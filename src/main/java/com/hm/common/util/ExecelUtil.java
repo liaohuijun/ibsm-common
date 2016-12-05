@@ -49,7 +49,7 @@ public class ExecelUtil {
 
 			for (int rowNum = 0; rowNum < cloneRowIndex; rowNum++) {
 				Row createRow = createSheet.createRow(rowNum);
-				cloneSheet.getRow(rowNum).forEach(cell -> {
+				for(Cell cell:cloneSheet.getRow(rowNum)){
 					if (CommonUtil.isNotEmpty(cell)) {
 						String cellStl = cell.toString().trim();
 						Cell createCell = createRow.createCell(cell.getColumnIndex());
@@ -59,7 +59,7 @@ public class ExecelUtil {
 							createCell.setCellValue(cellStl);
 						}
 					}
-				});
+				}
 			}
 
 			handler.write(createSheet, cloneRowIndex);
