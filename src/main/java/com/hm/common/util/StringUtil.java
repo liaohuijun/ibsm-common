@@ -73,4 +73,8 @@ public class StringUtil extends CommonUtil {
 
 		return machined + String.format("%015d", hash);
 	}
+	
+	public static String generateUUID(){
+		return UUID.randomUUID().toString().replaceAll("-", "");
+	}
 }
