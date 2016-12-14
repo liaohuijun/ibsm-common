@@ -27,47 +27,42 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>${servlet-api.version}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>${poi.version}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
 			<version>${poi.version}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.google.zxing</groupId>
 			<artifactId>core</artifactId>
 			<version>${zxing.version}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-compress</artifactId>
 			<version>${compress.version}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
 		</dependency>
+		
 	</dependencies>
 
-	<!-- <build> -->
-	<!-- <plugins> -->
-	<!-- <plugin> -->
-	<!-- <groupId>org.springframework.boot</groupId> -->
-	<!-- <artifactId>spring-boot-maven-plugin</artifactId> -->
-	<!-- </plugin> -->
-	<!-- <plugin> -->
-	<!-- <groupId>org.apache.maven.plugins</groupId> -->
-	<!-- <artifactId>maven-compiler-plugin</artifactId> -->
-	<!-- <version>${maven-compiler-plugin.version}</version> -->
-	<!-- <configuration> -->
-	<!-- <source>${java.version}</source> -->
-	<!-- <target>${java.version}</target> -->
-	<!-- </configuration> -->
-	<!-- </plugin> -->
-	<!-- </plugins> -->
-	<!-- </build> -->
+
 </project>

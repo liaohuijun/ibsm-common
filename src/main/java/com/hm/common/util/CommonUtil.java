@@ -92,14 +92,21 @@ public abstract class CommonUtil {
 	}
 
 	public static final boolean isEmpty(Object value) {
-//		if (value != null && value instanceof String) {
-//			return isEmpty((String) value);
-//		} else if (value != null && value instanceof Collection) {
-//			return isEmpty((Collection<?>) value);
-//		} else if (value != null && value instanceof Map) {
-//			return isEmpty((Map<?, ?>) value);
-//		}
+		if (value != null && value instanceof String) {
+			return isEmpty((String) value);
+		} else if (value != null && value instanceof Collection) {
+			return isEmpty((Collection<?>) value);
+		} else if (value != null && value instanceof Map) {
+			return isEmpty((Map<?, ?>) value);
+		}
 		return value == null;
+	}
+	
+	public static final boolean isEmpty(String value) {
+		if (value == null || value.length() == 0) {
+			return true;
+		}
+		return false;
 	}
 
 	public static final boolean isEmpty(Object[] value) {
@@ -136,4 +143,6 @@ public abstract class CommonUtil {
 		}
 		return false;
 	}
+	
+	
 }
