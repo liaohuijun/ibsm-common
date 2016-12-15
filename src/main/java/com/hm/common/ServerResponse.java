@@ -1,6 +1,6 @@
 package com.hm.common;
 
-import org.apache.poi.ss.formula.functions.T;
+import java.io.Serializable;
 
 /**
  * @author shishun.wang
@@ -8,7 +8,9 @@ import org.apache.poi.ss.formula.functions.T;
  * @version 1.0
  * @describe 服务器端返还数据格式body体定义
  */
-public class ServerResponse {
+public class ServerResponse<T> implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	private static final String OK = "ok";
 
@@ -18,23 +20,23 @@ public class ServerResponse {
 
 	private MetaType metaType;
 
-	public ServerResponse success() {
+	public ServerResponse<T> success() {
 		this.metaType = new MetaType(true, OK);
 		return this;
 	}
 
-	public ServerResponse success(T data) {
+	public ServerResponse<T> success(T data) {
 		this.metaType = new MetaType(true, OK);
 		this.data = data;
 		return this;
 	}
 
-	public ServerResponse failure() {
+	public ServerResponse<T> failure() {
 		this.metaType = new MetaType(false, ERROR);
 		return this;
 	}
 
-	public ServerResponse failure(String message) {
+	public ServerResponse<T> failure(String message) {
 		this.metaType = new MetaType(false, message);
 		return this;
 	}
@@ -53,7 +55,7 @@ public class ServerResponse {
 	 * @version 1.0
 	 * @describe 消息状态
 	 */
-	public class MetaType {
+	public static class MetaType {
 
 		private boolean success;
 
