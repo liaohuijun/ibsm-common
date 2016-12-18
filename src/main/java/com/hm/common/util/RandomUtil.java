@@ -58,16 +58,15 @@ public class RandomUtil {
 	}
 
 	public static String phone() {
-		Random random = new Random();
 		int prefix[] = { 134, 135, 136, 137, 138, 139, 150, 151, 152, 188, 130, 131, 132, 155, 156, 186, 133, 153,
 				189 };
-		int suffix = random.nextInt(100000000);
-		return prefix[random.nextInt(prefix.length - 1)] + "" + suffix;
+		int suffix = (int) (Math.random() * 1000000000);
+		return prefix[new Random().nextInt(prefix.length - 1)] + "" + suffix;
 	}
 
 	public static String qq(boolean isEmail) {
 		Random random = new Random();
-		return (random.nextInt(89999999) + 10000000) + (isEmail ? "qq.com" : "");
+		return (random.nextInt(89999999) + 10000000) + (isEmail ? "@qq.com" : "");
 	}
 
 	public static String username() {
