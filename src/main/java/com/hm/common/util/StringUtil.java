@@ -66,8 +66,23 @@ public class StringUtil extends CommonUtil {
 
 		return machined + String.format("%015d", hash);
 	}
-	
-	public static String generateUUID(){
+
+	public static String token() {
 		return UUID.randomUUID().toString().replaceAll("-", "");
+	}
+
+	/**
+	 * 不支持分布式系统---- 获取16位长度纯数字字符串
+	 * 
+	 * @return
+	 */
+	public static String rand16number() {
+		int machined = (int) (Math.random() * 10);
+		int hash = UUID.randomUUID().toString().hashCode();
+		if (hash < 0) {
+			hash = -hash;
+		}
+
+		return machined + String.format("%015d", hash);
 	}
 }
