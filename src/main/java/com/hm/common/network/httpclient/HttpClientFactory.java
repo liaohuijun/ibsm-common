@@ -6,9 +6,13 @@ import java.text.MessageFormat;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpOptions;
+import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -19,7 +23,7 @@ import com.alibaba.fastjson.JSON;
  * @author shishun.wang
  * @date 2016年12月18日 下午3:41:16
  * @version 1.0
- * @describe 
+ * @describe
  */
 public enum HttpClientFactory {
 
@@ -66,7 +70,7 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpClientFactory build(String uri, Object... objects) {
-			request = new HttpGet(MessageFormat.format(uri, objects));
+			request = new HttpPost(MessageFormat.format(uri, objects));
 			return this;
 		}
 
@@ -99,7 +103,7 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpClientFactory build(String uri, Object... objects) {
-			request = new HttpPost(MessageFormat.format(uri, objects));
+			request = new HttpPut(MessageFormat.format(uri, objects));
 			return this;
 		}
 
@@ -131,7 +135,7 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpClientFactory build(String uri, Object... objects) {
-			request = new HttpGet(MessageFormat.format(uri, objects));
+			request = new HttpDelete(MessageFormat.format(uri, objects));
 			return this;
 		}
 
@@ -163,7 +167,7 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpClientFactory build(String uri, Object... objects) {
-			request = new HttpGet(MessageFormat.format(uri, objects));
+			request = new HttpOptions(MessageFormat.format(uri, objects));
 			return this;
 		}
 
@@ -195,7 +199,7 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpClientFactory build(String uri, Object... objects) {
-			request = new HttpGet(MessageFormat.format(uri, objects));
+			request = new HttpPatch(MessageFormat.format(uri, objects));
 			return this;
 		}
 
