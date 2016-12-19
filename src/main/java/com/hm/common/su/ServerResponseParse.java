@@ -2,6 +2,7 @@ package com.hm.common.su;
 
 import com.hm.common.ServerResponse;
 import com.hm.common.ServerResponse.MetaType;
+import com.hm.common.exception.ServiceException;
 
 /**
  * @author shishun.wang
@@ -11,12 +12,12 @@ import com.hm.common.ServerResponse.MetaType;
  */
 public class ServerResponseParse {
 
-	public static <T> T parse(ServerResponse<T> serverResponse) throws Exception {
+	public static <T> T parse(ServerResponse<T> serverResponse) throws ServiceException {
 		MetaType metaType = serverResponse.getMetaType();
 		if (metaType.isSuccess()) {
 			return serverResponse.getData();
 		} else {
-			throw new Exception(metaType.getMessage());
+			throw ServiceException.warn(metaType.getMessage());
 		}
 	}
 }
