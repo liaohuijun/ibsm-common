@@ -16,5 +16,7 @@ public interface HttpClientStatus {
 		
 		public int SERVER_ERROR = 500;
 		
+		public int BAD_REQUEST = 400;
+		
 	}
 }
