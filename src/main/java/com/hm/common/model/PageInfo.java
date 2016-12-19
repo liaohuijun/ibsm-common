@@ -60,4 +60,10 @@ public class PageInfo<T> implements Serializable {
 	public static final <T> PageInfo<T> empty() {
 		return EMPTY;
 	}
+
+	@Override
+	public String toString() {
+		return "PageInfo [totalPage=" + totalPage + ", totalSize=" + totalSize + ", content=" + content + "]";
+	}
+
 }

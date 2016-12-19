@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @version 1.0
  * @describe 服务器端返还数据格式body体定义
  */
-public class ServerResponse<T> implements Serializable{
+public class ServerResponse<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -55,11 +55,16 @@ public class ServerResponse<T> implements Serializable{
 	 * @version 1.0
 	 * @describe 消息状态
 	 */
-	public static class MetaType {
+	public static class MetaType implements Serializable {
+
+		private static final long serialVersionUID = 5227261674159084436L;
 
 		private boolean success;
 
 		private String message;
+
+		public MetaType() {
+		}
 
 		public MetaType(boolean success, String message) {
 			this.success = success;
@@ -73,5 +78,30 @@ public class ServerResponse<T> implements Serializable{
 		public String getMessage() {
 			return message;
 		}
+
+		public void setSuccess(boolean success) {
+			this.success = success;
+		}
+
+		public void setMessage(String message) {
+			this.message = message;
+		}
+
+	}
+
+	public static String getOk() {
+		return OK;
+	}
+
+	public static String getError() {
+		return ERROR;
+	}
+
+	public void setData(T data) {
+		this.data = data;
+	}
+
+	public void setMetaType(MetaType metaType) {
+		this.metaType = metaType;
 	}
 }

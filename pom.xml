@@ -21,22 +21,32 @@
 		<compress.version>1.5</compress.version>
 		<fastjson.version>1.1.43</fastjson.version>
 		<httpclient.version>4.5.2</httpclient.version>
+		<slf4j.version>1.7.22</slf4j.version>
 	</properties>
 
 	<dependencies>
+
+		<!-- <dependency> -->
+		<!-- <groupId>org.slf4j</groupId> -->
+		<!-- <artifactId>slf4j-api</artifactId> -->
+		<!-- <version>${slf4j.version}</version> -->
+		<!-- 依赖模块将提供 -->
+		<!-- <scope>provided</scope> -->
+		<!-- </dependency> -->
+
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>${httpclient.version}</version>
 			<!-- 依赖模块将提供 -->
-<!-- 			<scope>provided</scope> -->
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpmime</artifactId>
 			<version>${httpclient.version}</version>
 			<!-- 依赖模块将提供 -->
-<!-- 			<scope>provided</scope> -->
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
