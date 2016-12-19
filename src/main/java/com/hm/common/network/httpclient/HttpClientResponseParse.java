@@ -18,7 +18,7 @@ public class HttpClientResponseParse {
 	public static <T> T parse(HttpResponse response, Class<T> type) throws Exception {
 		HttpEntity entity = response.getEntity();
 		if (response.getStatusLine().getStatusCode() == HttpClientStatus.ResponseCode.OK) {
-			String json = EntityUtils.toString(entity, "UTF-8");
+			String json = EntityUtils.toString(entity, HttpClientStatus.CHARACTER_ENCODING);
 			return JSON.parseObject(json, type);
 		}
 		return null;
@@ -27,7 +27,7 @@ public class HttpClientResponseParse {
 	public static <T> T parseGeneric(HttpResponse response, TypeReference<T> type) throws Exception {
 		HttpEntity entity = response.getEntity();
 		if (response.getStatusLine().getStatusCode() == HttpClientStatus.ResponseCode.OK) {
-			String json = EntityUtils.toString(entity, "UTF-8");
+			String json = EntityUtils.toString(entity, HttpClientStatus.CHARACTER_ENCODING);
 			return JSON.parseObject(json, type);
 		}
 		return null;
@@ -36,7 +36,7 @@ public class HttpClientResponseParse {
 	public static String parse(HttpResponse response) throws Exception {
 		HttpEntity entity = response.getEntity();
 		if (response.getStatusLine().getStatusCode() == HttpClientStatus.ResponseCode.OK) {
-			return EntityUtils.toString(entity, "UTF-8");
+			return EntityUtils.toString(entity, HttpClientStatus.CHARACTER_ENCODING);
 		}
 		return null;
 	}

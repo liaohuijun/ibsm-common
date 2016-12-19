@@ -7,6 +7,8 @@ package com.hm.common.network.httpclient;
  * @describe
  */
 public interface HttpClientStatus {
+	
+	public String CHARACTER_ENCODING = "UTF-8";
 
 	public interface  ResponseCode{
 		

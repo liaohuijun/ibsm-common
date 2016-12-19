@@ -5,7 +5,6 @@ import java.text.MessageFormat;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpGet;
@@ -45,15 +44,13 @@ public enum HttpClientFactory {
 		}
 
 		public HttpClientFactory parameters(Object parameters) {
-			this.httpEntity = new StringEntity(JSON.toJSONString(parameters), Charset.forName("UTF-8"));
+			this.httpEntity = new StringEntity(JSON.toJSONString(parameters),
+					Charset.forName(HttpClientStatus.CHARACTER_ENCODING));
 			return this;
 		}
 
 		public HttpResponse execute() throws Exception {
-			if (HttpEntityEnclosingRequestBase.class.isAssignableFrom(request.getClass())) {
-				((HttpEntityEnclosingRequestBase) request).setEntity(this.httpEntity);
-			}
-			return httpClient().execute(request);
+			return execute(this.request, this.httpEntity);
 		}
 	},
 	/**
@@ -76,16 +73,14 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpClientFactory parameters(Object parameters) {
-			this.httpEntity = new StringEntity(JSON.toJSONString(parameters), Charset.forName("UTF-8"));
+			this.httpEntity = new StringEntity(JSON.toJSONString(parameters),
+					Charset.forName(HttpClientStatus.CHARACTER_ENCODING));
 			return this;
 		}
 
 		@Override
 		public HttpResponse execute() throws Exception {
-			if (HttpEntityEnclosingRequestBase.class.isAssignableFrom(request.getClass())) {
-				((HttpEntityEnclosingRequestBase) request).setEntity(this.httpEntity);
-			}
-			return httpClient().execute(request);
+			return execute(this.request, this.httpEntity);
 		}
 
 	},
@@ -109,16 +104,13 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpClientFactory parameters(Object parameters) {
-			this.httpEntity = new StringEntity(JSON.toJSONString(parameters), Charset.forName("UTF-8"));
+			this.httpEntity = getHttpEntity(parameters);
 			return this;
 		}
 
 		@Override
 		public HttpResponse execute() throws Exception {
-			if (HttpEntityEnclosingRequestBase.class.isAssignableFrom(request.getClass())) {
-				((HttpEntityEnclosingRequestBase) request).setEntity(this.httpEntity);
-			}
-			return httpClient().execute(request);
+			return execute(this.request, this.httpEntity);
 		}
 	},
 	/**
@@ -141,16 +133,13 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpClientFactory parameters(Object parameters) {
-			this.httpEntity = new StringEntity(JSON.toJSONString(parameters), Charset.forName("UTF-8"));
+			this.httpEntity = getHttpEntity(parameters);
 			return this;
 		}
 
 		@Override
 		public HttpResponse execute() throws Exception {
-			if (HttpEntityEnclosingRequestBase.class.isAssignableFrom(request.getClass())) {
-				((HttpEntityEnclosingRequestBase) request).setEntity(this.httpEntity);
-			}
-			return httpClient().execute(request);
+			return execute(this.request, this.httpEntity);
 		}
 	},
 	/**
@@ -173,16 +162,13 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpClientFactory parameters(Object parameters) {
-			this.httpEntity = new StringEntity(JSON.toJSONString(parameters), Charset.forName("UTF-8"));
+			this.httpEntity = getHttpEntity(parameters);
 			return this;
 		}
 
 		@Override
 		public HttpResponse execute() throws Exception {
-			if (HttpEntityEnclosingRequestBase.class.isAssignableFrom(request.getClass())) {
-				((HttpEntityEnclosingRequestBase) request).setEntity(this.httpEntity);
-			}
-			return httpClient().execute(request);
+			return execute(this.request, this.httpEntity);
 		}
 	},
 	/**
@@ -205,16 +191,42 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpClientFactory parameters(Object parameters) {
-			this.httpEntity = new StringEntity(JSON.toJSONString(parameters), Charset.forName("UTF-8"));
+			this.httpEntity = getHttpEntity(parameters);
 			return this;
 		}
 
 		@Override
 		public HttpResponse execute() throws Exception {
-			if (HttpEntityEnclosingRequestBase.class.isAssignableFrom(request.getClass())) {
-				((HttpEntityEnclosingRequestBase) request).setEntity(this.httpEntity);
-			}
-			return httpClient().execute(request);
+			return execute(this.request, this.httpEntity);
+		}
+	}, 
+	/**
+	 * @author shishun.wang
+	 * @date 2016年12月19日 上午11:18:21
+	 * @version 1.0
+	 * @describe 文件上传请求
+	 */
+	FILE {
+		
+		private HttpRequestBase request;
+
+		private HttpEntity httpEntity;
+
+		@Override
+		public HttpClientFactory build(String uri, Object... objects) {
+			request = new HttpPost(MessageFormat.format(uri, objects));
+			return this;
+		}
+
+		@Override
+		public HttpClientFactory parameters(Object parameters) {
+			this.httpEntity = getHttpEntity(parameters);
+			return this;
+		}
+
+		@Override
+		public HttpResponse execute() throws Exception {
+			return execute(this.request, this.httpEntity);
 		}
 	};
 
@@ -224,8 +236,14 @@ public enum HttpClientFactory {
 
 	public abstract HttpResponse execute() throws Exception;
 
-	private static HttpClient httpClient() throws Exception {
-		return HttpClientBuilder.create().build();
+	private static HttpEntity getHttpEntity(Object parameters) {
+		return new StringEntity(JSON.toJSONString(parameters), Charset.forName(HttpClientStatus.CHARACTER_ENCODING));
 	}
 
+	private static HttpResponse execute(HttpRequestBase request, HttpEntity httpEntity) throws Exception {
+		if (HttpEntityEnclosingRequestBase.class.isAssignableFrom(request.getClass())) {
+			((HttpEntityEnclosingRequestBase) request).setEntity(httpEntity);
+		}
+		return HttpClientBuilder.create().build().execute(request);
+	}
 }
