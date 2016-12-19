@@ -2,6 +2,8 @@ package util.test.bean;
 
 import java.util.List;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import util.test.bean.OfferCallBackVo.CarInfoVo;
 import util.test.bean.OfferCallBackVo.CarOwnerVo;
 
@@ -12,6 +14,9 @@ import util.test.bean.OfferCallBackVo.CarOwnerVo;
  * @describe
  */
 public class OrderDetailsVo {
+
+	@JSONField(name="taskId")
+	private String taskId11;
 
 	private String taskId;
 
@@ -151,14 +156,21 @@ public class OrderDetailsVo {
 					+ prvName + ", totalPrice=" + totalPrice + ", payValidTime=" + payValidTime + ", quoteValidTime="
 					+ quoteValidTime + ", msg=" + msg + "]";
 		}
-		
-		
+
+	}
+
+	public String getTaskId11() {
+		return taskId11;
+	}
+
+	public void setTaskId11(String taskId11) {
+		this.taskId11 = taskId11;
 	}
 
 	@Override
 	public String toString() {
-		return "OrderDetailsVo [taskId=" + taskId + ", createTime=" + createTime + ", carInfo=" + carInfo + ", insured="
-				+ insured + ", providers=" + providers + "]";
+		return "OrderDetailsVo [taskId11=" + taskId11 + ", taskId=" + taskId + ", createTime=" + createTime
+				+ ", carInfo=" + carInfo + ", insured=" + insured + ", providers=" + providers + "]";
 	}
 
 }
