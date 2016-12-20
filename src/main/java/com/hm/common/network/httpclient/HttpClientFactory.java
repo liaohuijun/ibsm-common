@@ -50,7 +50,7 @@ public enum HttpClientFactory {
 		}
 
 		public HttpResponse execute() throws Exception {
-			return execute(this.request, this.httpEntity);
+			return super.execute(this.request, this.httpEntity);
 		}
 	},
 	/**
@@ -80,7 +80,7 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpResponse execute() throws Exception {
-			return execute(this.request, this.httpEntity);
+			return super.execute(this.request, this.httpEntity);
 		}
 
 	},
@@ -104,13 +104,13 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpClientFactory parameters(Object parameters) {
-			this.httpEntity = getHttpEntity(parameters);
+			this.httpEntity = super.getHttpEntity(parameters);
 			return this;
 		}
 
 		@Override
 		public HttpResponse execute() throws Exception {
-			return execute(this.request, this.httpEntity);
+			return super.execute(this.request, this.httpEntity);
 		}
 	},
 	/**
@@ -133,13 +133,13 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpClientFactory parameters(Object parameters) {
-			this.httpEntity = getHttpEntity(parameters);
+			this.httpEntity = super.getHttpEntity(parameters);
 			return this;
 		}
 
 		@Override
 		public HttpResponse execute() throws Exception {
-			return execute(this.request, this.httpEntity);
+			return super.execute(this.request, this.httpEntity);
 		}
 	},
 	/**
@@ -162,13 +162,13 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpClientFactory parameters(Object parameters) {
-			this.httpEntity = getHttpEntity(parameters);
+			this.httpEntity = super.getHttpEntity(parameters);
 			return this;
 		}
 
 		@Override
 		public HttpResponse execute() throws Exception {
-			return execute(this.request, this.httpEntity);
+			return super.execute(this.request, this.httpEntity);
 		}
 	},
 	/**
@@ -191,15 +191,15 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpClientFactory parameters(Object parameters) {
-			this.httpEntity = getHttpEntity(parameters);
+			this.httpEntity = super.getHttpEntity(parameters);
 			return this;
 		}
 
 		@Override
 		public HttpResponse execute() throws Exception {
-			return execute(this.request, this.httpEntity);
+			return super.execute(this.request, this.httpEntity);
 		}
-	}, 
+	},
 	/**
 	 * @author shishun.wang
 	 * @date 2016年12月19日 上午11:18:21
@@ -207,7 +207,7 @@ public enum HttpClientFactory {
 	 * @describe 文件上传请求
 	 */
 	FILE {
-		
+
 		private HttpRequestBase request;
 
 		private HttpEntity httpEntity;
@@ -220,13 +220,13 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpClientFactory parameters(Object parameters) {
-			this.httpEntity = getHttpEntity(parameters);
+			this.httpEntity = super.getHttpEntity(parameters);
 			return this;
 		}
 
 		@Override
 		public HttpResponse execute() throws Exception {
-			return execute(this.request, this.httpEntity);
+			return super.execute(this.request, this.httpEntity);
 		}
 	};
 
@@ -236,11 +236,11 @@ public enum HttpClientFactory {
 
 	public abstract HttpResponse execute() throws Exception;
 
-	private static HttpEntity getHttpEntity(Object parameters) {
+	private HttpEntity getHttpEntity(Object parameters) {
 		return new StringEntity(JSON.toJSONString(parameters), Charset.forName(HttpClientStatus.CHARACTER_ENCODING));
 	}
 
-	private static HttpResponse execute(HttpRequestBase request, HttpEntity httpEntity) throws Exception {
+	private HttpResponse execute(HttpRequestBase request, HttpEntity httpEntity) throws Exception {
 		if (HttpEntityEnclosingRequestBase.class.isAssignableFrom(request.getClass())) {
 			((HttpEntityEnclosingRequestBase) request).setEntity(httpEntity);
 		}
