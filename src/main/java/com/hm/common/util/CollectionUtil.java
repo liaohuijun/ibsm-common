@@ -3,8 +3,12 @@
  */
 package com.hm.common.util;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -28,20 +32,18 @@ public class CollectionUtil extends CommonUtil {
 
 	@SafeVarargs
 	public static final <T> Set<T> toSet(T... paramm) {
-		/*HashSet<T> set = new HashSet<>(paramm.length);
+		HashSet<T> set = new HashSet<T>(paramm.length);
 		for (T parameter : paramm) {
 			set.add(parameter);
 		}
-		return set;*/
-		
-		return null;
+		return set;
 	}
 
 	public static final <T> List<T> distinct(List<T> list, Comparator<T> comparator) {
-		/*if (isEmpty(list)) {
+		if (isEmpty(list)) {
 			return Collections.emptyList();
 		}
-		List<T> targetList = new ArrayList<>();
+		List<T> targetList = new ArrayList<T>();
 		list.stream().filter(item -> item != null).forEach(item -> {
 			Optional<T> tryFind = targetList.parallelStream()
 					.filter(targetItem -> comparator.compare(item, targetItem) == 0).findAny();
@@ -49,9 +51,7 @@ public class CollectionUtil extends CommonUtil {
 				targetList.add(item);
 			}
 		});
-		return targetList;*/
-		
-		return null;
+		return targetList;
 	}
 
 	public static final <T> List<T> distinct(List<T> list) {

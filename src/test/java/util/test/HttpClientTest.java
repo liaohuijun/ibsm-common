@@ -21,7 +21,7 @@ import util.test.bean.OrderDetailsVo;
  */
 public class HttpClientTest {
 
-	private String uri = "http://localhost:10000/";
+	private String uri = "http://115.28.66.183:10000/";
 
 	@Test
 	public void testGet() {
