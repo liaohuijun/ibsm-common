@@ -28,6 +28,7 @@ public class HttpClientResponseParse {
 		HttpEntity entity = response.getEntity();
 		if (response.getStatusLine().getStatusCode() == HttpClientStatus.ResponseCode.OK) {
 			String json = EntityUtils.toString(entity, HttpClientStatus.CHARACTER_ENCODING);
+			System.out.println(json);
 			return JSON.parseObject(json, type);
 		}
 		return null;
