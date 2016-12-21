@@ -38,16 +38,25 @@ public enum HttpClientFactory {
 
 		private HttpEntity httpEntity;
 
+		@Override
 		public HttpClientFactory build(String uri, Object... objects) {
 			request = new HttpGet(MessageFormat.format(uri, objects));
 			return this;
 		}
 
+		@Override
+		public HttpClientFactory headers(String key, String value) {
+			this.request.setHeader(key, value);
+			return this;
+		}
+
+		@Override
 		public HttpClientFactory parameters(Object parameters) {
 			this.httpEntity = super.getHttpEntity(parameters);
 			return this;
 		}
 
+		@Override
 		public HttpResponse execute() throws Exception {
 			return super.execute(this.request, this.httpEntity);
 		}
@@ -67,6 +76,12 @@ public enum HttpClientFactory {
 		@Override
 		public HttpClientFactory build(String uri, Object... objects) {
 			request = new HttpPost(MessageFormat.format(uri, objects));
+			return this;
+		}
+
+		@Override
+		public HttpClientFactory headers(String key, String value) {
+			this.request.setHeader(key, value);
 			return this;
 		}
 
@@ -101,6 +116,12 @@ public enum HttpClientFactory {
 		}
 
 		@Override
+		public HttpClientFactory headers(String key, String value) {
+			this.request.setHeader(key, value);
+			return this;
+		}
+
+		@Override
 		public HttpClientFactory parameters(Object parameters) {
 			this.httpEntity = super.getHttpEntity(parameters);
 			return this;
@@ -126,6 +147,12 @@ public enum HttpClientFactory {
 		@Override
 		public HttpClientFactory build(String uri, Object... objects) {
 			request = new HttpDelete(MessageFormat.format(uri, objects));
+			return this;
+		}
+
+		@Override
+		public HttpClientFactory headers(String key, String value) {
+			this.request.setHeader(key, value);
 			return this;
 		}
 
@@ -159,6 +186,12 @@ public enum HttpClientFactory {
 		}
 
 		@Override
+		public HttpClientFactory headers(String key, String value) {
+			this.request.setHeader(key, value);
+			return this;
+		}
+
+		@Override
 		public HttpClientFactory parameters(Object parameters) {
 			this.httpEntity = super.getHttpEntity(parameters);
 			return this;
@@ -184,6 +217,12 @@ public enum HttpClientFactory {
 		@Override
 		public HttpClientFactory build(String uri, Object... objects) {
 			request = new HttpPatch(MessageFormat.format(uri, objects));
+			return this;
+		}
+
+		@Override
+		public HttpClientFactory headers(String key, String value) {
+			this.request.setHeader(key, value);
 			return this;
 		}
 
@@ -217,6 +256,12 @@ public enum HttpClientFactory {
 		}
 
 		@Override
+		public HttpClientFactory headers(String key, String value) {
+			this.request.setHeader(key, value);
+			return this;
+		}
+
+		@Override
 		public HttpClientFactory parameters(Object parameters) {
 			this.httpEntity = super.getHttpEntity(parameters);
 			return this;
@@ -229,6 +274,8 @@ public enum HttpClientFactory {
 	};
 
 	public abstract HttpClientFactory build(String uri, Object... objects);
+
+	public abstract HttpClientFactory headers(String key, String value);
 
 	public abstract HttpClientFactory parameters(Object parameters);
 

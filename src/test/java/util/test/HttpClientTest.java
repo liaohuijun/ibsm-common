@@ -9,6 +9,7 @@ import com.hm.common.ServerResponse;
 import com.hm.common.model.PageInfo;
 import com.hm.common.network.httpclient.HttpClientFactory;
 import com.hm.common.network.httpclient.HttpClientResponseParse;
+import com.hm.common.network.httpclient.HttpClientStatus;
 import com.hm.common.su.ServerResponseParse;
 
 import util.test.bean.OfferUserVo;
@@ -28,7 +29,8 @@ public class HttpClientTest {
 	public void testGet() {
 		try {
 			HttpResponse response = HttpClientFactory.GET.build(uri + "restful/api/offer/query/{0}/{1}", 1, 10)
-					.execute();
+					.headers(HttpClientStatus.Headers.CLIENT_USER_ROLE, "SUPER")
+					.headers(HttpClientStatus.Headers.CLIENT_USER_SESSION_ID, "12345").execute();
 			ServerResponse<PageInfo<OrderDetailsVo>> parse = HttpClientResponseParse.parseGeneric(response,
 					new TypeReference<ServerResponse<PageInfo<OrderDetailsVo>>>() {
 					});
@@ -101,4 +103,5 @@ public class HttpClientTest {
 			e.printStackTrace();
 		}
 	}
+
 }
