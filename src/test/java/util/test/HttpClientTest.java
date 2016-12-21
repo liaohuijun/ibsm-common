@@ -57,7 +57,6 @@ public class HttpClientTest {
 			ServerResponse<Boolean> parse = HttpClientResponseParse.parseGeneric(response,
 					new TypeReference<ServerResponse<Boolean>>() {
 					});
-			System.out.println(parse);
 			System.out.println(ServerResponseParse.parse(parse));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -66,11 +65,38 @@ public class HttpClientTest {
 
 	@Test
 	public void testPut() {
+		try {
+			OfferUserVo offerUserVo = new OfferUserVo();
+			{
+				offerUserVo.setCarLicenseNo("setCarLicenseNo");
+				offerUserVo.setEngineNo("setEngineNo");
+				offerUserVo.setIsNew("NO");
+				offerUserVo.setGender("gender");
+				offerUserVo.setIdcardNo("idcardNo");
+			}
 
+			HttpResponse response = HttpClientFactory.PUT.build(uri + "restful/api/offer/user/{0}", "54018")
+					.parameters(offerUserVo).execute();
+			ServerResponse<Boolean> parse = HttpClientResponseParse.parseGeneric(response,
+					new TypeReference<ServerResponse<Boolean>>() {
+					});
+			System.out.println(ServerResponseParse.parse(parse));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void testDelete() {
-
+		try {
+			HttpResponse response = HttpClientFactory.DELETE.build(uri + "restful/api/offer/user/{0}", "54018")
+					.execute();
+			ServerResponse<Boolean> parse = HttpClientResponseParse.parseGeneric(response,
+					new TypeReference<ServerResponse<Boolean>>() {
+					});
+			System.out.println(ServerResponseParse.parse(parse));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
