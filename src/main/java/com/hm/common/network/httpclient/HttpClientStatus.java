@@ -9,6 +9,8 @@ package com.hm.common.network.httpclient;
 public interface HttpClientStatus {
 	
 	public String CHARACTER_ENCODING = "UTF-8";
+	
+	public String JSON_CONTENT_TYPE = "application/json";
 
 	public interface  ResponseCode{
 		

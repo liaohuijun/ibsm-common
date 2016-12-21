@@ -28,10 +28,11 @@ public class HttpClientResponseParse {
 		HttpEntity entity = response.getEntity();
 		if (response.getStatusLine().getStatusCode() == HttpClientStatus.ResponseCode.OK) {
 			String json = EntityUtils.toString(entity, HttpClientStatus.CHARACTER_ENCODING);
-			System.out.println(json);
 			return JSON.parseObject(json, type);
+		} else {
+			throw new Exception(response.getStatusLine().getStatusCode() + ":"
+					+ EntityUtils.toString(entity, HttpClientStatus.CHARACTER_ENCODING));
 		}
-		return null;
 	}
 
 	public static String parse(HttpResponse response) throws Exception {

@@ -44,8 +44,7 @@ public enum HttpClientFactory {
 		}
 
 		public HttpClientFactory parameters(Object parameters) {
-			this.httpEntity = new StringEntity(JSON.toJSONString(parameters),
-					Charset.forName(HttpClientStatus.CHARACTER_ENCODING));
+			this.httpEntity = super.getHttpEntity(parameters);
 			return this;
 		}
 
@@ -73,8 +72,7 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpClientFactory parameters(Object parameters) {
-			this.httpEntity = new StringEntity(JSON.toJSONString(parameters),
-					Charset.forName(HttpClientStatus.CHARACTER_ENCODING));
+			this.httpEntity = super.getHttpEntity(parameters);
 			return this;
 		}
 
@@ -237,7 +235,12 @@ public enum HttpClientFactory {
 	public abstract HttpResponse execute() throws Exception;
 
 	private HttpEntity getHttpEntity(Object parameters) {
-		return new StringEntity(JSON.toJSONString(parameters), Charset.forName(HttpClientStatus.CHARACTER_ENCODING));
+		StringEntity entity = new StringEntity(JSON.toJSONString(parameters),
+				Charset.forName(HttpClientStatus.CHARACTER_ENCODING));
+		entity.setContentEncoding(HttpClientStatus.CHARACTER_ENCODING);
+		entity.setContentType(HttpClientStatus.JSON_CONTENT_TYPE);
+
+		return entity;
 	}
 
 	private HttpResponse execute(HttpRequestBase request, HttpEntity httpEntity) throws Exception {

@@ -1,7 +1,6 @@
 package util.test;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -10,7 +9,6 @@ import com.hm.common.ServerResponse;
 import com.hm.common.model.PageInfo;
 import com.hm.common.network.httpclient.HttpClientFactory;
 import com.hm.common.network.httpclient.HttpClientResponseParse;
-import com.hm.common.network.httpclient.HttpClientStatus;
 import com.hm.common.su.ServerResponseParse;
 
 import util.test.bean.OfferUserVo;
@@ -24,7 +22,7 @@ import util.test.bean.OrderDetailsVo;
  */
 public class HttpClientTest {
 
-	private String uri = "http://localhost:10000/";
+	private String uri = "http://localhost:8899/";
 
 	@Test
 	public void testGet() {
@@ -50,17 +48,17 @@ public class HttpClientTest {
 				offerUserVo.setCarLicenseNo("setCarLicenseNo");
 				offerUserVo.setEngineNo("setEngineNo");
 				offerUserVo.setIsNew("YES");
+				offerUserVo.setGender("gender");
+				offerUserVo.setIdcardNo("idcardNo");
 			}
 
 			HttpResponse response = HttpClientFactory.POST.build(uri + "restful/api/offer/user/{0}", "54018")
 					.parameters(offerUserVo).execute();
-			String json = EntityUtils.toString(response.getEntity(), HttpClientStatus.CHARACTER_ENCODING);
-			System.out.println(json);
-//			ServerResponse<Boolean> parse = HttpClientResponseParse.parseGeneric(response,
-//					new TypeReference<ServerResponse<Boolean>>() {
-//					});
-//			System.out.println(parse);
-//			System.out.println(ServerResponseParse.parse(parse));
+			ServerResponse<Boolean> parse = HttpClientResponseParse.parseGeneric(response,
+					new TypeReference<ServerResponse<Boolean>>() {
+					});
+			System.out.println(parse);
+			System.out.println(ServerResponseParse.parse(parse));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
