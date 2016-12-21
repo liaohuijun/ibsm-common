@@ -89,12 +89,14 @@ public class HttpClientTest {
 	@Test
 	public void testDelete() {
 		try {
-			HttpResponse response = HttpClientFactory.DELETE.build(uri + "restful/api/offer/user/{0}", "54018")
-					.execute();
-			ServerResponse<Boolean> parse = HttpClientResponseParse.parseGeneric(response,
-					new TypeReference<ServerResponse<Boolean>>() {
-					});
-			System.out.println(ServerResponseParse.parse(parse));
+			/*
+			 * HttpResponse response = HttpClientFactory.DELETE.build(uri +
+			 * "restful/api/offer/user/{0}", "54018") .execute();
+			 * ServerResponse<Boolean> parse =
+			 * HttpClientResponseParse.parseGeneric(response, new
+			 * TypeReference<ServerResponse<Boolean>>() { });
+			 * System.out.println(ServerResponseParse.parse(parse));
+			 */
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

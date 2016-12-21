@@ -16,30 +16,24 @@ import com.alibaba.fastjson.TypeReference;
 public class HttpClientResponseParse {
 
 	public static <T> T parse(HttpResponse response, Class<T> type) throws Exception {
-		HttpEntity entity = response.getEntity();
-		if (response.getStatusLine().getStatusCode() == HttpClientStatus.ResponseCode.OK) {
-			String json = EntityUtils.toString(entity, HttpClientStatus.CHARACTER_ENCODING);
-			return JSON.parseObject(json, type);
-		}
-		return null;
+		return JSON.parseObject(parseContent(response), type);
 	}
 
 	public static <T> T parseGeneric(HttpResponse response, TypeReference<T> type) throws Exception {
+		return JSON.parseObject(parseContent(response), type);
+	}
+
+	public static String parse(HttpResponse response) throws Exception {
+		return parseContent(response);
+	}
+
+	private static String parseContent(HttpResponse response) throws Exception {
 		HttpEntity entity = response.getEntity();
 		if (response.getStatusLine().getStatusCode() == HttpClientStatus.ResponseCode.OK) {
-			String json = EntityUtils.toString(entity, HttpClientStatus.CHARACTER_ENCODING);
-			return JSON.parseObject(json, type);
+			return EntityUtils.toString(entity, HttpClientStatus.CHARACTER_ENCODING);
 		} else {
 			throw new Exception(response.getStatusLine().getStatusCode() + ":"
 					+ EntityUtils.toString(entity, HttpClientStatus.CHARACTER_ENCODING));
 		}
-	}
-
-	public static String parse(HttpResponse response) throws Exception {
-		HttpEntity entity = response.getEntity();
-		if (response.getStatusLine().getStatusCode() == HttpClientStatus.ResponseCode.OK) {
-			return EntityUtils.toString(entity, HttpClientStatus.CHARACTER_ENCODING);
-		}
-		return null;
 	}
 }
