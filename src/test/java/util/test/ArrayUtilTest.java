@@ -1,6 +1,8 @@
 package util.test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -44,5 +46,25 @@ public class ArrayUtilTest {
 		for (Object obj : objects) {
 			System.out.println("------" + obj);
 		}
+	}
+	
+	@Test
+	public void testForeach(){
+		for(String str:list()){
+			System.out.println(str);
+		}
+	}
+	
+	private List<String> list(){
+		List<String> list = new ArrayList<String>();
+		{
+			list.add("234567890");
+			list.add("345678");
+			list.add("dfvdsj");
+			list.add("wertyuio");
+			list.add("3mk");
+		}
+		
+		return list;
 	}
 }
