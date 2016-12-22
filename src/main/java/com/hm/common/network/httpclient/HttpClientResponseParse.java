@@ -27,6 +27,12 @@ public class HttpClientResponseParse {
 		return parseContent(response);
 	}
 
+	public static ResponseContent parseOtherStatusCodeContent(HttpResponse response) throws Exception {
+		HttpEntity entity = response.getEntity();
+		return new ResponseContent(response.getStatusLine().getStatusCode(),
+				EntityUtils.toString(entity, HttpClientStatus.CHARACTER_ENCODING));
+	}
+
 	private static String parseContent(HttpResponse response) throws Exception {
 		HttpEntity entity = response.getEntity();
 		if (response.getStatusLine().getStatusCode() == HttpClientStatus.ResponseCode.OK) {
@@ -35,5 +41,40 @@ public class HttpClientResponseParse {
 			throw new Exception(response.getStatusLine().getStatusCode() + ":"
 					+ EntityUtils.toString(entity, HttpClientStatus.CHARACTER_ENCODING));
 		}
+	}
+
+	public static class ResponseContent {
+
+		private int statusCode;
+
+		private String result;
+
+		public ResponseContent(int statusCode, String result) {
+			super();
+			this.statusCode = statusCode;
+			this.result = result;
+		}
+
+		public int getStatusCode() {
+			return statusCode;
+		}
+
+		public void setStatusCode(int statusCode) {
+			this.statusCode = statusCode;
+		}
+
+		public String getResult() {
+			return result;
+		}
+
+		public void setResult(String result) {
+			this.result = result;
+		}
+
+		@Override
+		public String toString() {
+			return "ResponseContent [statusCode=" + statusCode + ", result=" + result + "]";
+		}
+
 	}
 }

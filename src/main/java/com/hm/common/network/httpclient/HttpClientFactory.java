@@ -5,6 +5,7 @@ import java.text.MessageFormat;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpGet;
@@ -38,6 +39,8 @@ public enum HttpClientFactory {
 
 		private HttpEntity httpEntity;
 
+		private boolean redirectsEnabled;
+
 		@Override
 		public HttpClientFactory build(String uri, Object... objects) {
 			request = new HttpGet(MessageFormat.format(uri, objects));
@@ -51,6 +54,12 @@ public enum HttpClientFactory {
 		}
 
 		@Override
+		public HttpClientFactory redirectsEnabled(boolean enabled) {
+			this.redirectsEnabled = enabled;
+			return this;
+		}
+
+		@Override
 		public HttpClientFactory parameters(Object parameters) {
 			this.httpEntity = super.getHttpEntity(parameters);
 			return this;
@@ -58,7 +67,7 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpResponse execute() throws Exception {
-			return super.execute(this.request, this.httpEntity);
+			return super.execute(this.request, this.httpEntity, this.redirectsEnabled);
 		}
 	},
 	/**
@@ -73,6 +82,8 @@ public enum HttpClientFactory {
 
 		private HttpEntity httpEntity;
 
+		private boolean redirectsEnabled;
+
 		@Override
 		public HttpClientFactory build(String uri, Object... objects) {
 			request = new HttpPost(MessageFormat.format(uri, objects));
@@ -86,6 +97,12 @@ public enum HttpClientFactory {
 		}
 
 		@Override
+		public HttpClientFactory redirectsEnabled(boolean enabled) {
+			this.redirectsEnabled = enabled;
+			return this;
+		}
+
+		@Override
 		public HttpClientFactory parameters(Object parameters) {
 			this.httpEntity = super.getHttpEntity(parameters);
 			return this;
@@ -93,7 +110,7 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpResponse execute() throws Exception {
-			return super.execute(this.request, this.httpEntity);
+			return super.execute(this.request, this.httpEntity, this.redirectsEnabled);
 		}
 
 	},
@@ -109,6 +126,8 @@ public enum HttpClientFactory {
 
 		private HttpEntity httpEntity;
 
+		private boolean redirectsEnabled;
+
 		@Override
 		public HttpClientFactory build(String uri, Object... objects) {
 			request = new HttpPut(MessageFormat.format(uri, objects));
@@ -122,6 +141,12 @@ public enum HttpClientFactory {
 		}
 
 		@Override
+		public HttpClientFactory redirectsEnabled(boolean enabled) {
+			this.redirectsEnabled = enabled;
+			return this;
+		}
+
+		@Override
 		public HttpClientFactory parameters(Object parameters) {
 			this.httpEntity = super.getHttpEntity(parameters);
 			return this;
@@ -129,7 +154,7 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpResponse execute() throws Exception {
-			return super.execute(this.request, this.httpEntity);
+			return super.execute(this.request, this.httpEntity, this.redirectsEnabled);
 		}
 	},
 	/**
@@ -144,6 +169,8 @@ public enum HttpClientFactory {
 
 		private HttpEntity httpEntity;
 
+		private boolean redirectsEnabled;
+
 		@Override
 		public HttpClientFactory build(String uri, Object... objects) {
 			request = new HttpDelete(MessageFormat.format(uri, objects));
@@ -157,6 +184,12 @@ public enum HttpClientFactory {
 		}
 
 		@Override
+		public HttpClientFactory redirectsEnabled(boolean enabled) {
+			this.redirectsEnabled = enabled;
+			return this;
+		}
+
+		@Override
 		public HttpClientFactory parameters(Object parameters) {
 			this.httpEntity = super.getHttpEntity(parameters);
 			return this;
@@ -164,7 +197,7 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpResponse execute() throws Exception {
-			return super.execute(this.request, this.httpEntity);
+			return super.execute(this.request, this.httpEntity, this.redirectsEnabled);
 		}
 	},
 	/**
@@ -179,6 +212,8 @@ public enum HttpClientFactory {
 
 		private HttpEntity httpEntity;
 
+		private boolean redirectsEnabled;
+
 		@Override
 		public HttpClientFactory build(String uri, Object... objects) {
 			request = new HttpOptions(MessageFormat.format(uri, objects));
@@ -192,6 +227,12 @@ public enum HttpClientFactory {
 		}
 
 		@Override
+		public HttpClientFactory redirectsEnabled(boolean enabled) {
+			this.redirectsEnabled = enabled;
+			return this;
+		}
+
+		@Override
 		public HttpClientFactory parameters(Object parameters) {
 			this.httpEntity = super.getHttpEntity(parameters);
 			return this;
@@ -199,7 +240,7 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpResponse execute() throws Exception {
-			return super.execute(this.request, this.httpEntity);
+			return super.execute(this.request, this.httpEntity, this.redirectsEnabled);
 		}
 	},
 	/**
@@ -214,6 +255,8 @@ public enum HttpClientFactory {
 
 		private HttpEntity httpEntity;
 
+		private boolean redirectsEnabled;
+
 		@Override
 		public HttpClientFactory build(String uri, Object... objects) {
 			request = new HttpPatch(MessageFormat.format(uri, objects));
@@ -227,6 +270,12 @@ public enum HttpClientFactory {
 		}
 
 		@Override
+		public HttpClientFactory redirectsEnabled(boolean enabled) {
+			this.redirectsEnabled = enabled;
+			return this;
+		}
+
+		@Override
 		public HttpClientFactory parameters(Object parameters) {
 			this.httpEntity = super.getHttpEntity(parameters);
 			return this;
@@ -234,7 +283,7 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpResponse execute() throws Exception {
-			return super.execute(this.request, this.httpEntity);
+			return super.execute(this.request, this.httpEntity, this.redirectsEnabled);
 		}
 	},
 	/**
@@ -249,6 +298,8 @@ public enum HttpClientFactory {
 
 		private HttpEntity httpEntity;
 
+		private boolean redirectsEnabled;
+
 		@Override
 		public HttpClientFactory build(String uri, Object... objects) {
 			request = new HttpPost(MessageFormat.format(uri, objects));
@@ -262,6 +313,12 @@ public enum HttpClientFactory {
 		}
 
 		@Override
+		public HttpClientFactory redirectsEnabled(boolean enabled) {
+			this.redirectsEnabled = enabled;
+			return this;
+		}
+
+		@Override
 		public HttpClientFactory parameters(Object parameters) {
 			this.httpEntity = super.getHttpEntity(parameters);
 			return this;
@@ -269,13 +326,15 @@ public enum HttpClientFactory {
 
 		@Override
 		public HttpResponse execute() throws Exception {
-			return super.execute(this.request, this.httpEntity);
+			return super.execute(this.request, this.httpEntity, this.redirectsEnabled);
 		}
 	};
 
 	public abstract HttpClientFactory build(String uri, Object... objects);
 
 	public abstract HttpClientFactory headers(String key, String value);
+
+	public abstract HttpClientFactory redirectsEnabled(boolean enabled);
 
 	public abstract HttpClientFactory parameters(Object parameters);
 
@@ -290,10 +349,19 @@ public enum HttpClientFactory {
 		return entity;
 	}
 
-	private HttpResponse execute(HttpRequestBase request, HttpEntity httpEntity) throws Exception {
+	private HttpResponse execute(HttpRequestBase request, HttpEntity httpEntity, boolean redirectsEnabled)
+			throws Exception {
 		if (HttpEntityEnclosingRequestBase.class.isAssignableFrom(request.getClass())) {
 			((HttpEntityEnclosingRequestBase) request).setEntity(httpEntity);
 		}
+		request.setConfig(createConfig(redirectsEnabled));
 		return HttpClientBuilder.create().build().execute(request);
+	}
+
+	private static RequestConfig createConfig(boolean redirectsEnabled) {
+		return RequestConfig.custom().setSocketTimeout(HttpClientStatus.SOCKET_TIME_OUT)
+				.setConnectTimeout(HttpClientStatus.CONNECT_TIME_OUT)
+				.setConnectionRequestTimeout(HttpClientStatus.CONNECTION_REQUEST_TIME_OUT)
+				.setRedirectsEnabled(redirectsEnabled).build();
 	}
 }

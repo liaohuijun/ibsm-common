@@ -12,6 +12,12 @@ public interface HttpClientStatus {
 
 	public String JSON_CONTENT_TYPE = "application/json";
 
+	public int SOCKET_TIME_OUT = 5000;
+
+	public int CONNECT_TIME_OUT = 5000;
+
+	public int CONNECTION_REQUEST_TIME_OUT = 5000;
+
 	public interface ResponseCode {
 
 		public int OK = 200;
