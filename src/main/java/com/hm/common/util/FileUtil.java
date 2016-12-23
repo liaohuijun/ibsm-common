@@ -12,9 +12,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.net.URL;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  * @author shishun.wang
@@ -22,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
  * @version 1.0
  * @describe
  */
-public class FileUtil extends CommonUtil{
+public class FileUtil extends CommonUtil {
 
 	/**
 	 * 获取文件扩展名
@@ -45,10 +52,14 @@ public class FileUtil extends CommonUtil{
 	 * 
 	 * @param url
 	 * @param isMkdir
+	 * @param isFile
 	 * @throws Exception
 	 */
-	public static boolean exists(String url, boolean isMkdir) throws Exception {
+	public static boolean exists(String url, boolean isMkdir, boolean isFile) throws Exception {
 		File file = new File(url);
+		if (isFile) {
+			file = file.getParentFile();
+		}
 		if (!file.exists()) {
 			if (!isMkdir) {
 				return false;
@@ -282,5 +293,112 @@ public class FileUtil extends CommonUtil{
 		out.close();
 		out = null;
 		return true;
+	}
+
+	/**
+	 * 文件上传
+	 * 
+	 * @param request
+	 * @param config
+	 * @return true:上传成功，false:上传失败
+	 */
+	public static boolean upload(HttpServletRequest request, UploadFileConfig config) throws Exception {
+		if (!ServletFileUpload.isMultipartContent(request)) {
+			return false;
+		}
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		factory.setSizeThreshold(config.getMemoryThreshold());
+		factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
+
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		upload.setFileSizeMax(config.getMaxFileSize());
+		upload.setSizeMax(config.getMaxRequestSize());
+
+		exists(config.getFilePath(), true, true);
+		List<FileItem> formItems = upload.parseRequest(request);
+		if (null == formItems) {
+			return false;
+		}
+		for (FileItem fileItem : formItems) {
+			if (!fileItem.isFormField()) {
+				File uploadFile = new File(config.getFilePath());
+				fileItem.write(uploadFile);
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * @author shishun.wang
+	 * @date 2016年12月23日 下午6:20:08
+	 * @version 1.0
+	 * @describe 上传文件配置
+	 */
+	public static class UploadFileConfig implements Serializable {
+
+		private static final long serialVersionUID = -1418792151706752798L;
+
+		/**
+		 * 内存阈值:[设置内存临界值 - 超过后将产生临时文件并存储于临时目录中]
+		 */
+		private int memoryThreshold = 1024 * 1024 * 3;// 3MB
+
+		/**
+		 * 文件最大值
+		 */
+		private int maxFileSize = 1024 * 1024 * 40; // 40MB
+
+		/**
+		 * 设置最大请求值(包含文件和表单数据)
+		 */
+		private int maxRequestSize = 1024 * 1024 * 50; // 50MB
+
+		/**
+		 * 上传路径
+		 */
+		private String filePath;
+
+		public int getMemoryThreshold() {
+			return memoryThreshold;
+		}
+
+		public void setMemoryThreshold(int memoryThreshold) {
+			this.memoryThreshold = memoryThreshold;
+		}
+
+		public long getMaxFileSize() {
+			return maxFileSize;
+		}
+
+		public void setMaxFileSize(int maxFileSize) {
+			this.maxFileSize = maxFileSize;
+		}
+
+		public int getMaxRequestSize() {
+			return maxRequestSize;
+		}
+
+		public void setMaxRequestSize(int maxRequestSize) {
+			this.maxRequestSize = maxRequestSize;
+		}
+
+		public String getFilePath() {
+			return filePath;
+		}
+
+		public void setFilePath(String filePath) {
+			this.filePath = filePath;
+		}
+
+		public static long getSerialversionuid() {
+			return serialVersionUID;
+		}
+
+		@Override
+		public String toString() {
+			return "UploadConfig [memoryThreshold=" + memoryThreshold + ", maxFileSize=" + maxFileSize
+					+ ", maxRequestSize=" + maxRequestSize + ", filePath=" + filePath + "]";
+		}
+
 	}
 }
