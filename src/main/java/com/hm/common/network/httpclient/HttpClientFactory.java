@@ -343,8 +343,8 @@ public enum HttpClientFactory {
 	private HttpEntity getHttpEntity(Object parameters) {
 		StringEntity entity = new StringEntity(JSON.toJSONString(parameters),
 				Charset.forName(HttpClientStatus.CHARACTER_ENCODING));
-//		entity.setContentEncoding(HttpClientStatus.CHARACTER_ENCODING);
-//		entity.setContentType(HttpClientStatus.JSON_CONTENT_TYPE);
+		entity.setContentEncoding(HttpClientStatus.CHARACTER_ENCODING);
+		entity.setContentType(HttpClientStatus.JSON_CONTENT_TYPE);
 		return entity;
 	}
 
