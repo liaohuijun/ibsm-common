@@ -5,6 +5,8 @@ import org.junit.Test;
 import com.hm.common.def.OltuResponseType;
 import com.hm.common.oltu.OltuFactory;
 import com.hm.common.oltu.bean.AccessToken;
+import com.hm.common.oltu.bean.AccessTokenCallBack;
+import com.hm.common.oltu.bean.OltuUser;
 import com.hm.common.oltu.bean.UserAuthorize;
 
 /**
@@ -50,7 +52,7 @@ public class TestOltuServer {
 	public void accessToken() throws Exception {
 		String code = authorize();
 		System.out.println(code);
-		
+
 		AccessToken accessToken = new AccessToken();
 		{
 			accessToken.setClientId(clientId);
@@ -58,8 +60,13 @@ public class TestOltuServer {
 			accessToken.setCode(code);
 			accessToken.setGrantType(GRANT_TYPE);
 			accessToken.setRedirectUri(redirectUri);
-			accessToken.setResponseType(OltuResponseType.token);
+			accessToken.setResponseType(OltuResponseType.code);
 		}
-		System.out.println(OltuFactory.getAccessToken(host, accessToken));
+		AccessTokenCallBack token = OltuFactory.getAccessToken(host, accessToken);
+		System.out.println(token);
+
+		OltuUser oltuUser = OltuFactory.getOltuUserByAccessToken(host, token.getAccessToken());
+		System.out.println(oltuUser);
 	}
+
 }
