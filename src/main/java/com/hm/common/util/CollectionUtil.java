@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author shishun.wang
@@ -55,11 +56,9 @@ public class CollectionUtil extends CommonUtil {
 	}
 
 	public static final <T> List<T> distinct(List<T> list) {
-		/*if (isEmpty(list)) {
+		if (isEmpty(list)) {
 			return Collections.emptyList();
 		}
-		return list.stream().distinct().collect(Collectors.toList());*/
-		
-		return null;
+		return list.stream().distinct().collect(Collectors.toList());
 	}
 }
