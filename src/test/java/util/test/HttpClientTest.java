@@ -5,12 +5,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.alibaba.fastjson.TypeReference;
-import com.hm.common.ServerResponse;
-import com.hm.common.model.PageInfo;
 import com.hm.common.network.httpclient.HttpClientFactory;
 import com.hm.common.network.httpclient.HttpClientResponseParse;
 import com.hm.common.network.httpclient.HttpClientStatus;
 import com.hm.common.su.ServerResponseParse;
+import com.hm.common.su.bean.PageInfo;
+import com.hm.common.su.bean.ServerResponse;
 
 import util.test.bean.OfferUserVo;
 import util.test.bean.OrderDetailsVo;

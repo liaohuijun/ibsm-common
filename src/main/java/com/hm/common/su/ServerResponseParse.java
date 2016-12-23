@@ -1,8 +1,8 @@
 package com.hm.common.su;
 
-import com.hm.common.ServerResponse;
-import com.hm.common.ServerResponse.MetaType;
 import com.hm.common.exception.ServiceException;
+import com.hm.common.su.bean.ServerResponse;
+import com.hm.common.su.bean.ServerResponse.MetaType;
 
 /**
  * @author shishun.wang

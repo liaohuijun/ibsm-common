@@ -4,7 +4,6 @@ import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 
 import com.alibaba.fastjson.TypeReference;
-import com.hm.common.ServerResponse;
 import com.hm.common.def.OltuResponseType;
 import com.hm.common.network.httpclient.HttpClientFactory;
 import com.hm.common.network.httpclient.HttpClientResponseParse;
@@ -13,6 +12,7 @@ import com.hm.common.oltu.bean.AccessTokenCallBack;
 import com.hm.common.oltu.bean.OltuUser;
 import com.hm.common.oltu.bean.UserAuthorize;
 import com.hm.common.su.ServerResponseParse;
+import com.hm.common.su.bean.ServerResponse;
 import com.hm.common.util.UriUtil;
 
 /**

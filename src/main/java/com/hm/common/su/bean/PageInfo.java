@@ -1,4 +1,4 @@
-package com.hm.common.model;
+package com.hm.common.su.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
