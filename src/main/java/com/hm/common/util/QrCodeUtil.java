@@ -17,16 +17,16 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
  * @author shishun.wang
  * @date 下午2:09:08 2016年11月18日
  * @version 1.0
- * @describe 
+ * @describe
  */
 public class QrCodeUtil {
 
-private Integer size = 350;
-	
+	private Integer size = 350;
+
 	private String format = "jpeg";
-	
+
 	private String coding = "UTF-8";
-	
+
 	private Map<EncodeHintType, Object> encodeHints() {
 		Map<EncodeHintType, Object> encodeHints = new HashMap<EncodeHintType, Object>();
 

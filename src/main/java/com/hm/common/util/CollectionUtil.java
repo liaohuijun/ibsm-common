@@ -20,6 +20,9 @@ import java.util.stream.Collectors;
  */
 public class CollectionUtil extends CommonUtil {
 
+	private CollectionUtil() {
+	}
+
 	@SafeVarargs
 	public static final <T> Set<T> toSet(T... paramm) {
 		HashSet<T> set = new HashSet<>(paramm.length);

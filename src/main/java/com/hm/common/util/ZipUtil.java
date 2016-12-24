@@ -27,8 +27,9 @@ import org.apache.poi.util.IOUtils;
  */
 public class ZipUtil {
 
-	public ZipUtil(){}
-	
+	private ZipUtil() {
+	}
+
 	/**
 	 * zip 文件打包适用于所有
 	 * 

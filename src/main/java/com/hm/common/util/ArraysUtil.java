@@ -13,7 +13,7 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public class ArraysUtil extends CommonUtil {
 
-	public ArraysUtil() {
+	private ArraysUtil() {
 	}
 
 	/**

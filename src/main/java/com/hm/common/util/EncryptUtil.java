@@ -27,7 +27,7 @@ import javax.crypto.SecretKey;
  */
 public class EncryptUtil {
 
-	public EncryptUtil() {
+	private EncryptUtil() {
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class EncryptUtil {
 	 */
 	public static class Md5 {
 
-		public Md5() {
+		private Md5() {
 		}
 
 		private final static String[] strDigits = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c",
@@ -96,7 +96,7 @@ public class EncryptUtil {
 	 */
 	public static class Base64 {
 
-		public Base64() {
+		private Base64() {
 		}
 
 		public static char[] encode(byte[] data) {
@@ -192,7 +192,7 @@ public class EncryptUtil {
 	 */
 	public static class DesUtil {
 
-		public DesUtil() {
+		private DesUtil() {
 		}
 
 		/**

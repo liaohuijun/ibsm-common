@@ -12,6 +12,9 @@ import com.hm.common.su.bean.ServerResponse.MetaType;
  */
 public class ServerResponseParse {
 
+	private ServerResponseParse() {
+	}
+
 	public static <T> T parse(ServerResponse<T> serverResponse) throws ServiceException {
 		MetaType metaType = serverResponse.getMetaType();
 		if (metaType.isSuccess()) {

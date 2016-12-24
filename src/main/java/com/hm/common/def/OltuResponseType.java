@@ -11,4 +11,7 @@ public enum OltuResponseType {
 	code,
 
 	token;
+
+	private OltuResponseType() {
+	}
 }
