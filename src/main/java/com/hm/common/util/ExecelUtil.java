@@ -22,60 +22,70 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class ExecelUtil {
 
+	private ExecelUtil() {
+	}
+
 	public static class Export {
 
+		private Export() {
+		}
+
 		public static Workbook initWorkbook(FileInputStream fileInputStream) throws IOException {
-			Workbook workbook = null;
 			if (CommonUtil.isEmpty(fileInputStream)) {
 				try {
-					workbook = new XSSFWorkbook();
+					return new XSSFWorkbook();
 				} catch (Exception e) {
-					workbook = new HSSFWorkbook();
+					return new HSSFWorkbook();
 				}
 			} else {
 				try {
-					workbook = new XSSFWorkbook(fileInputStream);
+					return new XSSFWorkbook(fileInputStream);
 				} catch (Exception e) {
-					workbook = new HSSFWorkbook(fileInputStream);
+					return new HSSFWorkbook(fileInputStream);
 				}
 			}
-			return workbook;
 		}
 
 		public static File clone(Sheet cloneSheet, Integer cloneRowIndex, Map<String, Object> data,
 				SheetWriterDataHandler handler) throws IOException {
-			Workbook tempWorkbook = initWorkbook(null);
-			Sheet createSheet = tempWorkbook.createSheet("第一页");
+			Workbook tempWorkbook = null;
+			try {
+				tempWorkbook = initWorkbook(null);
+				Sheet createSheet = tempWorkbook.createSheet("第一页");
 
-			for (int rowNum = 0; rowNum < cloneRowIndex; rowNum++) {
-				Row createRow = createSheet.createRow(rowNum);
-				for(Cell cell:cloneSheet.getRow(rowNum)){
-					if (CommonUtil.isNotEmpty(cell)) {
-						String cellStl = cell.toString().trim();
-						Cell createCell = createRow.createCell(cell.getColumnIndex());
-						if (CommonUtil.isNotEmpty(data.get(cellStl))) {
-							createCell.setCellValue(data.get(cellStl) + "");
-						} else {
-							createCell.setCellValue(cellStl);
+				for (int rowNum = 0; rowNum < cloneRowIndex; rowNum++) {
+					Row createRow = createSheet.createRow(rowNum);
+					cloneSheet.getRow(rowNum).forEach(cell -> {
+						if (CommonUtil.isNotEmpty(cell)) {
+							String cellStl = cell.toString().trim();
+							Cell createCell = createRow.createCell(cell.getColumnIndex());
+							if (CommonUtil.isNotEmpty(data.get(cellStl))) {
+								createCell.setCellValue(data.get(cellStl) + "");
+							} else {
+								createCell.setCellValue(cellStl);
+							}
 						}
-					}
+					});
 				}
+
+				handler.write(createSheet, cloneRowIndex);
+
+				File tempFile = File.createTempFile(UUID.randomUUID().toString(), ".xlsx");
+				tempFile.deleteOnExit();
+				tempWorkbook.write(new FileOutputStream(tempFile));
+
+				return tempFile;
+			} finally {
+				if (null != tempWorkbook)
+					tempWorkbook.close();
 			}
-
-			handler.write(createSheet, cloneRowIndex);
-
-			File tempFile = File.createTempFile(UUID.randomUUID().toString(), ".xlsx");
-			tempFile.deleteOnExit();
-			tempWorkbook.write(new FileOutputStream(tempFile));
-
-			return tempFile;
 		}
 
+		@FunctionalInterface
 		public interface SheetWriterDataHandler {
 
 			void write(Sheet excelSheet, Integer cloneRowIndex);
 
 		}
-
 	}
 }

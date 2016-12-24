@@ -11,6 +11,8 @@ import java.util.Map;
  * @describe
  */
 public class UriUtil extends CommonUtil {
+	
+	private UriUtil(){}
 
 	public static String parse(String uri) {
 		String uris[] = uri.split("[?]");

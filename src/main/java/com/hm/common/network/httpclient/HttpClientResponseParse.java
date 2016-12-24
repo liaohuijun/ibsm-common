@@ -15,6 +15,9 @@ import com.alibaba.fastjson.TypeReference;
  */
 public class HttpClientResponseParse {
 
+	public HttpClientResponseParse() {
+	}
+
 	public static <T> T parse(HttpResponse response, Class<T> type) throws Exception {
 		return JSON.parseObject(parseContent(response), type);
 	}

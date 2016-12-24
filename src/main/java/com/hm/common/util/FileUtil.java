@@ -31,6 +31,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  */
 public class FileUtil extends CommonUtil {
 
+	private FileUtil(){}
+	
 	/**
 	 * 获取文件扩展名
 	 * 
@@ -76,7 +78,7 @@ public class FileUtil extends CommonUtil {
 	 * @param data
 	 * @throws Exception
 	 */
-	public static void writer(String path, String data) throws Exception {
+	public static void writer(String path, String data) throws IOException {
 		File file = new File(path);
 		if (file.exists()) {
 			file.delete();
@@ -93,8 +95,6 @@ public class FileUtil extends CommonUtil {
 			bufferedWriter.write(data);
 			bufferedWriter.flush();
 			bufferedWriter.close();
-		} catch (Exception e) {
-			e.printStackTrace();
 		} finally {
 			if (null != bufferedWriter)
 				bufferedWriter.close();
@@ -105,29 +105,30 @@ public class FileUtil extends CommonUtil {
 		}
 	}
 
-	public static String read(String path) throws Exception {
+	public static String read(String path) throws IOException {
+		FileInputStream fileInputStream = null;
 		BufferedReader bufferedReader = null;
 		InputStreamReader inputStreamReader = null;
-
 		try {
-			inputStreamReader = new InputStreamReader(new FileInputStream(path), "UTF-8");
+			fileInputStream = new FileInputStream(path);
+			inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");
 			bufferedReader = new BufferedReader(inputStreamReader);
 
-			StringBuffer buffer = new StringBuffer("");
+			StringBuilder buffer = new StringBuilder("");
 			String line = null;
 			while (null != (line = bufferedReader.readLine())) {
 				buffer.append(line).append(System.lineSeparator());
 			}
 			return buffer.toString();
-		} catch (Exception e) {
-			e.printStackTrace();
 		} finally {
 			if (null != bufferedReader)
 				bufferedReader.close();
 			if (null != inputStreamReader)
 				inputStreamReader.close();
+			if (null != fileInputStream) {
+				fileInputStream.close();
+			}
 		}
-		return null;
 	}
 
 	/**
@@ -183,15 +184,14 @@ public class FileUtil extends CommonUtil {
 	 *
 	 * @param remotePath
 	 * @return
-	 * @throws Exception
 	 */
-	public static boolean remoteFileExists(String remotePath) throws Exception {
+	public static boolean remoteFileExists(String remotePath) {
 		try {
 			new URL(remotePath).openConnection().getInputStream();
-			return true;
 		} catch (Exception e) {
 			return false;
 		}
+		return true;
 	}
 
 	/**
@@ -203,8 +203,12 @@ public class FileUtil extends CommonUtil {
 	 * @throws Exception
 	 */
 	public static void download(File file, String fileName, HttpServletResponse response) throws Exception {
+		FileInputStream fileInputStream = null;
+		InputStream inputStream = null;
+		OutputStream outputStream = null;
 		try {
-			InputStream inputStream = new BufferedInputStream(new FileInputStream(file.getPath()));
+			fileInputStream = new FileInputStream(file.getPath());
+			inputStream = new BufferedInputStream(fileInputStream);
 			byte[] buffer = new byte[inputStream.available()];
 			inputStream.read(buffer);
 			inputStream.close();
@@ -212,18 +216,21 @@ public class FileUtil extends CommonUtil {
 			// 设置response的Header
 			response.reset();
 			response.addHeader("Content-Disposition", "attachment;filename=" + fileName);
-			response.addHeader("Content-Length", "" + file.length());
+			response.addHeader("Content-Length", String.valueOf(file.length()));
 			response.setHeader("Pragma", "No-cache");
 			response.setHeader("Cache-Control", "no-cache");
-			OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
-			// response.setContentType("application/vnd.ms-excel;charset=utf-8");
+
+			outputStream = new BufferedOutputStream(response.getOutputStream());
 			response.setContentType("binary/octet-stream");
 			outputStream.write(buffer);
 			outputStream.flush();
-			outputStream.close();
-		} catch (Exception e) {
-			e.printStackTrace();
 		} finally {
+			if (null != outputStream)
+				outputStream.close();
+			if (null != inputStream)
+				inputStream.close();
+			if (null != fileInputStream)
+				fileInputStream.close();
 			deleteFile(file.getPath());
 		}
 	}
@@ -267,13 +274,17 @@ public class FileUtil extends CommonUtil {
 	 * 
 	 */
 	public static byte[] getFile(String path) throws IOException {
-		FileInputStream stream = new FileInputStream(path);
-		int size = stream.available();
-		byte data[] = new byte[size];
-		stream.read(data);
-		stream.close();
-		stream = null;
-		return data;
+		FileInputStream stream = null;
+		try {
+			stream = new FileInputStream(path);
+			int size = stream.available();
+			byte data[] = new byte[size];
+			stream.read(data);
+			return data;
+		} finally {
+			if (null != stream)
+				stream.close();
+		}
 	}
 
 	/**
@@ -284,14 +295,20 @@ public class FileUtil extends CommonUtil {
 	 * @param path
 	 *            文件路径,包含文件名
 	 * @return boolean isOK 当写入完毕时返回true;
+	 * @throws IOException
 	 * @throws Exception
 	 */
-	public static boolean toFile(byte data[], String path) throws Exception {
-		FileOutputStream out = new FileOutputStream(path);
-		out.write(data);
-		out.flush();
-		out.close();
-		out = null;
+	public static boolean toFile(byte data[], String path) throws IOException {
+		FileOutputStream out = null;
+		try {
+			out = new FileOutputStream(path);
+			out.write(data);
+			out.flush();
+		} finally {
+			if (null != out) {
+				out.close();
+			}
+		}
 		return true;
 	}
 

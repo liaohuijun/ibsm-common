@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class RemoteClientUtil extends CommonUtil {
 
+	private RemoteClientUtil() {
+	}
+
 	public static String getPackHost(HttpServletRequest request) {
 		String ip = getHost(request);
 		return ("0:0:0:0:0:0:0:1".equals(ip)) ? "127.0.0.1" : ip;

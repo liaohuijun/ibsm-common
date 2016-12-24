@@ -20,6 +20,8 @@ import com.hm.common.def.DateUtilCompareDef;
  */
 public class DateUtil extends CommonUtil {
 
+	public DateUtil(){}
+	
 	public static String yyyyMMddhhmm(Date date) {
 		return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date);
 	}

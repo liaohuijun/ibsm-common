@@ -13,6 +13,9 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public class ArraysUtil extends CommonUtil {
 
+	public ArraysUtil() {
+	}
+
 	/**
 	 * 排除数组中重复值
 	 * 
@@ -25,7 +28,7 @@ public class ArraysUtil extends CommonUtil {
 		if (CommonUtil.isEmpty(sources)) {
 			return sources;
 		}
-		List<T> list = new ArrayList<T>();
+		List<T> list = new ArrayList<>();
 		for (T obj : sources) {
 			if (!list.contains(obj)) {
 				list.add(obj);
@@ -62,10 +65,10 @@ public class ArraysUtil extends CommonUtil {
 	 * @return
 	 */
 	public static <T> T[] remove(T[] sources, T target) {
+		List<T> list = new ArrayList<>();
 		if (null == sources) {
-			return null;
+			return (T[]) list.toArray();
 		}
-		List<T> list = new ArrayList<T>();
 		for (T obj : sources) {
 			list.add(obj);
 			list.remove(target);

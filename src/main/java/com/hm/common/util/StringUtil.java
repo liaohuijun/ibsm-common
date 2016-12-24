@@ -10,6 +10,8 @@ import java.util.UUID;
  */
 public class StringUtil extends CommonUtil {
 
+	private StringUtil(){}
+	
 	public static final boolean isBlank(String value) {
 		if (isEmpty(value)) {
 			return true;

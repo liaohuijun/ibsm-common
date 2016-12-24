@@ -20,20 +20,9 @@ import java.util.stream.Collectors;
  */
 public class CollectionUtil extends CommonUtil {
 
-	/**
-	 * @param collection
-	 * @return false:当前集合不为空并且元素长度不等于0
-	 */
-	public static boolean isCollectionBlank(List<?> collection) {
-		if (isEmpty(collection)) {
-			return true;
-		}
-		return collection.size() == 0;
-	}
-
 	@SafeVarargs
 	public static final <T> Set<T> toSet(T... paramm) {
-		HashSet<T> set = new HashSet<T>(paramm.length);
+		HashSet<T> set = new HashSet<>(paramm.length);
 		for (T parameter : paramm) {
 			set.add(parameter);
 		}
@@ -44,7 +33,7 @@ public class CollectionUtil extends CommonUtil {
 		if (isEmpty(list)) {
 			return Collections.emptyList();
 		}
-		List<T> targetList = new ArrayList<T>();
+		List<T> targetList = new ArrayList<>();
 		list.stream().filter(item -> item != null).forEach(item -> {
 			Optional<T> tryFind = targetList.parallelStream()
 					.filter(targetItem -> comparator.compare(item, targetItem) == 0).findAny();

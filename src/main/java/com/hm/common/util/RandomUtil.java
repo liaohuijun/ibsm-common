@@ -9,7 +9,10 @@ import java.util.Random;
  * @version 1.0
  * @describe 随机生成工具类
  */
-public class RandomUtil {
+public class RandomUtil extends CommonUtil {
+
+	private RandomUtil() {
+	}
 
 	private static String[] surname = { "赵", "钱", "孙", "李", "周", "吴", "郑", "王", "冯", "陈", "褚", "卫", "蒋", "沈", "韩", "杨",
 			"朱", "秦", "尤", "许", "何", "吕", "施", "张", "孔", "曹", "严", "华", "金", "魏", "陶", "姜", "戚", "谢", "邹", "喻", "柏",

@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 
@@ -17,6 +18,8 @@ import javax.swing.ImageIcon;
  */
 public class ImageUtil {
 
+	private ImageUtil(){}
+	
 	/**
 	 * 调整大小
 	 * 
@@ -25,9 +28,9 @@ public class ImageUtil {
 	 * @param size
 	 *            将图片缩放到目标尺寸
 	 * @return
-	 * @throws Exception
+	 * @throws IOException
 	 */
-	public static BufferedImage resize(BufferedImage image, int size) throws Exception {
+	public static BufferedImage resize(BufferedImage image, int size) throws IOException {
 		Image resizedImage = null;
 		int iWidth = image.getWidth(null);
 		int iHeight = image.getHeight(null);
