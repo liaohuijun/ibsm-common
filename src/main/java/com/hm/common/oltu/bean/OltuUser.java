@@ -1,6 +1,8 @@
 package com.hm.common.oltu.bean;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
@@ -24,6 +26,8 @@ public class OltuUser implements Serializable {
 	private String salt;
 
 	private long createTime;
+
+	private Map<String, Object> extension = new HashMap<String, Object>();
 
 	public String getId() {
 		return id;
@@ -69,10 +73,18 @@ public class OltuUser implements Serializable {
 		return serialVersionUID;
 	}
 
+	public Map<String, Object> getExtension() {
+		return extension;
+	}
+
+	public void setExtension(Map<String, Object> extension) {
+		this.extension = extension;
+	}
+
 	@Override
 	public String toString() {
 		return "OltuUser [id=" + id + ", userName=" + userName + ", password=" + password + ", salt=" + salt
-				+ ", createTime=" + createTime + "]";
+				+ ", createTime=" + createTime + ", extension=" + extension + "]";
 	}
 
 }

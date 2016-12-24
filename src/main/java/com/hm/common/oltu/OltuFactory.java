@@ -76,9 +76,26 @@ public class OltuFactory {
 	 */
 	public static OltuUser getOltuUserByAccessToken(String host, String accessToken) throws Exception {
 		HttpResponse response = HttpClientFactory.GET
-				.build(host + "/api/rest/v1/userinfo?access_token={0}", accessToken).execute();
+				.build(host + "/api/restful/v1/userinfo?access_token={0}", accessToken).execute();
 		ServerResponse<OltuUser> parse = HttpClientResponseParse.parseGeneric(response,
 				new TypeReference<ServerResponse<OltuUser>>() {
+				});
+		return ServerResponseParse.parse(parse);
+	}
+
+	/**
+	 * 注册授权新用户
+	 * 
+	 * @param host
+	 * @param oltuUser
+	 * @return
+	 * @throws Exception
+	 */
+	public static String registerOltuUser(String host, OltuUser oltuUser) throws Exception {
+		HttpResponse response = HttpClientFactory.POST.build(host + "/api/restful/v1/userinfo").parameters(oltuUser)
+				.execute();
+		ServerResponse<String> parse = HttpClientResponseParse.parseGeneric(response,
+				new TypeReference<ServerResponse<String>>() {
 				});
 		return ServerResponseParse.parse(parse);
 	}

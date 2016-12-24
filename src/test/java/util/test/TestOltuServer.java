@@ -1,5 +1,8 @@
 package util.test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 
 import com.hm.common.def.OltuResponseType;
@@ -67,6 +70,23 @@ public class TestOltuServer {
 
 		OltuUser oltuUser = OltuFactory.getOltuUserByAccessToken(host, token.getAccessToken());
 		System.out.println(oltuUser);
+	}
+
+	@Test
+	public void registerOltuUser() throws Exception {
+		OltuUser oltuUser = new OltuUser();
+		{
+			oltuUser.setUserName("Tom");
+			oltuUser.setPassword("11111");
+			oltuUser.setSalt("1234");
+			Map<String, Object> extension = new HashMap<String, Object>();
+			{
+				extension.put("parent", "TOM0");
+				extension.put("age", 15);
+			}
+			oltuUser.setExtension(extension);
+		}
+		System.out.println(OltuFactory.registerOltuUser(host, oltuUser));
 	}
 
 }
