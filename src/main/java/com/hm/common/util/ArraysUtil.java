@@ -75,4 +75,55 @@ public class ArraysUtil extends CommonUtil {
 		}
 		return (T[]) list.toArray();
 	}
+
+	/**
+	 * 集合是否有交叉
+	 * 
+	 * @param arg0
+	 * @param arg1
+	 * @return
+	 */
+	public static <T> boolean cross(T[] arg0, T[] arg1) {
+		if (arg0 == null && arg1 == null) {
+			return true;
+		}
+		List<T> arg0List = new ArrayList<>();
+		if (null != arg0) {
+			arg0List = Arrays.asList(arg0);
+		}
+		List<T> arg1List = new ArrayList<>();
+		if (null != arg1) {
+			arg1List = Arrays.asList(arg1);
+		}
+
+		if (arg0List.size() > arg1List.size()) {
+			for (T obj : arg0List) {
+				if (arg1List.contains(obj)) {
+					return true;
+				}
+			}
+		} else {
+			for (T obj : arg1List) {
+				if (arg0List.contains(obj)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * 集合是否包含某个元素
+	 * 
+	 * @param source
+	 * @param target
+	 * @return
+	 */
+	public static <T> boolean contains(T[] source, T target) {
+		if (CommonUtil.isEmpty(source)) {
+			return false;
+		}
+		return Arrays.asList(source).contains(target);
+	}
 }

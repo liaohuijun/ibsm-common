@@ -55,6 +55,25 @@ public class ArrayUtilTest {
 		}
 	}
 	
+	private Object[] ee = {1,"232","ads",232};
+	private Object[] ff = {"232"};
+	private Object[] gg = {55};
+	private Object[] kk = null;
+	
+	@Test
+	public void cross(){
+		System.out.println(ArraysUtil.cross(ee, ff));
+		System.out.println(ArraysUtil.cross(ee, gg));
+		System.out.println(ArraysUtil.cross(ee, kk));
+		System.out.println(ArraysUtil.cross(kk, ff));
+	}
+	
+	@Test
+	public void contains(){
+		System.out.println(ArraysUtil.contains(ee, 2));
+		System.out.println(ArraysUtil.contains(ee, "ads"));
+	}
+	
 	private List<String> list(){
 		List<String> list = new ArrayList<String>();
 		{
