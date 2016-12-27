@@ -25,7 +25,7 @@ public class ArraysUtil extends CommonUtil {
 	 * @return
 	 */
 	public static <T> T[] distinct(T[] sources) {
-		if (CommonUtil.isEmpty(sources)) {
+		if (null == sources) {
 			return sources;
 		}
 		List<T> list = new ArrayList<>();
@@ -121,9 +121,35 @@ public class ArraysUtil extends CommonUtil {
 	 * @return
 	 */
 	public static <T> boolean contains(T[] source, T target) {
-		if (CommonUtil.isEmpty(source)) {
+		if (null == source) {
 			return false;
 		}
 		return Arrays.asList(source).contains(target);
+	}
+
+	/**
+	 * 聚合多个数组合并为一个数组
+	 * 
+	 * @param source
+	 * @param targets
+	 * @return
+	 */
+	public static <T> T[] concat(T[] source, T[]... targets) {
+		if (CommonUtil.isEmpty(targets)) {
+			return source;
+		}
+		int offset = null == source ? 0 : source.length;
+		int index = offset;
+		for (T[] objs : targets) {
+			index += null == objs ? 0 : objs.length;
+		}
+		T[] result = null == source ? (T[]) new Object[index] : Arrays.copyOf(source, index);
+		for (T[] objs : targets) {
+			if (null != objs) {
+				System.arraycopy(objs, 0, result, offset, objs.length);
+				offset += objs.length;
+			}
+		}
+		return result;
 	}
 }
