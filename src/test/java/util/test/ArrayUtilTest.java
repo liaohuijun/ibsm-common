@@ -76,7 +76,7 @@ public class ArrayUtilTest {
 
 	@Test
 	public void concat() {
-		System.out.println(Arrays.asList(ArraysUtil.concat(ee, ff)));
+		System.out.println(Arrays.asList(ArraysUtil.concat(ee, ff, gg, kk)));
 		System.out.println(Arrays.asList(ArraysUtil.concat(ee, gg)));
 		System.out.println(Arrays.asList(ArraysUtil.concat(kk, gg)));
 		System.out.println(Arrays.asList(ArraysUtil.concat(ff, kk)));

@@ -87,5 +87,11 @@ public class HttpClientTest {
 		 * System.out.println(ServerResponseParse.parse(parse));
 		 */
 	}
+	
+	@Test
+	public void testHttpClient(){
+		HttpClientFactory factory = HttpClientFactory.valueOf(HttpClientFactory.class, "DELETE");
+		System.out.println(factory);
+	}
 
 }
