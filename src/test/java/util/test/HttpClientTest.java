@@ -2,7 +2,6 @@ package util.test;
 
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
-import org.junit.Test;
 
 import com.alibaba.fastjson.TypeReference;
 import com.hm.common.network.httpclient.HttpClientFactory;
@@ -25,7 +24,7 @@ public class HttpClientTest {
 
 	private String uri = "http://localhost:8899/";
 
-	@Test
+	// @Test
 	public void testGet() throws Exception {
 		HttpResponse response = HttpClientFactory.GET.build(uri + "restful/api/offer/query/{0}/{1}", 1, 10)
 				.headers(HttpClientStatus.Headers.CLIENT_USER_ROLE, "SUPER")
@@ -38,7 +37,7 @@ public class HttpClientTest {
 		System.out.println(pageInfo.getContent());
 	}
 
-	@Test
+	// @Test
 	public void testPost() throws Exception {
 		OfferUserVo offerUserVo = new OfferUserVo();
 		{
@@ -57,7 +56,7 @@ public class HttpClientTest {
 		System.out.println(ServerResponseParse.parse(parse));
 	}
 
-	@Test
+	// @Test
 	public void testPut() throws Exception {
 		OfferUserVo offerUserVo = new OfferUserVo();
 		{
@@ -76,7 +75,7 @@ public class HttpClientTest {
 		System.out.println(ServerResponseParse.parse(parse));
 	}
 
-	@Test
+	// @Test
 	public void testDelete() throws Exception {
 		/*
 		 * HttpResponse response = HttpClientFactory.DELETE.build(uri +
@@ -87,9 +86,9 @@ public class HttpClientTest {
 		 * System.out.println(ServerResponseParse.parse(parse));
 		 */
 	}
-	
-	@Test
-	public void testHttpClient(){
+
+	// @Test
+	public void testHttpClient() {
 		HttpClientFactory factory = HttpClientFactory.valueOf(HttpClientFactory.class, "DELETE");
 		System.out.println(factory);
 	}

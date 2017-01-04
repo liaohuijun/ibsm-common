@@ -2,8 +2,6 @@ package util.test;
 
 import java.io.IOException;
 
-import org.junit.Test;
-
 import com.hm.common.util.PingUtil;
 
 /**
@@ -16,17 +14,17 @@ public class TestPingUtil {
 
 	private String host = "10.0.0.10";
 	
-	@Test
+//	@Test
 	public void ping() throws IOException{
 		System.out.println(PingUtil.ping(host));
 	}
 	
-	@Test
+//	@Test
 	public void pingPrint() throws IOException{
 		System.out.println(PingUtil.pingPrint(host));
 	}
 	
-	@Test
+//	@Test
 	public void cusPing() throws IOException{
 		System.out.println(PingUtil.ping(host, 5, 5000));
 	}

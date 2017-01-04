@@ -3,8 +3,6 @@ package util.test;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
-
 import com.hm.common.def.OltuResponseType;
 import com.hm.common.oltu.OltuFactory;
 import com.hm.common.oltu.bean.AccessToken;
@@ -51,7 +49,7 @@ public class TestOltuServer {
 	 * 
 	 * @throws Exception
 	 */
-	@Test
+//	@Test
 	public void accessToken() throws Exception {
 		String code = authorize();
 		System.out.println(code);
@@ -72,7 +70,7 @@ public class TestOltuServer {
 		System.out.println(oltuUser);
 	}
 
-	@Test
+//	@Test
 	public void registerOltuUser() throws Exception {
 		OltuUser oltuUser = new OltuUser();
 		{
