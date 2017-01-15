@@ -144,5 +144,4 @@ public abstract class CommonUtil {
 		return false;
 	}
 	
-	
 }
