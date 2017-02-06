@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hm.common.util.QueryParamUtil;
+
 /**
  * @author shishun.wang
  * @date 2016年12月15日 上午11:24:05
@@ -64,6 +66,27 @@ public class PageInfo<T> implements Serializable {
 	@Override
 	public String toString() {
 		return "PageInfo [totalPage=" + totalPage + ", totalSize=" + totalSize + ", content=" + content + "]";
+	}
+
+	public static class PageParam {
+
+		private int page;
+
+		private int size;
+
+		public PageParam(int pageNumber, int pageSize) {
+			QueryParamUtil.checkPagging(pageNumber, pageSize);
+			this.page = pageNumber - 1;
+			this.size = pageSize;
+		}
+
+		public int getPage() {
+			return this.page;
+		}
+
+		public int getSize() {
+			return this.size;
+		}
 	}
 
 }
