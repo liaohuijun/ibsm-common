@@ -15,6 +15,8 @@ public class TestRsaUtil {
 	@Test
 	public void testGenerationPwd() {
 		RsaUtil.generateKeyPair("D:/tmp/RSA");
+
+		System.out.println(RsaUtil.generateEncrypt());
 	}
 
 	@Test
