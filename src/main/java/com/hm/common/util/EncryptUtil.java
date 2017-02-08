@@ -1,10 +1,16 @@
 package com.hm.common.util;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -14,17 +20,21 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.Signature;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 /**
  * @author shishun.wang
@@ -32,6 +42,7 @@ import javax.crypto.SecretKey;
  * @version 1.0
  * @describe
  */
+@SuppressWarnings("restriction")
 public class EncryptUtil {
 
 	private EncryptUtil() {
@@ -55,8 +66,7 @@ public class EncryptUtil {
 		private Md5() {
 		}
 
-		private final static String[] strDigits = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c",
-				"d", "e", "f" };
+		private final static String[] strDigits = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
 
 		// 返回形式为数字跟字符串
 		private static String byteToArrayString(byte bByte) {
@@ -161,8 +171,7 @@ public class EncryptUtil {
 			return out;
 		}
 
-		private static char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
-				.toCharArray();
+		private static char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".toCharArray();
 
 		private static byte[] codes = new byte[256];
 
@@ -483,176 +492,266 @@ public class EncryptUtil {
 	 */
 	public static class RsaUtil {
 
-		public static final String KEY_ALGORITHM = "RSA";
-		/** 貌似默认是RSA/NONE/PKCS1Padding，未验证 */
-		public static final String CIPHER_ALGORITHM = "RSA/ECB/PKCS1Padding";
-
-		/** RSA密钥长度必须是64的倍数，在512~65536之间。默认是1024 */
-		public static final int KEY_SIZE = 2048;
-
-		public static final String PUBLIC_KEY = "publicKey";
-		public static final String PRIVATE_KEY = "privateKey";
-
-		/**
-		 * 生成密钥对。注意这里是生成密钥对KeyPair，再由密钥对获取公私钥
-		 * 
-		 * @return
-		 */
-		public static Map<String, byte[]> generateKeyBytes() {
-
-			try {
-				KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(KEY_ALGORITHM);
-				keyPairGenerator.initialize(KEY_SIZE);
-				KeyPair keyPair = keyPairGenerator.generateKeyPair();
-				RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
-				RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-
-				Map<String, byte[]> keyMap = new HashMap<String, byte[]>();
-				keyMap.put(PUBLIC_KEY, publicKey.getEncoded());
-				keyMap.put(PRIVATE_KEY, privateKey.getEncoded());
-				return keyMap;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-
-		/**
-		 * 还原公钥，X509EncodedKeySpec 用于构建公钥的规范
-		 * 
-		 * @param keyBytes
-		 * @return
-		 */
-		public static PublicKey restorePublicKey(byte[] keyBytes) {
-			X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(keyBytes);
-
-			try {
-				KeyFactory factory = KeyFactory.getInstance(KEY_ALGORITHM);
-				PublicKey publicKey = factory.generatePublic(x509EncodedKeySpec);
-				return publicKey;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-
-		/**
-		 * 还原私钥，PKCS8EncodedKeySpec 用于构建私钥的规范
-		 * 
-		 * @param keyBytes
-		 * @return
-		 */
-		public static PrivateKey restorePrivateKey(byte[] keyBytes) {
-			PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(keyBytes);
-			try {
-				KeyFactory factory = KeyFactory.getInstance(KEY_ALGORITHM);
-				PrivateKey privateKey = factory.generatePrivate(pkcs8EncodedKeySpec);
-				return privateKey;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-
-		/**
-		 * 加密，三步走。
-		 * 
-		 * @param key
-		 * @param plainText
-		 * @return
-		 */
-		public static byte[] RsaEncode(PublicKey key, byte[] plainText) {
-
-			try {
-				Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
-				cipher.init(Cipher.ENCRYPT_MODE, key);
-				return cipher.doFinal(plainText);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-
-		/**
-		 * 解密，三步走。
-		 * 
-		 * @param key
-		 * @param encodedText
-		 * @return
-		 */
-		public static String RsaDecode(PrivateKey key, byte[] encodedText) {
-
-			try {
-				Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
-				cipher.init(Cipher.DECRYPT_MODE, key);
-				return new String(cipher.doFinal(encodedText));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-
-		/**
-		 * 加密
-		 * 
-		 * @param encryption
-		 *            原始秘钥
-		 * @return
-		 */
-		public static RsaEncryptionInfo encode(byte[] encryption) {
-			Map<String, byte[]> keyMap = generateKeyBytes();
-
-			// 加密
-			PublicKey publicKey = restorePublicKey(keyMap.get(PUBLIC_KEY));
-
-			byte[] encodedText = RsaEncode(publicKey, encryption);
-			String encryptionPwd = org.apache.commons.codec.binary.Base64.encodeBase64String(encodedText);
-
-			return new RsaEncryptionInfo(encryptionPwd, keyMap.get(PRIVATE_KEY).toString());
-		}
-
-		/**
-		 * @param encryptionInfo
-		 * @return 解密
-		 */
-		public static String decode(RsaEncryptionInfo encryptionInfo) {
-			PrivateKey privateKey = EncryptUtil.RsaUtil.restorePrivateKey(encryptionInfo.getSalt().getBytes());
-			return RsaDecode(privateKey, encryptionInfo.getEncryption().getBytes());
-		}
-
-		public static class RsaEncryptionInfo {
-
-			private String encryption;
-
-			private String salt;
-
-			public RsaEncryptionInfo(String encryption, String salt) {
-				super();
-				this.encryption = encryption;
-				this.salt = salt;
-			}
-
-			public void setEncryption(String encryption) {
-				this.encryption = encryption;
-			}
-
-			public String getEncryption() {
-				return this.encryption;
-			}
-
-			public void setSalt(String salt) {
-				this.salt = salt;
-			}
-
-			public String getSalt() {
-				return this.salt;
-			}
-
-			@Override
-			public String toString() {
-				return "RsaEncryptionInfo [encryption=" + encryption + ", salt=" + salt + "]";
-			}
+		private RsaUtil() {
 
 		}
+		
+		private static Cipher cipher;  
+	    
+	    static{  
+	        try {  
+	            cipher = Cipher.getInstance("RSA");  
+	        } catch (NoSuchAlgorithmException e) {  
+	            e.printStackTrace();  
+	        } catch (NoSuchPaddingException e) {  
+	            e.printStackTrace();  
+	        }  
+	    }
+	    
+	    /** 
+	     * 生成密钥对 
+	     * @param filePath 生成密钥的路径 
+	     * @return 
+	     */  
+	    public static Map<String,String> generateKeyPair(String filePath){  
+	        try {  
+	            KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");  
+	            // 密钥位数  
+	            keyPairGen.initialize(2048);  
+	            // 密钥对  
+	            KeyPair keyPair = keyPairGen.generateKeyPair();  
+	            // 公钥  
+	            PublicKey publicKey = keyPair.getPublic();  
+	            // 私钥  
+	            PrivateKey privateKey = keyPair.getPrivate();  
+	            //得到公钥字符串  
+	            String publicKeyString = getKeyString(publicKey);  
+	            //得到私钥字符串  
+	            String privateKeyString = getKeyString(privateKey);  
+	            //将密钥对写入到文件  
+	            FileWriter pubfw = new FileWriter(filePath + "/publicKey.keystore");  
+	            FileWriter prifw = new FileWriter(filePath + "/privateKey.keystore");  
+	            BufferedWriter pubbw = new BufferedWriter(pubfw);  
+	            BufferedWriter pribw = new BufferedWriter(prifw);  
+	            pubbw.write(publicKeyString);  
+	            pribw.write(privateKeyString);  
+	            pubbw.flush();  
+	            pubbw.close();  
+	            pubfw.close();  
+	            pribw.flush();  
+	            pribw.close();  
+	            prifw.close();  
+	            //将生成的密钥对返回  
+	            Map<String,String> map = new HashMap<String,String>();  
+	            map.put("publicKey", publicKeyString);  
+	            map.put("privateKey", privateKeyString);  
+	            return map;  
+	        } catch (Exception e) {  
+	            e.printStackTrace();  
+	        }  
+	        return null;  
+	    }
+	    
+	    /** 
+	     * 得到公钥 
+	     *  
+	     * @param key 
+	     *            密钥字符串（经过base64编码） 
+	     * @throws Exception 
+	     */  
+		public static PublicKey getPublicKey(String key) throws Exception {  
+	        byte[] keyBytes;  
+	        keyBytes = (new BASE64Decoder()).decodeBuffer(key);  
+	        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);  
+	        KeyFactory keyFactory = KeyFactory.getInstance("RSA");  
+	        PublicKey publicKey = keyFactory.generatePublic(keySpec);  
+	        return publicKey;  
+	    }  
+	      
+	    /** 
+	     * 得到私钥 
+	     *  
+	     * @param key 
+	     *            密钥字符串（经过base64编码） 
+	     * @throws Exception 
+	     */  
+	    public static PrivateKey getPrivateKey(String key) throws Exception {  
+	        byte[] keyBytes;  
+	        keyBytes = (new BASE64Decoder()).decodeBuffer(key);  
+	        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);  
+	        KeyFactory keyFactory = KeyFactory.getInstance("RSA");  
+	        PrivateKey privateKey = keyFactory.generatePrivate(keySpec);  
+	        return privateKey;  
+	    }
+	    
+	    /** 
+	     * 得到密钥字符串（经过base64编码） 
+	     *  
+	     * @return 
+	     */  
+	    public static String getKeyString(Key key) throws Exception {  
+	        byte[] keyBytes = key.getEncoded();  
+	        String s = (new BASE64Encoder()).encode(keyBytes);  
+	        return s;  
+	    }
+	    
+	    /** 
+	     * 使用公钥对明文进行加密，返回BASE64编码的字符串 
+	     * @param publicKey 
+	     * @param plainText 
+	     * @return 
+	     */  
+	    public static String encrypt(PublicKey publicKey, String plainText){  
+	        try {             
+	            cipher.init(Cipher.ENCRYPT_MODE, publicKey);  
+	            byte[] enBytes = cipher.doFinal(plainText.getBytes());            
+	            return (new BASE64Encoder()).encode(enBytes);  
+	        } catch (InvalidKeyException e) {  
+	            e.printStackTrace();  
+	        } catch (IllegalBlockSizeException e) {  
+	            e.printStackTrace();  
+	        } catch (BadPaddingException e) {  
+	            e.printStackTrace();  
+	        }  
+	        return null;  
+	    }  
+	      
+	    /** 
+	     * 使用keystore对明文进行加密 
+	     * @param publicKeystore 公钥文件路径 
+	     * @param plainText      明文 
+	     * @return 
+	     */  
+	    public static String fileEncrypt(String publicKeystore, String plainText){  
+	        try {             
+	            FileReader fr = new FileReader(publicKeystore);  
+	            BufferedReader br = new BufferedReader(fr);  
+	            String publicKeyString="";  
+	            String str;  
+	            while((str=br.readLine())!=null){  
+	                publicKeyString+=str;  
+	            }  
+	            br.close();  
+	            fr.close();  
+	            cipher.init(Cipher.ENCRYPT_MODE,getPublicKey(publicKeyString));  
+	            byte[] enBytes = cipher.doFinal(plainText.getBytes());            
+	            return (new BASE64Encoder()).encode(enBytes);  
+	        } catch (InvalidKeyException e) {  
+	            e.printStackTrace();  
+	        } catch (IllegalBlockSizeException e) {  
+	            e.printStackTrace();  
+	        } catch (BadPaddingException e) {  
+	            e.printStackTrace();  
+	        } catch (Exception e) {  
+	            e.printStackTrace();  
+	        }  
+	        return null;  
+	    }
+	    
+	    /** 
+	     * 使用公钥对明文进行加密 
+	     * @param publicKey      公钥 
+	     * @param plainText      明文 
+	     * @return 
+	     */  
+	    public static String encrypt(String publicKey, String plainText){  
+	        try {              
+	            cipher.init(Cipher.ENCRYPT_MODE,getPublicKey(publicKey));  
+	            byte[] enBytes = cipher.doFinal(plainText.getBytes());            
+	            return (new BASE64Encoder()).encode(enBytes);  
+	        } catch (InvalidKeyException e) {  
+	            e.printStackTrace();  
+	        } catch (IllegalBlockSizeException e) {  
+	            e.printStackTrace();  
+	        } catch (BadPaddingException e) {  
+	            e.printStackTrace();  
+	        } catch (Exception e) {  
+	            e.printStackTrace();  
+	        }  
+	        return null;  
+	    } 
+	      
+	    /** 
+	     * 使用私钥对明文密文进行解密 
+	     * @param privateKey 
+	     * @param enStr 
+	     * @return 
+	     */  
+	    public static String decrypt(PrivateKey privateKey, String enStr){  
+	        try {  
+	            cipher.init(Cipher.DECRYPT_MODE, privateKey);  
+	            byte[] deBytes = cipher.doFinal((new BASE64Decoder()).decodeBuffer(enStr));  
+	            return new String(deBytes);  
+	        } catch (InvalidKeyException e) {  
+	            e.printStackTrace();  
+	        } catch (IllegalBlockSizeException e) {  
+	            e.printStackTrace();  
+	        } catch (BadPaddingException e) {  
+	            e.printStackTrace();  
+	        } catch (IOException e) {  
+	            e.printStackTrace();  
+	        }  
+	        return null;  
+	    }
+	    
+	    /** 
+	     * 使用私钥对密文进行解密 
+	     * @param privateKey       私钥 
+	     * @param enStr            密文 
+	     * @return 
+	     */  
+	    public static String decrypt(String privateKey, String enStr){  
+	        try {           
+	            cipher.init(Cipher.DECRYPT_MODE, getPrivateKey(privateKey));  
+	            byte[] deBytes = cipher.doFinal((new BASE64Decoder()).decodeBuffer(enStr));  
+	            return new String(deBytes);  
+	        } catch (InvalidKeyException e) {  
+	            e.printStackTrace();  
+	        } catch (IllegalBlockSizeException e) {  
+	            e.printStackTrace();  
+	        } catch (BadPaddingException e) {  
+	            e.printStackTrace();  
+	        } catch (IOException e) {  
+	            e.printStackTrace();  
+	        } catch (Exception e) {  
+	            e.printStackTrace();  
+	        }  
+	        return null;  
+	    }
+	    
+	    /** 
+	     * 使用keystore对密文进行解密 
+	     * @param privateKeystore  私钥路径 
+	     * @param enStr            密文 
+	     * @return 
+	     */  
+	    public static String fileDecrypt(String privateKeystore, String enStr){  
+	        try {  
+	            FileReader fr = new FileReader(privateKeystore);  
+	            BufferedReader br = new BufferedReader(fr);  
+	            String privateKeyString="";  
+	            String str;  
+	            while((str=br.readLine())!=null){  
+	                privateKeyString+=str;  
+	            }  
+	            br.close();  
+	            fr.close();           
+	            cipher.init(Cipher.DECRYPT_MODE, getPrivateKey(privateKeyString));  
+	            byte[] deBytes = cipher.doFinal((new BASE64Decoder()).decodeBuffer(enStr));  
+	            return new String(deBytes);  
+	        } catch (InvalidKeyException e) {  
+	            e.printStackTrace();  
+	        } catch (IllegalBlockSizeException e) {  
+	            e.printStackTrace();  
+	        } catch (BadPaddingException e) {  
+	            e.printStackTrace();  
+	        } catch (IOException e) {  
+	            e.printStackTrace();  
+	        } catch (Exception e) {  
+	            e.printStackTrace();  
+	        }  
+	        return null;  
+	    }
+
 	}
 }
