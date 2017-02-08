@@ -88,5 +88,5 @@ public class PageInfo<T> implements Serializable {
 			return this.size;
 		}
 	}
-
+	
 }
