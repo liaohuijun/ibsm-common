@@ -18,12 +18,12 @@ public enum ActivateDef {
 	 */
 	ENABLE(1, "启用（已激活）");
 
-	private int value;
+	private int status;
 
 	private String desc;
 
-	private ActivateDef(int value, String desc) {
-		this.value = value;
+	private ActivateDef(int status, String desc) {
+		this.status = status;
 		this.desc = desc;
 	}
 
@@ -31,7 +31,7 @@ public enum ActivateDef {
 		return this.desc;
 	}
 
-	public int value() {
-		return this.value;
+	public int status() {
+		return this.status;
 	}
 }

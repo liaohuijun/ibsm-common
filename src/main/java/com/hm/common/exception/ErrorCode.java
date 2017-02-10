@@ -10,6 +10,10 @@ public enum ErrorCode {
 
 	/**数据没找到*/
 	DATA_NOT_FOUND("{0}数据没找到"),
+	
+	/**不允许为空*/
+	DATA_NOT_NULL("参数错误,{0}"),
+	
 	;
 	
 	private String value;

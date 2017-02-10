@@ -18,12 +18,12 @@ public enum DataStatusDef {
 	 */
 	ENABLE(1, "启用（正在使用）");
 
-	private int value;
+	private int status;
 
 	private String desc;
 
-	private DataStatusDef(int value, String desc) {
-		this.value = value;
+	private DataStatusDef(int status, String desc) {
+		this.status = status;
 		this.desc = desc;
 	}
 
@@ -31,7 +31,7 @@ public enum DataStatusDef {
 		return this.desc;
 	}
 
-	public int value() {
-		return this.value;
+	public int status() {
+		return this.status;
 	}
 }

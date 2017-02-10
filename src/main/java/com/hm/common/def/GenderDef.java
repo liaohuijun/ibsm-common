@@ -18,12 +18,12 @@ public enum GenderDef {
 	 */
 	WOMAN(2, "女");
 
-	private int value;
+	private int status;
 
 	private String desc;
 
-	private GenderDef(int value, String desc) {
-		this.value = value;
+	private GenderDef(int status, String desc) {
+		this.status = status;
 		this.desc = desc;
 	}
 
@@ -31,7 +31,7 @@ public enum GenderDef {
 		return this.desc;
 	}
 
-	public int value() {
-		return this.value;
+	public int status() {
+		return this.status;
 	}
 }
