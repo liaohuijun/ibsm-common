@@ -2,6 +2,7 @@ package util.test;
 
 import org.junit.Test;
 
+import com.hm.common.util.EncryptUtil;
 import com.hm.common.util.EncryptUtil.RsaUtil;
 
 /**
@@ -31,5 +32,12 @@ public class TestRsaUtil {
 		System.out.println("加密后文字：\r\n" + aData);
 		String dData = RsaUtil.decrypt(privateKey, aData);
 		System.out.println("解密后文字: \r\n" + dData);
+	}
+	
+	@Test
+	public void testBase64(){
+		String encode = String.valueOf(EncryptUtil.Base64.encode("MIIEvgIBADANBgkqh".getBytes()));
+		System.out.println(encode);
+		System.out.println(new String(EncryptUtil.Base64.decode(encode.toCharArray())));
 	}
 }

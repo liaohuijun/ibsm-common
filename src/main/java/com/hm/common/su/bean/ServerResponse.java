@@ -38,6 +38,7 @@ public class ServerResponse<T> implements Serializable {
 
 	public ServerResponse<T> failure(String message) {
 		this.metaType = new MetaType(false, message);
+		this.data = null;
 		return this;
 	}
 
