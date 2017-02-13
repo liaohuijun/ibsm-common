@@ -6,6 +6,8 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.swing.ImageIcon;
@@ -18,8 +20,9 @@ import javax.swing.ImageIcon;
  */
 public class ImageUtil {
 
-	private ImageUtil(){}
-	
+	private ImageUtil() {
+	}
+
 	/**
 	 * 调整大小
 	 * 
@@ -43,8 +46,7 @@ public class ImageUtil {
 		Image temp = new ImageIcon(resizedImage).getImage();
 
 		// Create the buffered image.
-		BufferedImage bufferedImage = new BufferedImage(temp.getWidth(null), temp.getHeight(null),
-				BufferedImage.TYPE_INT_RGB);
+		BufferedImage bufferedImage = new BufferedImage(temp.getWidth(null), temp.getHeight(null), BufferedImage.TYPE_INT_RGB);
 
 		// Copy image to buffered image.
 		Graphics g = bufferedImage.createGraphics();
@@ -57,12 +59,34 @@ public class ImageUtil {
 
 		// Soften.
 		float softenFactor = 0.05f;
-		float[] softenArray = { 0, softenFactor, 0, softenFactor, 1 - (softenFactor * 4), softenFactor, 0, softenFactor,
-				0 };
+		float[] softenArray = { 0, softenFactor, 0, softenFactor, 1 - (softenFactor * 4), softenFactor, 0, softenFactor, 0 };
 		Kernel kernel = new Kernel(3, 3, softenArray);
 		ConvolveOp cOp = new ConvolveOp(kernel, ConvolveOp.EDGE_NO_OP, null);
 		bufferedImage = cOp.filter(bufferedImage, null);
 
 		return bufferedImage;
 	}
+
+	public static String toBase64(File file) {
+		FileInputStream fileInputStream = null;
+		byte[] data = null;
+		try {
+			fileInputStream = new FileInputStream(file);
+			data = new byte[fileInputStream.available()];
+			fileInputStream.read(data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (null != fileInputStream) {
+				try {
+					fileInputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return "data:image/png;base64," + String.valueOf(EncryptUtil.Base64.encode(data));
+	}
+
 }
