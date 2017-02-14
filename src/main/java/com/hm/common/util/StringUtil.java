@@ -10,8 +10,9 @@ import java.util.UUID;
  */
 public class StringUtil extends CommonUtil {
 
-	private StringUtil(){}
-	
+	private StringUtil() {
+	}
+
 	public static final boolean isBlank(String value) {
 		if (isEmpty(value)) {
 			return true;
@@ -86,5 +87,61 @@ public class StringUtil extends CommonUtil {
 		}
 
 		return machined + String.format("%015d", hash);
+	}
+
+	/**
+	 * 驼峰字符串转下划线字符串
+	 * 
+	 * @param arg0
+	 * @return
+	 */
+	public static String camelToUnderline(String arg0) {
+		if (CommonUtil.isEmpty(arg0)) {
+			return null;
+		}
+
+		int length = arg0.length();
+		StringBuilder builder = new StringBuilder(length);
+
+		for (int i = 0; i < length; ++i) {
+			char ch = arg0.charAt(i);
+			if (Character.isUpperCase(ch)) {
+				builder.append("_");
+				builder.append(Character.toLowerCase(ch));
+			} else {
+				builder.append(ch);
+			}
+		}
+
+		return builder.toString();
+	}
+
+	/**
+	 * 下划线字符串转驼峰字符串
+	 * 
+	 * @param arg0
+	 * @return
+	 */
+	public static String underlineToCamel(String arg0) {
+		if (CommonUtil.isEmpty(arg0)) {
+			return null;
+		}
+
+		int length = arg0.length();
+		StringBuilder builder = new StringBuilder(length);
+
+		for (int i = 0; i < length; ++i) {
+			char ch = arg0.charAt(i);
+			if (ch == 95) {
+				++i;
+				if (i < length) {
+					builder.append(Character.toUpperCase(arg0.charAt(i)));
+				}
+			} else {
+				builder.append(ch);
+			}
+		}
+
+		return builder.toString();
 	}
 }
