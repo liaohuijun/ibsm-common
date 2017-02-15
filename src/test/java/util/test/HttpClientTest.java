@@ -1,7 +1,9 @@
 package util.test;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
+import org.junit.Test;
 
 import com.alibaba.fastjson.TypeReference;
 import com.hm.common.network.httpclient.HttpClientFactory;
@@ -27,8 +29,7 @@ public class HttpClientTest {
 	// @Test
 	public void testGet() throws Exception {
 		HttpResponse response = HttpClientFactory.GET.build(uri + "restful/api/offer/query/{0}/{1}", 1, 10)
-				.headers(HttpClientStatus.Headers.CLIENT_USER_ROLE, "SUPER")
-				.headers(HttpClientStatus.Headers.CLIENT_USER_SESSION_ID, "12345").execute();
+				.headers(HttpClientStatus.Headers.CLIENT_USER_ROLE, "SUPER").headers(HttpClientStatus.Headers.CLIENT_USER_SESSION_ID, "12345").execute();
 		ServerResponse<PageInfo<OrderDetailsVo>> parse = HttpClientResponseParse.parseGeneric(response,
 				new TypeReference<ServerResponse<PageInfo<OrderDetailsVo>>>() {
 				});
@@ -48,11 +49,9 @@ public class HttpClientTest {
 			offerUserVo.setIdcardNo("idcardNo");
 		}
 
-		HttpResponse response = HttpClientFactory.POST.build(uri + "restful/api/offer/user/{0}", "54018")
-				.parameters(offerUserVo).execute();
-		ServerResponse<Boolean> parse = HttpClientResponseParse.parseGeneric(response,
-				new TypeReference<ServerResponse<Boolean>>() {
-				});
+		HttpResponse response = HttpClientFactory.POST.build(uri + "restful/api/offer/user/{0}", "54018").parameters(offerUserVo).execute();
+		ServerResponse<Boolean> parse = HttpClientResponseParse.parseGeneric(response, new TypeReference<ServerResponse<Boolean>>() {
+		});
 		System.out.println(ServerResponseParse.parse(parse));
 	}
 
@@ -67,11 +66,9 @@ public class HttpClientTest {
 			offerUserVo.setIdcardNo("idcardNo");
 		}
 
-		HttpResponse response = HttpClientFactory.PUT.build(uri + "restful/api/offer/user/{0}", "54018")
-				.parameters(offerUserVo).execute();
-		ServerResponse<Boolean> parse = HttpClientResponseParse.parseGeneric(response,
-				new TypeReference<ServerResponse<Boolean>>() {
-				});
+		HttpResponse response = HttpClientFactory.PUT.build(uri + "restful/api/offer/user/{0}", "54018").parameters(offerUserVo).execute();
+		ServerResponse<Boolean> parse = HttpClientResponseParse.parseGeneric(response, new TypeReference<ServerResponse<Boolean>>() {
+		});
 		System.out.println(ServerResponseParse.parse(parse));
 	}
 
@@ -87,10 +84,19 @@ public class HttpClientTest {
 		 */
 	}
 
-	// @Test
-	public void testHttpClient() {
-		HttpClientFactory factory = HttpClientFactory.valueOf(HttpClientFactory.class, "DELETE");
-		System.out.println(factory);
+	@Test
+	public void testHttpClient() throws Exception {
+		 HttpClientFactory build = HttpClientFactory.GET.build("http://api.chbtc.com/data/v1/ticker?currency=", "eth_cny");
+		 HttpResponse response = build.execute();
+		 
+		 System.out.println(EntityUtils.toString(response.getEntity(), HttpClientStatus.CHARACTER_ENCODING));
 	}
-
+	
+	@Test
+	public void testHttpClient11() throws Exception {
+		 HttpClientFactory build = HttpClientFactory.GET.build("http://api.chbtc.com/data/v1/kline?currency=", "eth_cny");
+		 HttpResponse response = build.execute();
+		 
+		 System.out.println(EntityUtils.toString(response.getEntity(), HttpClientStatus.CHARACTER_ENCODING));
+	}
 }
