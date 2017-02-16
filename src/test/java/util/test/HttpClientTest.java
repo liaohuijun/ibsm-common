@@ -86,17 +86,54 @@ public class HttpClientTest {
 
 	@Test
 	public void testHttpClient() throws Exception {
-		 HttpClientFactory build = HttpClientFactory.GET.build("http://api.chbtc.com/data/v1/ticker?currency=", "eth_cny");
-		 HttpResponse response = build.execute();
-		 
-		 System.out.println(EntityUtils.toString(response.getEntity(), HttpClientStatus.CHARACTER_ENCODING));
+		HttpClientFactory build = HttpClientFactory.GET.build("http://api.chbtc.com/data/v1/ticker?currency=", "eth_cny");
+		HttpResponse response = build.execute();
+
+		System.out.println(EntityUtils.toString(response.getEntity(), HttpClientStatus.CHARACTER_ENCODING));
 	}
-	
+
 	@Test
 	public void testHttpClient11() throws Exception {
-		 HttpClientFactory build = HttpClientFactory.GET.build("http://api.chbtc.com/data/v1/kline?currency=", "eth_cny");
-		 HttpResponse response = build.execute();
-		 
-		 System.out.println(EntityUtils.toString(response.getEntity(), HttpClientStatus.CHARACTER_ENCODING));
+		HttpClientFactory build = HttpClientFactory.GET.build("http://api.chbtc.com/data/v1/kline?currency=", "eth_cny");
+		HttpResponse response = build.execute();
+
+		System.out.println(EntityUtils.toString(response.getEntity(), HttpClientStatus.CHARACTER_ENCODING));
+	}
+
+	@Test
+	public void test11(){
+		for(int i = 0 ; i < 5; i++){
+			if(i == 3) continue;
+			System.out.println(i);
+		}
+	}
+	
+	public static class GetReplyVo {
+
+		private int code;
+
+		private String msg;
+
+		public int getCode() {
+			return code;
+		}
+
+		public void setCode(int code) {
+			this.code = code;
+		}
+
+		public String getMsg() {
+			return msg;
+		}
+
+		public void setMsg(String msg) {
+			this.msg = msg;
+		}
+
+		@Override
+		public String toString() {
+			return "GetReplyVo [code=" + code + ", msg=" + msg + "]";
+		}
+
 	}
 }

@@ -13,6 +13,23 @@ public class StringUtil extends CommonUtil {
 	private StringUtil() {
 	}
 
+	/**
+	 * 不区分大小写字符串比较
+	 * 
+	 * @param arg0
+	 * @param arg1
+	 * @return
+	 */
+	public static final boolean notDistinguishCaseEquals(String arg0, String arg1) {
+		if (CommonUtil.isAllEmpty(arg0, arg1)) {
+			return true;
+		}
+		if (CommonUtil.isAnyEmpty(arg0, arg1)) {
+			return false;
+		}
+		return arg0.trim().toLowerCase().equals(arg1.trim().toLowerCase());
+	}
+
 	public static final boolean isBlank(String value) {
 		if (isEmpty(value)) {
 			return true;
