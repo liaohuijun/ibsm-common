@@ -15,7 +15,10 @@ public enum ErrorCode {
 	DATA_NOT_NULL("参数错误,{0}"),
 
 	/** 无权访问 */
-	NO_DATA_ACCESS("无数据访问权限");
+	NO_DATA_ACCESS("无数据访问权限"),
+	
+	/** 客户端请求频繁,请稍后重试*/
+	CLIENT_REQUEST_VISIT_FREQUENTLY("请求频繁,请稍后重试");
 
 	private String value;
 
