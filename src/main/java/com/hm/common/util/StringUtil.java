@@ -27,7 +27,7 @@ public class StringUtil extends CommonUtil {
 		if (CommonUtil.isAnyEmpty(arg0, arg1)) {
 			return false;
 		}
-		return arg0.trim().toLowerCase().equals(arg1.trim().toLowerCase());
+		return arg0.trim().equalsIgnoreCase(arg1.trim());
 	}
 
 	public static final boolean isBlank(String value) {
@@ -161,4 +161,5 @@ public class StringUtil extends CommonUtil {
 
 		return builder.toString();
 	}
+
 }
