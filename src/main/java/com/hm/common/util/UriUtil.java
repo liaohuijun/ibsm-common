@@ -1,6 +1,8 @@
 package com.hm.common.util;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,8 +13,9 @@ import java.util.Map;
  * @describe
  */
 public class UriUtil extends CommonUtil {
-	
-	private UriUtil(){}
+
+	private UriUtil() {
+	}
 
 	public static String parse(String uri) {
 		String uris[] = uri.split("[?]");
@@ -35,5 +38,14 @@ public class UriUtil extends CommonUtil {
 			content.put(temps[0], temps.length == 2 ? temps[1] : null);
 		}
 		return content;
+	}
+
+	public static String encode(String uri) {
+		try {
+			return URLEncoder.encode(uri, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
