@@ -18,7 +18,10 @@ public enum ErrorCode {
 	NO_DATA_ACCESS("无数据访问权限"),
 	
 	/** 客户端请求频繁,请稍后重试*/
-	CLIENT_REQUEST_VISIT_FREQUENTLY("请求频繁,请稍后重试");
+	CLIENT_REQUEST_VISIT_FREQUENTLY("请求频繁,请稍后重试"),
+	
+	/** 会话超时*/
+	SESSION_OUT_TIME("会话超时");
 
 	private String value;
 
