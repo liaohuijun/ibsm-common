@@ -54,7 +54,7 @@ public class StringUtil extends CommonUtil {
 		return false;
 	}
 
-	public static final boolean isNotBlankOrNull(String value) {
+	public static final boolean notBlankOrNull(String value) {
 		return !isBlankOrNull(value);
 	}
 
