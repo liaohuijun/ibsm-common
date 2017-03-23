@@ -26,10 +26,18 @@
 		<redis-clients.version>2.6.0</redis-clients.version>
 		<commons-lang3.version>3.3.1</commons-lang3.version>
 		<redisson.version>2.4.0</redisson.version>
-
+		<jaxb.version>2.2.12</jaxb.version>
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+		    <groupId>javax.xml.bind</groupId>
+		    <artifactId>jaxb-api</artifactId>
+		    <version>${jaxb.version}</version>
+		    <!-- 依赖模块将提供 -->
+			<scope>provided</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
