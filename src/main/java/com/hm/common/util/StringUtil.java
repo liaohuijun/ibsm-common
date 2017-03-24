@@ -162,17 +162,4 @@ public class StringUtil extends CommonUtil {
 		return builder.toString();
 	}
 
-	/**
-	 * 查询参数处理去除空格
-	 * 
-	 * @param arg0
-	 * @return
-	 */
-	public static String queryParam(String arg0) {
-		if (CommonUtil.isEmpty(arg0)) {
-			return null;
-		}
-		return arg0.trim();
-	}
-
 }

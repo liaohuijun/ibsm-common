@@ -101,7 +101,7 @@ public abstract class CommonUtil {
 		}
 		return value == null;
 	}
-	
+
 	public static final boolean isEmpty(String value) {
 		if (value == null || value.length() == 0) {
 			return true;
@@ -143,5 +143,19 @@ public abstract class CommonUtil {
 		}
 		return false;
 	}
-	
+
+	@SuppressWarnings("unchecked")
+	public static <T> T of(T arg0) {
+		if (isEmpty(arg0)) {
+			return null;
+		}
+		if (arg0 instanceof String) {
+			if (StringUtil.isBlankOrNull(arg0.toString())) {
+				return null;
+			}
+			return (T) arg0.toString().trim();
+		}
+		return arg0;
+	}
+
 }
