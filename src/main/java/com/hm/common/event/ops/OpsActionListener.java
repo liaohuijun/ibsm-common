@@ -13,15 +13,15 @@ public class OpsActionListener {
 
 	private Vector<OpsListener> listeners = new Vector<OpsListener>();
 
-	public  void addListener(OpsTarget target, OpsListener listener) {
+	public void addListener(OpsTarget target, OpsListener listener) {
 		if (null == target) {
 			return;
 		}
 		listeners.add(listener);
-		 this.handler(new EventObject(target));
+		this.handler(new EventObject(target));
 	}
 
-	private  void removeListener(OpsListener listener) {
+	private void removeListener(OpsListener listener) {
 		listeners.removeElement(listener);
 	}
 
