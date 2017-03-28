@@ -14,14 +14,16 @@ public enum LoggerRecordChannelDef {
 
 	DOWNLOAD("DOWNLOAD", "下载"),
 	
-	ACTIVATION("ACTIVATION", "激活");
+	ACTIVATION("ACTIVATION", "激活"),
 	
-	private String status;
+	REQUST("REQUST", "请求");
+	
+	private String code;
 
 	private String desc;
 
-	private LoggerRecordChannelDef(String status, String desc) {
-		this.status = status;
+	private LoggerRecordChannelDef(String code, String desc) {
+		this.code = code;
 		this.desc = desc;
 	}
 	
@@ -29,7 +31,7 @@ public enum LoggerRecordChannelDef {
 		return this.desc;
 	}
 
-	public String status() {
-		return this.status;
+	public String code() {
+		return this.code;
 	}
 }
