@@ -150,7 +150,7 @@ public abstract class CommonUtil {
 			return null;
 		}
 		if (arg0 instanceof String) {
-			if (StringUtil.isBlankOrNull(arg0.toString())) {
+			if (StringUtil.isBlank(arg0.toString())) {
 				return null;
 			}
 			return (T) arg0.toString().trim();
