@@ -22,6 +22,14 @@ public class DateUtil extends CommonUtil {
 
 	private DateUtil(){}
 	
+	public static String now4yyyyMMddhhmm(){
+		return yyyyMMddhhmm(new Date());
+	}
+	
+	public static String now4yyyyMMdd(){
+		return yyyyMMdd(new Date());
+	}
+	
 	public static String yyyyMMddhhmm(Date date) {
 		return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date);
 	}
