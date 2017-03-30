@@ -1,5 +1,8 @@
 package com.hm.common.util;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -18,6 +21,12 @@ public class RemoteClientUtil extends CommonUtil {
 		return ("0:0:0:0:0:0:0:1".equals(ip)) ? "127.0.0.1" : ip;
 	}
 
+	/**
+	 * 获取客户端ip地址
+	 * 
+	 * @param request
+	 * @return
+	 */
 	public static String getHost(HttpServletRequest request) {
 		String ip = request.getHeader("X-Forwarded-For");
 		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
@@ -36,5 +45,15 @@ public class RemoteClientUtil extends CommonUtil {
 			ip = request.getRemoteAddr();
 		}
 		return ip;
+	}
+
+	/**
+	 * 获取本地ip地址
+	 * 
+	 * @return
+	 * @throws UnknownHostException
+	 */
+	public static String getLocalIpAddress() throws UnknownHostException {
+		return InetAddress.getLocalHost().getHostAddress();
 	}
 }
