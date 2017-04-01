@@ -20,16 +20,17 @@ import com.hm.common.def.DateUtilCompareDef;
  */
 public class DateUtil extends CommonUtil {
 
-	private DateUtil(){}
-	
-	public static String now4yyyyMMddhhmm(){
+	private DateUtil() {
+	}
+
+	public static String now4yyyyMMddhhmm() {
 		return yyyyMMddhhmm(new Date());
 	}
-	
-	public static String now4yyyyMMdd(){
+
+	public static String now4yyyyMMdd() {
 		return yyyyMMdd(new Date());
 	}
-	
+
 	public static String yyyyMMddhhmm(Date date) {
 		return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date);
 	}
@@ -335,5 +336,115 @@ public class DateUtil extends CommonUtil {
 			this.endTime = endTime;
 		}
 
+	}
+
+	public static String now2week() {
+		Calendar calendar = Calendar.getInstance();
+		switch (calendar.get(Calendar.DAY_OF_WEEK) - 1) {
+		case 0:
+			return "星期天";
+		case 1:
+			return "星期一";
+		case 2:
+			return "星期二";
+		case 3:
+			return "星期三";
+		case 4:
+			return "星期四";
+		case 5:
+			return "星期五";
+		case 6:
+			return "星期六";
+		default:
+			return "未知";
+		}
+	}
+
+	public static boolean checkWeek(Date date, Week weekday) {
+		return weekday == toWeek(date);
+	}
+
+	public static Week toWeek(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		switch (calendar.get(Calendar.DAY_OF_WEEK) - 1) {
+		case 0:
+			return Week.SUNDAY;
+		case 1:
+			return Week.MONDAY;
+		case 2:
+			return Week.TUESDAY;
+		case 3:
+			return Week.WEDNESDAY;
+		case 4:
+			return Week.THURSDAY;
+		case 5:
+			return Week.FRIDAY;
+		case 6:
+			return Week.SATURDAY;
+		default:
+			return null;
+		}
+	}
+
+	/**
+	 * @author shishun.wang
+	 * @date 2017年4月1日 下午3:47:41
+	 * @version 1.0
+	 * @describe
+	 */
+	public static enum Week {
+
+		/**
+		 * 星期天
+		 */
+		SUNDAY("SUNDAY", "星期天"),
+
+		/**
+		 * 星期一
+		 */
+		MONDAY("MONDAY", "星期一"),
+
+		/**
+		 * 星期二
+		 */
+		TUESDAY("TUESDAY", "星期二"),
+
+		/**
+		 * 星期三
+		 */
+		WEDNESDAY("WEDNESDAY", "星期三"),
+
+		/**
+		 * 星期四
+		 */
+		THURSDAY("THURSDAY", "星期四"),
+
+		/**
+		 * 星期五
+		 */
+		FRIDAY("FRIDAY", "星期五"),
+
+		/**
+		 * 星期六
+		 */
+		SATURDAY("SATURDAY", "星期六");
+
+		private Week(String code, String desc) {
+			this.code = code;
+			this.desc = desc;
+		}
+
+		private String code;
+
+		private String desc;
+
+		public String code() {
+			return this.code;
+		}
+
+		public String desc() {
+			return this.desc;
+		}
 	}
 }
