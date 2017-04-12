@@ -133,13 +133,13 @@ public class StringUtil extends CommonUtil {
 		return builder.toString();
 	}
 
-	public static String[] splitArrays(String str){
-		if(CommonUtil.isEmpty(str)){
+	public static String[] splitArrays(String str) {
+		if (CommonUtil.isEmpty(str)) {
 			return null;
 		}
 		return str.split(",");
 	}
-	
+
 	/**
 	 * 下划线字符串转驼峰字符串
 	 * 
@@ -169,4 +169,16 @@ public class StringUtil extends CommonUtil {
 		return builder.toString();
 	}
 
+	/**
+	 * 清除字符串中的所有空格
+	 * 
+	 * @param arg0
+	 * @return
+	 */
+	public static String dislodgeAllBlank(String arg0) {
+		if (CommonUtil.isEmpty(arg0)) {
+			return null;
+		}
+		return arg0.replaceAll("\\s*", "");
+	}
 }
