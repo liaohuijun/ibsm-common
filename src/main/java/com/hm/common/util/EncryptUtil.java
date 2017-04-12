@@ -495,18 +495,6 @@ public class EncryptUtil {
 
 		}
 
-		private static Cipher cipher;
-
-		static {
-			try {
-				cipher = Cipher.getInstance("RSA");
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
-			} catch (NoSuchPaddingException e) {
-				e.printStackTrace();
-			}
-		}
-
 		/**
 		 * 生成密钥对
 		 * 
@@ -674,9 +662,14 @@ public class EncryptUtil {
 		 */
 		public static String encrypt(PublicKey publicKey, String plainText) {
 			try {
+				Cipher cipher = Cipher.getInstance("RSA");
 				cipher.init(Cipher.ENCRYPT_MODE, publicKey);
 				byte[] enBytes = cipher.doFinal(plainText.getBytes());
 				return (new BASE64Encoder()).encode(enBytes);
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			} catch (NoSuchPaddingException e) {
+				e.printStackTrace();
 			} catch (InvalidKeyException e) {
 				e.printStackTrace();
 			} catch (IllegalBlockSizeException e) {
@@ -698,6 +691,7 @@ public class EncryptUtil {
 		 */
 		public static String fileEncrypt(String publicKeystore, String plainText) {
 			try {
+				Cipher cipher = Cipher.getInstance("RSA");
 				FileReader fr = new FileReader(publicKeystore);
 				BufferedReader br = new BufferedReader(fr);
 				String publicKeyString = "";
@@ -710,6 +704,10 @@ public class EncryptUtil {
 				cipher.init(Cipher.ENCRYPT_MODE, getPublicKey(publicKeyString));
 				byte[] enBytes = cipher.doFinal(plainText.getBytes());
 				return (new BASE64Encoder()).encode(enBytes);
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			} catch (NoSuchPaddingException e) {
+				e.printStackTrace();
 			} catch (InvalidKeyException e) {
 				e.printStackTrace();
 			} catch (IllegalBlockSizeException e) {
@@ -733,9 +731,14 @@ public class EncryptUtil {
 		 */
 		public static String encrypt(String publicKey, String plainText) {
 			try {
+				Cipher cipher = Cipher.getInstance("RSA");
 				cipher.init(Cipher.ENCRYPT_MODE, getPublicKey(publicKey));
 				byte[] enBytes = cipher.doFinal(plainText.getBytes());
 				return (new BASE64Encoder()).encode(enBytes);
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			} catch (NoSuchPaddingException e) {
+				e.printStackTrace();
 			} catch (InvalidKeyException e) {
 				e.printStackTrace();
 			} catch (IllegalBlockSizeException e) {
@@ -757,9 +760,14 @@ public class EncryptUtil {
 		 */
 		public static String decrypt(PrivateKey privateKey, String enStr) {
 			try {
+				Cipher cipher = Cipher.getInstance("RSA");
 				cipher.init(Cipher.DECRYPT_MODE, privateKey);
 				byte[] deBytes = cipher.doFinal((new BASE64Decoder()).decodeBuffer(enStr));
 				return new String(deBytes);
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			} catch (NoSuchPaddingException e) {
+				e.printStackTrace();
 			} catch (InvalidKeyException e) {
 				e.printStackTrace();
 			} catch (IllegalBlockSizeException e) {
@@ -783,9 +791,14 @@ public class EncryptUtil {
 		 */
 		public static String decrypt(String privateKey, String enStr) {
 			try {
+				Cipher cipher = Cipher.getInstance("RSA");
 				cipher.init(Cipher.DECRYPT_MODE, getPrivateKey(privateKey));
 				byte[] deBytes = cipher.doFinal((new BASE64Decoder()).decodeBuffer(enStr));
 				return new String(deBytes);
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			} catch (NoSuchPaddingException e) {
+				e.printStackTrace();
 			} catch (InvalidKeyException e) {
 				e.printStackTrace();
 			} catch (IllegalBlockSizeException e) {
@@ -811,6 +824,7 @@ public class EncryptUtil {
 		 */
 		public static String fileDecrypt(String privateKeystore, String enStr) {
 			try {
+				Cipher cipher = Cipher.getInstance("RSA");
 				FileReader fr = new FileReader(privateKeystore);
 				BufferedReader br = new BufferedReader(fr);
 				String privateKeyString = "";
@@ -823,6 +837,10 @@ public class EncryptUtil {
 				cipher.init(Cipher.DECRYPT_MODE, getPrivateKey(privateKeyString));
 				byte[] deBytes = cipher.doFinal((new BASE64Decoder()).decodeBuffer(enStr));
 				return new String(deBytes);
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			} catch (NoSuchPaddingException e) {
+				e.printStackTrace();
 			} catch (InvalidKeyException e) {
 				e.printStackTrace();
 			} catch (IllegalBlockSizeException e) {

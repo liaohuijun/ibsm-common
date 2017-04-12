@@ -133,6 +133,13 @@ public class StringUtil extends CommonUtil {
 		return builder.toString();
 	}
 
+	public static String[] splitArrays(String str){
+		if(CommonUtil.isEmpty(str)){
+			return null;
+		}
+		return str.split(",");
+	}
+	
 	/**
 	 * 下划线字符串转驼峰字符串
 	 * 
