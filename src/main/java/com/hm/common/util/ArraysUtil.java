@@ -2,7 +2,9 @@ package com.hm.common.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author shishun.wang
@@ -151,5 +153,46 @@ public class ArraysUtil extends CommonUtil {
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * 查找source 中去除taget中存在的元素
+	 * 
+	 * @param source
+	 * @param target
+	 * @return
+	 */
+	public static <T> Set<T> notContain(Set<T> source, Set<T> target) {
+		if (CommonUtil.isAnyEmpty(source, target)) {
+			return null;
+		}
+		Set<T> tmp = new HashSet<T>();
+		for (T arg : source) {
+			if (target.contains(arg)) {
+				continue;
+			}
+			tmp.add(arg);
+		}
+		return tmp;
+	}
+
+	/**
+	 * 查找source 中包含target的元素
+	 * 
+	 * @param source
+	 * @param target
+	 * @return
+	 */
+	public static <T> Set<T> contain(Set<T> source, Set<T> target) {
+		if (CommonUtil.isAnyEmpty(source, target)) {
+			return null;
+		}
+		Set<T> tmp = new HashSet<T>();
+		for (T arg : source) {
+			if (target.contains(arg)) {
+				tmp.add(arg);
+			}
+		}
+		return tmp;
 	}
 }
