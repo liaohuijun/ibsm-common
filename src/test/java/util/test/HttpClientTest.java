@@ -72,7 +72,7 @@ public class HttpClientTest {
 		System.out.println(ServerResponseParse.parse(parse));
 	}
 
-	// @Test
+	 @Test
 	public void testDelete() throws Exception {
 		/*
 		 * HttpResponse response = HttpClientFactory.DELETE.build(uri +
@@ -82,6 +82,22 @@ public class HttpClientTest {
 		 * TypeReference<ServerResponse<Boolean>>() { });
 		 * System.out.println(ServerResponseParse.parse(parse));
 		 */
+		
+		for(int i = 0 ; i < 100; i++){
+			new Thread(){
+				public void run() {
+					for(int k = 0; k < 100 ;k ++){
+						try{
+							HttpResponse response = HttpClientFactory.GET.build("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx5191fcc3effa8fce&secret=aee6c2f72961d7671da698836365da29").execute();
+							System.out.println(EntityUtils.toString(response.getEntity(), HttpClientStatus.CHARACTER_ENCODING));
+						}catch(Exception e){
+							e.printStackTrace();
+						}
+					}
+				};
+			}.start();
+		}
+		
 	}
 
 	@Test

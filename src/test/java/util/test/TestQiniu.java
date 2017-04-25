@@ -18,6 +18,6 @@ public class TestQiniu {
 		String secretKey = "pKpJuadjOKWkIl3k2S6VwbYIFEXYPZp-zeQtSfNR";
 		QiNiuConfig.load().init(accessKey, secretKey);
 
-		System.out.println(QiNiuUpload.Sample.upload("fvsdfvsdre", "122.png", FileUtil.getFile("d:/122.png")));
+		System.out.println(QiNiuUpload.Sample.upload("ibsm-cms", "122.png", FileUtil.getFile("d:/122.png")));
 	}
 }

@@ -5,6 +5,8 @@ import java.util.UUID;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
+import com.hm.common.util.CommonUtil;
+
 /**
  * @author shishun.wang
  * @date 2017年3月23日 下午3:39:38
@@ -29,6 +31,8 @@ public class Test {
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
 			jaxbMarshaller.marshal(model, System.out);
+			
+			System.out.println(CommonUtil.isPhoneLegal("135884507258"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
