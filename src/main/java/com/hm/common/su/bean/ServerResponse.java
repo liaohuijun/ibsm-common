@@ -42,6 +42,12 @@ public class ServerResponse<T> implements Serializable {
 		return this;
 	}
 
+	public ServerResponse<T> failure(String code, String message) {
+		this.metaType = new MetaType(false, code, message);
+		this.data = null;
+		return this;
+	}
+
 	public T getData() {
 		return data;
 	}
@@ -62,12 +68,20 @@ public class ServerResponse<T> implements Serializable {
 
 		private boolean success;
 
+		private String code;
+
 		private String message;
 
 		public MetaType() {
 		}
 
 		public MetaType(boolean success, String message) {
+			this.success = success;
+			this.message = message;
+		}
+
+		public MetaType(boolean success, String code, String message) {
+			this.code = code;
 			this.success = success;
 			this.message = message;
 		}
@@ -86,6 +100,14 @@ public class ServerResponse<T> implements Serializable {
 
 		public void setMessage(String message) {
 			this.message = message;
+		}
+
+		public String getCode() {
+			return code;
+		}
+
+		public void setCode(String code) {
+			this.code = code;
 		}
 
 	}
