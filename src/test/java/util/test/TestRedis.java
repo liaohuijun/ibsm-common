@@ -16,31 +16,31 @@ public class TestRedis {
 
 	@Test
 	public void testId() {
-		RedissonClient redissonClient = new RedissonFactory().buildSingle("localhost:6379");
-		for (int i = 0; i < 10; i++) {
-			new Thread() {
-				public void run() {
-					try {
-						for (int j = 0; j < 3000; j++) {
-							System.out.println(Thread.currentThread().getName() + ";" + new RedissonManager(redissonClient).id("aabbc").nextId());
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				};
-			}.start();
-			new Thread() {
-				public void run() {
-					try {
-						for (int j = 0; j < 3000; j++) {
-							System.out.println(Thread.currentThread().getName() + ";" + new RedissonManager(redissonClient).id("aabbc").nextId());
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				};
-			}.start();
-		}
+//		RedissonClient redissonClient = new RedissonFactory().buildSingle("localhost:6379");
+//		for (int i = 0; i < 10; i++) {
+//			new Thread() {
+//				public void run() {
+//					try {
+//						for (int j = 0; j < 3000; j++) {
+//							System.out.println(Thread.currentThread().getName() + ";" + new RedissonManager(redissonClient).id("aabbc").nextId());
+//						}
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//				};
+//			}.start();
+//			new Thread() {
+//				public void run() {
+//					try {
+//						for (int j = 0; j < 3000; j++) {
+//							System.out.println(Thread.currentThread().getName() + ";" + new RedissonManager(redissonClient).id("aabbc").nextId());
+//						}
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//				};
+//			}.start();
+//		}
 
 	}
 }

@@ -1,7 +1,5 @@
 package util.test;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -21,15 +19,16 @@ public class TestJsoup {
 		Elements elements = doc.getElementsByClass("infobox");
 		Document containerDoc = Jsoup.parse(elements.toString());
 		Elements clearfixs = containerDoc.getElementsByClass("c");
-		AtomicInteger index = new AtomicInteger(10);
+//		AtomicInteger index = new AtomicInteger(10);
 		for (Element element : clearfixs) {
 //			System.out.println(element.toString());
-			int num = index.getAndIncrement();
+//			int num = index.getAndIncrement();
 			String content = element.select("a span").html().replaceAll("What a fucking day!", "");
-			String sql = "INSERT INTO `tbl_archive` VALUES ("+num+", 0, '"+content+"', 1, '2017-4-11 00:22:17', '', 0);";
-			sql = "INSERT INTO `tbl_archive` VALUES ("+index.getAndIncrement()+", 0, '"+content+"', 1, '2017-4-11 00:31:32', '"+content+"', NULL, 0, 3, '', '', '2017-4-11 00:31:32', NULL, NULL, NULL, 0, 0, 0, 0, '"+content+"', 1);";
+			System.out.println(content);
+//			String sql = "INSERT INTO `tbl_archive` VALUES ("+num+", 0, '"+content+"', 1, '2017-4-11 00:22:17', '', 0);";
+//			sql = "INSERT INTO `tbl_archive` VALUES ("+index.getAndIncrement()+", 0, '"+content+"', 1, '2017-4-11 00:31:32', '"+content+"', NULL, 0, 3, '', '', '2017-4-11 00:31:32', NULL, NULL, NULL, 0, 0, 0, 0, '"+content+"', 1);";
 //			System.out.println(sql);
-			System.out.println("INSERT INTO `tbl_article` VALUES ("+num+", '2017-4-11 00:22:17', 5, "+num+", 1);");
+//			System.out.println("INSERT INTO `tbl_article` VALUES ("+num+", '2017-4-11 00:22:17', 5, "+num+", 1);");
 //			System.out.println(element.select("a span").html().replaceAll("What a fucking day!", ""));
 //			System.out.println("---------------");
 		}

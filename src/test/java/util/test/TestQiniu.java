@@ -13,11 +13,11 @@ import com.hm.common.util.FileUtil;
 public class TestQiniu {
 
 	public static void main(String[] args) throws Exception {
-		QiNiuConfig.instance();
-		String accessKey = "JThHMlAGBk-icmnKl7ujGYvA0ZyQxqEYRZHXRpiW";
-		String secretKey = "pKpJuadjOKWkIl3k2S6VwbYIFEXYPZp-zeQtSfNR";
-		QiNiuConfig.load().init(accessKey, secretKey);
-
-		System.out.println(QiNiuUpload.Sample.upload("ibsm-cms", "122.png", FileUtil.getFile("d:/122.png")));
+//		QiNiuConfig.instance();
+//		String accessKey = "JThHMlAGBk-icmnKl7ujGYvA0ZyQxqEYRZHXRpiW";
+//		String secretKey = "pKpJuadjOKWkIl3k2S6VwbYIFEXYPZp-zeQtSfNR";
+//		QiNiuConfig.load().init(accessKey, secretKey);
+//
+//		System.out.println(QiNiuUpload.Sample.upload("ibsm-cms", "122.png", FileUtil.getFile("d:/122.png")));
 	}
 }

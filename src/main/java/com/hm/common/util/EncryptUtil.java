@@ -32,6 +32,10 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
@@ -43,6 +47,8 @@ import sun.misc.BASE64Encoder;
  * @describe
  */
 public class EncryptUtil {
+	
+	private static Logger logger = LoggerFactory.getLogger(EncryptUtil.class);
 
 	private EncryptUtil() {
 	}
@@ -855,5 +861,77 @@ public class EncryptUtil {
 			return null;
 		}
 
+	}
+
+	/**
+	 * @author shishun.wang
+	 * @date 2017年4月28日 下午4:08:51
+	 * @version 1.0
+	 * @describe AES加密
+	 */
+	public static class AES {
+
+		public static String PUBLIC_KEY = "721e6a1af0cb967f3c7a670da30a6bf6";
+
+		private static String AES = "AES";
+
+		private static int AES_PASSWORD = 128;
+
+		private AES() {
+
+		}
+
+		public static String encrypt(String content) {
+			return encrypt(content, PUBLIC_KEY);
+		}
+
+		public static String encrypt(String content, String password) {
+			try {
+				KeyGenerator kgen = KeyGenerator.getInstance(AES);
+				kgen.init(AES_PASSWORD, new SecureRandom(StringUtil.parseHexStr2Byte(password)));
+				byte[] enCodeFormat = kgen.generateKey().getEncoded();
+				SecretKeySpec key = new SecretKeySpec(enCodeFormat, AES);
+				Cipher cipher = Cipher.getInstance(AES);
+				byte[] byteContent = StringUtil.parseHexStr2Byte(content);
+				cipher.init(Cipher.ENCRYPT_MODE, key);
+				return StringUtil.parseByte2HexStr(cipher.doFinal(byteContent));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		public static String decrypt(String content, String password) {
+			try {
+				KeyGenerator kgen = KeyGenerator.getInstance(AES);
+				kgen.init(AES_PASSWORD, new SecureRandom(StringUtil.parseHexStr2Byte(password)));
+				byte[] enCodeFormat = kgen.generateKey().getEncoded();
+				SecretKeySpec key = new SecretKeySpec(enCodeFormat, AES);
+				Cipher cipher = Cipher.getInstance(AES);
+				cipher.init(Cipher.DECRYPT_MODE, key);
+				return StringUtil.parseByte2HexStr(cipher.doFinal(StringUtil.parseHexStr2Byte(content)));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		public static String decrypt(String content) {
+			return decrypt(content, PUBLIC_KEY);
+		}
+		
+		public static boolean validation(String sourceContent,String encryptionContent){
+			if(CommonUtil.isAnyEmpty(sourceContent,encryptionContent)){
+				return false;
+			}
+			
+			try {
+				String decContent = EncryptUtil.AES.decrypt(encryptionContent);
+				return sourceContent.toLowerCase().equals(decContent.toLowerCase());
+			} catch (Exception e) {
+				logger.error("验证AES密钥失败,sourceContent={},encryptionContent={}",e,sourceContent,encryptionContent);
+				return false;
+			}
+		}
 	}
 }
