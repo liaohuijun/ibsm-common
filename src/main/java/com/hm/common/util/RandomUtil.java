@@ -3,6 +3,9 @@ package com.hm.common.util;
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author shishun.wang
  * @date 2016年12月17日 上午11:45:37
@@ -10,6 +13,8 @@ import java.util.Random;
  * @describe 随机生成工具类
  */
 public class RandomUtil extends CommonUtil {
+	
+	private static Logger logger = LoggerFactory.getLogger(RandomUtil.class);
 
 	private RandomUtil() {
 	}
@@ -119,7 +124,7 @@ public class RandomUtil extends CommonUtil {
 			// 区位码组合成汉字
 			return new String(bArr, "GB2312");
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 			return surname[random.nextInt(surname.length - 1)];
 		}
 	}

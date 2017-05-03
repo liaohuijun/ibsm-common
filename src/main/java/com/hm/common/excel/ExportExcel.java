@@ -11,6 +11,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -21,6 +23,8 @@ import com.alibaba.fastjson.JSONObject;
  * @describe
  */
 public interface ExportExcel<T> {
+	
+	static Logger logger = LoggerFactory.getLogger(ExportExcel.class);
 
 	/**
 	 * 将字节数组写出到servlet输出流
@@ -108,7 +112,7 @@ public interface ExportExcel<T> {
 		try {
 			response.getOutputStream().write(message);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 }

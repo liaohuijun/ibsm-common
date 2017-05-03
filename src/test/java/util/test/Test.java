@@ -41,7 +41,7 @@ public class Test {
 			
 			
 		}catch(Exception e){
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 

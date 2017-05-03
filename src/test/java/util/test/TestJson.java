@@ -24,7 +24,7 @@ public class TestJson {
 			String json = JSON.toJSONString(jsonModel);
 			System.out.println(json);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 

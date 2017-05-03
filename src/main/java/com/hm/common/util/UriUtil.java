@@ -6,6 +6,9 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author shishun.wang
  * @date 2016年12月22日 下午5:57:28
@@ -13,6 +16,8 @@ import java.util.Map;
  * @describe
  */
 public class UriUtil extends CommonUtil {
+	
+	private static Logger logger = LoggerFactory.getLogger(UriUtil.class);
 
 	private UriUtil() {
 	}
@@ -44,7 +49,7 @@ public class UriUtil extends CommonUtil {
 		try {
 			return URLEncoder.encode(uri, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		return null;
 	}

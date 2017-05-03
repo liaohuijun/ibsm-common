@@ -91,7 +91,7 @@ public class HttpClientTest {
 							HttpResponse response = HttpClientFactory.GET.build("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx5191fcc3effa8fce&secret=aee6c2f72961d7671da698836365da29").execute();
 							System.out.println(EntityUtils.toString(response.getEntity(), HttpClientStatus.CHARACTER_ENCODING));
 						}catch(Exception e){
-							e.printStackTrace();
+							logger.error(e.getMessage(), e);
 						}
 					}
 				};

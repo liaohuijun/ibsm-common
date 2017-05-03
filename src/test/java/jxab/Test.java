@@ -34,7 +34,7 @@ public class Test {
 			
 			System.out.println(CommonUtil.isPhoneLegal("135884507258"));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 }

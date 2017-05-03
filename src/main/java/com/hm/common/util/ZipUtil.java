@@ -18,6 +18,8 @@ import org.apache.commons.compress.archivers.zip.Zip64Mode;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 import org.apache.poi.util.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author shishun.wang
@@ -27,6 +29,8 @@ import org.apache.poi.util.IOUtils;
  */
 public class ZipUtil {
 
+	private static Logger logger = LoggerFactory.getLogger(ZipUtil.class);
+	
 	private ZipUtil() {
 	}
 
@@ -66,7 +70,7 @@ public class ZipUtil {
 			zipOutput.finish();
 			zipOutput.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		} finally {
 			if (zipOutput != null) {
 				try {

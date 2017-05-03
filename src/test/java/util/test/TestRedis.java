@@ -25,7 +25,7 @@ public class TestRedis {
 //							System.out.println(Thread.currentThread().getName() + ";" + new RedissonManager(redissonClient).id("aabbc").nextId());
 //						}
 //					} catch (Exception e) {
-//						e.printStackTrace();
+//						logger.error(e.getMessage(), e);
 //					}
 //				};
 //			}.start();
@@ -36,7 +36,7 @@ public class TestRedis {
 //							System.out.println(Thread.currentThread().getName() + ";" + new RedissonManager(redissonClient).id("aabbc").nextId());
 //						}
 //					} catch (Exception e) {
-//						e.printStackTrace();
+//						logger.error(e.getMessage(), e);
 //					}
 //				};
 //			}.start();

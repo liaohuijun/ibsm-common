@@ -10,6 +10,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.hm.common.def.DateUtilCompareDef;
 
 /**
@@ -20,6 +23,8 @@ import com.hm.common.def.DateUtilCompareDef;
  */
 public class DateUtil extends CommonUtil {
 
+	private static Logger logger = LoggerFactory.getLogger(DateUtil.class);
+	
 	private DateUtil() {
 	}
 
@@ -244,7 +249,7 @@ public class DateUtil extends CommonUtil {
 			oneDay.setStartTime(dateFormat.parse(format.format(currentDate) + " 00:00:00"));
 			oneDay.setEndTime(dateFormat.parse(format.format(currentDate) + " 23:59:59"));
 		} catch (ParseException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		return oneDay;
 	}

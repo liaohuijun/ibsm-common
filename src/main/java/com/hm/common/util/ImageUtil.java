@@ -12,6 +12,9 @@ import java.io.IOException;
 
 import javax.swing.ImageIcon;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author shishun.wang
  * @date 下午2:08:04 2016年11月18日
@@ -19,6 +22,8 @@ import javax.swing.ImageIcon;
  * @describe
  */
 public class ImageUtil {
+	
+	private static Logger logger = LoggerFactory.getLogger(ImageUtil.class);
 
 	private ImageUtil() {
 	}
@@ -75,13 +80,13 @@ public class ImageUtil {
 			data = new byte[fileInputStream.available()];
 			fileInputStream.read(data);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		} finally {
 			if (null != fileInputStream) {
 				try {
 					fileInputStream.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					logger.error(e.getMessage(), e);
 				}
 			}
 		}

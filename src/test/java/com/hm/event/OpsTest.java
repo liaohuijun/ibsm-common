@@ -36,13 +36,13 @@ public class OpsTest {
 										System.out.println(event.getSource().toString());
 										Thread.sleep(500);
 									} catch (InterruptedException e) {
-										e.printStackTrace();
+										logger.error(e.getMessage(), e);
 									}
 								}
 							});
 						}
 					} catch (Exception e) {
-						e.printStackTrace();
+						logger.error(e.getMessage(), e);
 					}
 				};
 			}.start();

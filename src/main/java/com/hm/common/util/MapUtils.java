@@ -9,7 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class MapUtils {
+	
+	private static Logger logger = LoggerFactory.getLogger(MapUtils.class);
 
 	/**
 	 * 从map集合中获取属性值
@@ -91,13 +96,13 @@ public class MapUtils {
 							pd.getWriteMethod().invoke(obj, new Object[] { propertyValue });
 						}
 					} catch (IllegalArgumentException e) {
-						e.printStackTrace();
+						logger.error(e.getMessage(), e);
 					}
 				}
 				return (T) obj;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 
 		return null;
@@ -133,7 +138,7 @@ public class MapUtils {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 
 		return map;

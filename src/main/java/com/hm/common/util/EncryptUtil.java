@@ -47,7 +47,7 @@ import sun.misc.BASE64Encoder;
  * @describe
  */
 public class EncryptUtil {
-	
+
 	private static Logger logger = LoggerFactory.getLogger(EncryptUtil.class);
 
 	private EncryptUtil() {
@@ -102,8 +102,8 @@ public class EncryptUtil {
 					// md.digest() 该函数返回值为存放哈希值结果的byte数组
 					resultString = byteToString(md.digest(strObj.getBytes()));
 					return resultString;
-				} catch (NoSuchAlgorithmException ex) {
-					ex.printStackTrace();
+				} catch (NoSuchAlgorithmException e) {
+					logger.error(e.getMessage(), e);
 				}
 			}
 			return UUID.randomUUID().toString();
@@ -226,7 +226,7 @@ public class EncryptUtil {
 				KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
 				return keyGenerator.generateKey();
 			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 			return null;
 		}
@@ -256,7 +256,7 @@ public class EncryptUtil {
 				// 对要加密的内容进行编码处理,
 				cipherByte = c1.doFinal(info.getBytes());
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 			// 返回密文的十六进制形式
 			return byte2hex(cipherByte);
@@ -285,7 +285,7 @@ public class EncryptUtil {
 				// 对要解密的内容进行编码处理
 				cipherByte = c1.doFinal(hex2byte(info));
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 			// return byte2hex(cipherByte);
 			return new String(cipherByte);
@@ -369,7 +369,7 @@ public class EncryptUtil {
 				// 将公匙私匙写入到文件当中
 				doObjToFile(privateListence, new Object[] { prikey, pubkey });
 			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 		}
 
@@ -390,12 +390,12 @@ public class EncryptUtil {
 					oos.writeObject(objs[i]);
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} finally {
 				try {
 					oos.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					logger.error(e.getMessage(), e);
 				}
 			}
 		}
@@ -419,12 +419,12 @@ public class EncryptUtil {
 					obj = ois.readObject();
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} finally {
 				try {
 					ois.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					logger.error(e.getMessage(), e);
 				}
 			}
 			return obj;
@@ -457,7 +457,7 @@ public class EncryptUtil {
 				// 将数字签名,公匙,信息放入文件中
 				doObjToFile(signfile, new Object[] { signed, mypubkey, info });
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 		}
 
@@ -483,7 +483,7 @@ public class EncryptUtil {
 				// 验证传入的签名
 				return signetcheck.verify(signed);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 				return false;
 			}
 		}
@@ -542,7 +542,7 @@ public class EncryptUtil {
 				map.put("privateKey", privateKeyString);
 				return map;
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 			return null;
 		}
@@ -565,7 +565,7 @@ public class EncryptUtil {
 
 				return new RsaCallback(privateKeyString, publicKeyString);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 
 			return null;
@@ -673,15 +673,15 @@ public class EncryptUtil {
 				byte[] enBytes = cipher.doFinal(plainText.getBytes());
 				return (new BASE64Encoder()).encode(enBytes);
 			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (NoSuchPaddingException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (InvalidKeyException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (IllegalBlockSizeException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (BadPaddingException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 			return null;
 		}
@@ -711,17 +711,17 @@ public class EncryptUtil {
 				byte[] enBytes = cipher.doFinal(plainText.getBytes());
 				return (new BASE64Encoder()).encode(enBytes);
 			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (NoSuchPaddingException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (InvalidKeyException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (IllegalBlockSizeException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (BadPaddingException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 			return null;
 		}
@@ -742,17 +742,17 @@ public class EncryptUtil {
 				byte[] enBytes = cipher.doFinal(plainText.getBytes());
 				return (new BASE64Encoder()).encode(enBytes);
 			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (NoSuchPaddingException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (InvalidKeyException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (IllegalBlockSizeException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (BadPaddingException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 			return null;
 		}
@@ -771,17 +771,17 @@ public class EncryptUtil {
 				byte[] deBytes = cipher.doFinal((new BASE64Decoder()).decodeBuffer(enStr));
 				return new String(deBytes);
 			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (NoSuchPaddingException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (InvalidKeyException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (IllegalBlockSizeException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (BadPaddingException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 			return null;
 		}
@@ -802,19 +802,19 @@ public class EncryptUtil {
 				byte[] deBytes = cipher.doFinal((new BASE64Decoder()).decodeBuffer(enStr));
 				return new String(deBytes);
 			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (NoSuchPaddingException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (InvalidKeyException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (IllegalBlockSizeException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (BadPaddingException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 			return null;
 		}
@@ -844,19 +844,19 @@ public class EncryptUtil {
 				byte[] deBytes = cipher.doFinal((new BASE64Decoder()).decodeBuffer(enStr));
 				return new String(deBytes);
 			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (NoSuchPaddingException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (InvalidKeyException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (IllegalBlockSizeException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (BadPaddingException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 			return null;
 		}
@@ -896,7 +896,7 @@ public class EncryptUtil {
 				cipher.init(Cipher.ENCRYPT_MODE, key);
 				return StringUtil.parseByte2HexStr(cipher.doFinal(byteContent));
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 			return null;
 		}
@@ -911,7 +911,7 @@ public class EncryptUtil {
 				cipher.init(Cipher.DECRYPT_MODE, key);
 				return StringUtil.parseByte2HexStr(cipher.doFinal(StringUtil.parseHexStr2Byte(content)));
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 			return null;
 		}
@@ -919,17 +919,17 @@ public class EncryptUtil {
 		public static String decrypt(String content) {
 			return decrypt(content, PUBLIC_KEY);
 		}
-		
-		public static boolean validation(String sourceContent,String encryptionContent){
-			if(CommonUtil.isAnyEmpty(sourceContent,encryptionContent)){
+
+		public static boolean validation(String sourceContent, String encryptionContent) {
+			if (CommonUtil.isAnyEmpty(sourceContent, encryptionContent)) {
 				return false;
 			}
-			
+
 			try {
 				String decContent = EncryptUtil.AES.decrypt(encryptionContent);
 				return sourceContent.toLowerCase().equals(decContent.toLowerCase());
 			} catch (Exception e) {
-				logger.error("验证AES密钥失败,sourceContent={},encryptionContent={}",e,sourceContent,encryptionContent);
+				logger.error("验证AES密钥失败,sourceContent={},encryptionContent={}", e, sourceContent, encryptionContent);
 				return false;
 			}
 		}
