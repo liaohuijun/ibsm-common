@@ -2,7 +2,8 @@ package util.test;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
-import org.apache.poi.ddf.EscherColorRef.SysIndexSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -17,6 +18,8 @@ import com.hm.common.network.httpclient.HttpClientStatus;
  */
 public class Test {
 
+	private static Logger logger = LoggerFactory.getLogger(Test.class);
+	
 	public static void main(String[] args) {
 		System.out.println(x(142.5, 100, 80));
 		System.out.println(pay(205, 100, 80));

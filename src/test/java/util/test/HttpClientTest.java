@@ -4,6 +4,8 @@ import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.TypeReference;
 import com.hm.common.network.httpclient.HttpClientFactory;
@@ -24,6 +26,8 @@ import util.test.bean.OrderDetailsVo;
  */
 public class HttpClientTest {
 
+	private static Logger logger = LoggerFactory.getLogger(HttpClientTest.class);
+	
 	private String uri = "http://localhost:8899/";
 
 	// @Test

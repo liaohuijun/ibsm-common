@@ -3,6 +3,9 @@ package com.hm.event;
 import java.util.EventObject;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.hm.common.event.ops.OpsActionListener;
 import com.hm.common.event.ops.OpsListener;
 import com.hm.common.event.ops.OpsTarget;
@@ -15,6 +18,8 @@ import com.hm.common.event.ops.OpsTarget;
  */
 public class OpsTest {
 
+	private static Logger logger = LoggerFactory.getLogger(OpsTest.class);
+	
 	public static void main(String[] args) {
 		OpsActionListener opsActionListener = new OpsActionListener();
 		while (true) {

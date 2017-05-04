@@ -5,6 +5,9 @@ import java.util.UUID;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.hm.common.util.CommonUtil;
 
 /**
@@ -15,6 +18,8 @@ import com.hm.common.util.CommonUtil;
  */
 public class Test {
 
+	private static Logger logger = LoggerFactory.getLogger(Test.class);
+	
 	public static void main(String[] args) {
 		try {
 			JxabModel model = new JxabModel();

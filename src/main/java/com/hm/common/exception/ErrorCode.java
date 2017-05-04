@@ -14,11 +14,14 @@ public enum ErrorCode {
 	/** 系统错误,请联系管理员 */
 	SYSTEM_ERROR("系统错误,请联系管理员"),
 
-	/** 数据没找到 */
+	/**{0}数据没找到 */
 	DATA_NOT_FOUND("{0}数据没找到"),
 
-	/** 不允许为空 */
+	/** 参数错误,{0}*/
 	DATA_NOT_NULL("参数错误,{0}"),
+	
+	/** 参数缺失,{0}不允许为空*/
+	PARAMETERS_MISSING("参数缺失,{0}不允许为空"),
 
 	/** 必填参数缺失 */
 	REQUIRED_PARAMETERS_MISSING("必填参数缺失"),
