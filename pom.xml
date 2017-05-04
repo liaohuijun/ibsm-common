@@ -34,28 +34,28 @@
 	</properties>
 
 	<dependencies>
-		
+
 		<dependency>
-		    <groupId>org.xerial</groupId>
-		    <artifactId>sqlite-jdbc</artifactId>
-		    <version>${sqlite.version}</version>
-		    <!-- 依赖模块将提供 -->
-		    <scope>provided</scope>
-		</dependency>
-		
-		<dependency>
-    		<groupId>mysql</groupId>
-		    <artifactId>mysql-connector-java</artifactId>
-		    <version>${mysql.version}</version>
-		    <!-- 依赖模块将提供 -->
-		    <scope>provided</scope>
+			<groupId>org.xerial</groupId>
+			<artifactId>sqlite-jdbc</artifactId>
+			<version>${sqlite.version}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
-		    <groupId>commons-dbutils</groupId>
-		    <artifactId>commons-dbutils</artifactId>
-		    <version>${dbutils.version}</version>
-		    <!-- 依赖模块将提供 -->
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-dbutils</groupId>
+			<artifactId>commons-dbutils</artifactId>
+			<version>${dbutils.version}</version>
+			<!-- 依赖模块将提供 -->
 			<scope>provided</scope>
 		</dependency>
 
@@ -74,13 +74,13 @@
 			<!-- 依赖模块将提供 -->
 			<scope>provided</scope>
 		</dependency>
-		
-		<dependency>
-		    <groupId>org.slf4j</groupId>
-		    <artifactId>slf4j-log4j12</artifactId>
-		    <version>1.7.25</version>
-		</dependency>
-				
+
+		<!-- <dependency> -->
+		<!-- <groupId>org.slf4j</groupId> -->
+		<!-- <artifactId>slf4j-log4j12</artifactId> -->
+		<!-- <version>1.7.25</version> -->
+		<!-- </dependency> -->
+
 
 		<!-- <dependency> -->
 		<!-- <groupId>redis.clients</groupId> -->
@@ -191,13 +191,13 @@
 			<!-- 依赖模块将提供 -->
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>org.jsoup</groupId>
-		    <artifactId>jsoup</artifactId>
-		    <version>1.10.2</version>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.10.2</version>
 		</dependency>
-		
+
 
 		<dependency>
 			<groupId>junit</groupId>

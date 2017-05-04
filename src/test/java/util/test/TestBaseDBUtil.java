@@ -16,10 +16,14 @@ import com.hm.common.dbutil.BaseDBUtil;
 public class TestBaseDBUtil {
 
 	public static void main(String[] args) throws Exception {
-		Connection connection = BaseDBUtil.MYSQL.build("localhost", 3306, "ibsm-manage", "root", "root").connection();
-		QueryRunner qRunner = new QueryRunner();
-		qRunner.query(connection, "select id,note from im_role ", new ArrayListHandler()).forEach(row -> {
-			System.out.println(row);
-		});
+		Connection connection = BaseDBUtil.MYSQL.build("115.28.66.183", 3306, "ibsm-manage", "admin", "admin").connection();
+		for (int i = 0; i < 100; i++) {
+			QueryRunner qRunner = new QueryRunner();
+			qRunner.query(connection, "select * from im_role ", new ArrayListHandler()).forEach(row -> {
+				for (Object cloumn : row) {
+					System.out.println(cloumn);
+				}
+			});
+		}
 	}
 }
