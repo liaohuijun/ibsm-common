@@ -173,7 +173,7 @@ public abstract class CommonUtil {
 	 * 17+除9的任意数 147
 	 */
 	public static boolean isChinaPhoneLegal(String str) throws PatternSyntaxException {
-		String regExp = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
+		String regExp = "^((13[0-9])|(15[^4])|(18[0,1,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
 		Pattern p = Pattern.compile(regExp);
 		Matcher m = p.matcher(str);
 		return m.matches();
@@ -187,5 +187,17 @@ public abstract class CommonUtil {
 		Pattern p = Pattern.compile(regExp);
 		Matcher m = p.matcher(str);
 		return m.matches();
+	}
+
+	/**
+	 * 判断字符串全是数字
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static boolean isNumberic(String str) {
+		Pattern pattern = Pattern.compile("[0-9]*");
+		Matcher isNum = pattern.matcher(str);
+		return isNum.matches();
 	}
 }

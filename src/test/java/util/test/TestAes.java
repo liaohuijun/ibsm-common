@@ -1,7 +1,6 @@
 package util.test;
 
-import com.hm.common.util.EncryptUtil;
-import com.hm.common.util.StringUtil;
+import com.hm.common.util.CommonUtil;
 
 /**
  * @author shishun.wang
@@ -12,13 +11,15 @@ import com.hm.common.util.StringUtil;
 public class TestAes {
 
 	public static void main(String[] args) {
-		String content = StringUtil.token();
-		System.out.println(content);
-		String token = EncryptUtil.AES.encrypt(content);
-		System.out.println(token);
-		System.out.println(token.length());
-		String decContent = EncryptUtil.AES.decrypt(token);
-		System.out.println(decContent);
-		System.out.println(EncryptUtil.AES.validation(content, token));
+//		String content = StringUtil.token();
+//		System.out.println(content);
+//		String token = EncryptUtil.AES.encrypt(content);
+//		System.out.println(token);
+//		System.out.println(token.length());
+//		String decContent = EncryptUtil.AES.decrypt(token);
+//		System.out.println(decContent);
+//		System.out.println(EncryptUtil.AES.validation(content, token));
+		
+		System.out.println(CommonUtil.isNumberic("1234567890"));
 	}
 }
