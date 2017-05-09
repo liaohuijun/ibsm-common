@@ -119,7 +119,7 @@ public class HttpClientTest {
 
 		System.out.println(EntityUtils.toString(response.getEntity(), HttpClientStatus.CHARACTER_ENCODING));
 	}
-
+	
 	@Test
 	public void test11(){
 		for(int i = 0 ; i < 5; i++){

@@ -3,6 +3,11 @@ package util.test;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
+
+import com.hm.common.network.httpclient.HttpClientFactory;
+import com.hm.common.network.httpclient.HttpClientStatus;
 import com.hm.common.pool.thread.ThreadPoolFactory;
 
 /**
@@ -13,10 +18,10 @@ import com.hm.common.pool.thread.ThreadPoolFactory;
  */
 public class ThreadPoolTest {
 
-	private static ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
+	private static ExecutorService fixedThreadPool = Executors.newFixedThreadPool(3);
 
 	public static void main(String[] args) throws Exception {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 50; i++) {
 			test(i);
 		}
 	}
@@ -26,10 +31,13 @@ public class ThreadPoolTest {
 			
 			@Override
 			public void run() {
-				System.out.println(Thread.currentThread().getName() + "执行结果：" + i + ";;当前时间" + System.currentTimeMillis());
 				try {
-					Thread.sleep(3000l);
-				} catch (InterruptedException e) {
+					System.out.println(Thread.currentThread().getName() + "执行结果：" + i + ";;当前时间" + System.currentTimeMillis());
+//					Thread.sleep(3000l);
+					HttpResponse response = HttpClientFactory.GET.build("http://localhost:8080/discover").execute();
+					String json = EntityUtils.toString(response.getEntity(), HttpClientStatus.CHARACTER_ENCODING);
+					System.out.println(json);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}

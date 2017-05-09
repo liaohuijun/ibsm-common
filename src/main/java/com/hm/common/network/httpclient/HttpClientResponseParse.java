@@ -3,9 +3,12 @@ package com.hm.common.network.httpclient;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.hm.common.exception.ServiceException;
 
 /**
  * @author shishun.wang
@@ -14,6 +17,8 @@ import com.alibaba.fastjson.TypeReference;
  * @describe
  */
 public class HttpClientResponseParse {
+
+	private static Logger logger = LoggerFactory.getLogger(HttpClientResponseParse.class);
 
 	private HttpClientResponseParse() {
 	}
@@ -41,8 +46,9 @@ public class HttpClientResponseParse {
 		if (response.getStatusLine().getStatusCode() == HttpClientStatus.ResponseCode.OK) {
 			return EntityUtils.toString(entity, HttpClientStatus.CHARACTER_ENCODING);
 		} else {
-			throw new Exception(response.getStatusLine().getStatusCode() + ":"
+			logger.error(response.getStatusLine().getStatusCode() + ":"
 					+ EntityUtils.toString(entity, HttpClientStatus.CHARACTER_ENCODING));
+			throw ServiceException.warn(EntityUtils.toString(entity, HttpClientStatus.CHARACTER_ENCODING));
 		}
 	}
 
