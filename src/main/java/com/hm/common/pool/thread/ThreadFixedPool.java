@@ -12,33 +12,22 @@ import com.hm.common.util.CommonUtil;
 
 /**
  * @author shishun.wang
- * @date 2017年5月8日 下午6:17:16
+ * @date 2017年5月9日 下午2:45:15
  * @version 1.0
  * @describe
  */
-public class ThreadPoolFactory {
+public class ThreadFixedPool {
 
-	private static Logger logger = LoggerFactory.getLogger(ThreadPoolFactory.class);
-
-	private static ThreadPoolFactory THREAD_POOL_FACTORY = null;
+	private static Logger logger = LoggerFactory.getLogger(ThreadFixedPool.class);
 
 	private int defaultPoolSize = 1;
 
 	private ExecutorService executorService;
 
-	private ThreadPoolFactory() {
+	private ThreadFixedPool() {
 	}
 
-	public static ThreadPoolFactory instance() {
-		if (null == THREAD_POOL_FACTORY) {
-			synchronized (ThreadPoolFactory.class) {
-				THREAD_POOL_FACTORY = new ThreadPoolFactory();
-			}
-		}
-		return THREAD_POOL_FACTORY;
-	}
-
-	public ThreadPoolFactory build() {
+	public ThreadFixedPool build() {
 		if (null == executorService) {
 			logger.info("加载默认线程池,初始化线程数为:{}", defaultPoolSize);
 			executorService = Executors.newFixedThreadPool(defaultPoolSize);
@@ -46,7 +35,7 @@ public class ThreadPoolFactory {
 		return this;
 	}
 
-	public ThreadPoolFactory build(int poolSize) {
+	public ThreadFixedPool build(int poolSize) {
 		if (null == executorService) {
 			if (CommonUtil.isEmpty(poolSize)) {
 				throw ServiceException.warning(ErrorCode.PARAMETERS_MISSING, "poolSize");
