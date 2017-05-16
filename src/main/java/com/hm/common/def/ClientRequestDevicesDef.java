@@ -6,17 +6,22 @@ package com.hm.common.def;
  * @version 1.0
  * @describe
  */
-public enum MobileDevicesDef {
+public enum ClientRequestDevicesDef {
 
 	/**
 	 * ANDROID手机
 	 */
 	ANDROID("ANDROID", "ANDROID手机"),
+	
+	/**
+	 * 
+	 */
+	WINDOWS_PHONE("WINDOWS_PHONE","windows phone"),
 
 	/**
 	 * IPHONE手机
 	 */
-	IPHONE("IPHONE", "IPHONE手机"),
+	MAC("MAC", "MAC OS"),
 	
 	/**
 	 * PC浏览器
@@ -27,7 +32,7 @@ public enum MobileDevicesDef {
 
 	private String desc;
 
-	private MobileDevicesDef(String status, String desc) {
+	private ClientRequestDevicesDef(String status, String desc) {
 		this.status = status;
 		this.desc = desc;
 	}

@@ -32,14 +32,18 @@ public class HttpClientTest {
 
 	// @Test
 	public void testGet() throws Exception {
-		HttpResponse response = HttpClientFactory.GET.build(uri + "restful/api/offer/query/{0}/{1}", 1, 10)
-				.headers(HttpClientStatus.Headers.CLIENT_USER_ROLE, "SUPER").headers(HttpClientStatus.Headers.CLIENT_USER_SESSION_ID, "12345").execute();
-		ServerResponse<PageInfo<OrderDetailsVo>> parse = HttpClientResponseParse.parseGeneric(response,
-				new TypeReference<ServerResponse<PageInfo<OrderDetailsVo>>>() {
-				});
-		PageInfo<OrderDetailsVo> pageInfo = ServerResponseParse.parse(parse);
-		Assert.assertNotEquals(pageInfo.getContent().size(), 0);
-		System.out.println(pageInfo.getContent());
+		
+		HttpResponse response = HttpClientFactory.GET.build("https://jingyan.baidu.com/article/e52e3615a2b18f40c60c51d1.html").execute();
+		System.out.println(EntityUtils.toString(response.getEntity(), HttpClientStatus.CHARACTER_ENCODING));
+		
+//		HttpResponse response = HttpClientFactory.GET.build(uri + "restful/api/offer/query/{0}/{1}", 1, 10)
+//				.headers(HttpClientStatus.Headers.CLIENT_USER_ROLE, "SUPER").headers(HttpClientStatus.Headers.CLIENT_USER_SESSION_ID, "12345").execute();
+//		ServerResponse<PageInfo<OrderDetailsVo>> parse = HttpClientResponseParse.parseGeneric(response,
+//				new TypeReference<ServerResponse<PageInfo<OrderDetailsVo>>>() {
+//				});
+//		PageInfo<OrderDetailsVo> pageInfo = ServerResponseParse.parse(parse);
+//		Assert.assertNotEquals(pageInfo.getContent().size(), 0);
+//		System.out.println(pageInfo.getContent());
 	}
 
 	// @Test

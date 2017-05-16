@@ -42,7 +42,6 @@ public class ThreadPoolTest {
 				}
 			}
 		});
-		System.out.println("aasdfghjk");
 //		fixedThreadPool.execute(new Runnable() {
 //
 //			@Override

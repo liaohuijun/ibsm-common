@@ -1,5 +1,6 @@
 package com.hm.common.util;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -231,6 +232,31 @@ public class DateUtil extends CommonUtil {
 		calendar.setTime(currentDate);
 		calendar.add(Calendar.DAY_OF_MONTH, days);
 		return calendar.getTime();
+	}
+	
+	/**
+	 * Timestamp 转date
+	 * @param timestamp
+	 * @return
+	 */
+	public static Date timestamp2date(Timestamp timestamp) {
+		Date date = new Date();
+		try {
+			date = timestamp;
+			return date;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * Timestamp 转long
+	 * @param timestamp 
+	 * @return
+	 */
+	public static long timestamp2long(Timestamp timestamp) {
+		return timestamp2date(timestamp).getTime();
 	}
 
 	/**
