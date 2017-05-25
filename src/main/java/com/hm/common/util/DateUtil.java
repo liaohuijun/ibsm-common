@@ -25,7 +25,7 @@ import com.hm.common.def.DateUtilCompareDef;
 public class DateUtil extends CommonUtil {
 
 	private static Logger logger = LoggerFactory.getLogger(DateUtil.class);
-	
+
 	private DateUtil() {
 	}
 
@@ -233,9 +233,10 @@ public class DateUtil extends CommonUtil {
 		calendar.add(Calendar.DAY_OF_MONTH, days);
 		return calendar.getTime();
 	}
-	
+
 	/**
 	 * Timestamp 转date
+	 * 
 	 * @param timestamp
 	 * @return
 	 */
@@ -252,11 +253,22 @@ public class DateUtil extends CommonUtil {
 
 	/**
 	 * Timestamp 转long
-	 * @param timestamp 
+	 * 
+	 * @param timestamp
 	 * @return
 	 */
 	public static long timestamp2long(Timestamp timestamp) {
 		return timestamp2date(timestamp).getTime();
+	}
+
+	/**
+	 * date 转 timestamp
+	 * 
+	 * @param date
+	 * @return
+	 */
+	public static Timestamp date2timestamp(Date date) {
+		return new Timestamp(date.getTime());
 	}
 
 	/**

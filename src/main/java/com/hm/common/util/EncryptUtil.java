@@ -71,7 +71,8 @@ public class EncryptUtil {
 		private Md5() {
 		}
 
-		private final static String[] strDigits = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
+		private final static String[] strDigits = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c",
+				"d", "e", "f" };
 
 		// 返回形式为数字跟字符串
 		private static String byteToArrayString(byte bByte) {
@@ -176,7 +177,8 @@ public class EncryptUtil {
 			return out;
 		}
 
-		private static char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".toCharArray();
+		private static char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+				.toCharArray();
 
 		private static byte[] codes = new byte[256];
 
@@ -871,30 +873,26 @@ public class EncryptUtil {
 	 */
 	public static class AES {
 
-		public static String PUBLIC_KEY = "721e6a1af0cb967f3c7a670da30a6bf6";
+		public static String CRYPT_KEY = "def123efg8dv0abc";// 长度必须16位
 
 		private static String AES = "AES";
-
-		private static int AES_PASSWORD = 128;
 
 		private AES() {
 
 		}
 
 		public static String encrypt(String content) {
-			return encrypt(content, PUBLIC_KEY);
+			return encrypt(content, CRYPT_KEY);
 		}
 
 		public static String encrypt(String content, String password) {
 			try {
-				KeyGenerator kgen = KeyGenerator.getInstance(AES);
-				kgen.init(AES_PASSWORD, new SecureRandom(StringUtil.parseHexStr2Byte(password)));
-				byte[] enCodeFormat = kgen.generateKey().getEncoded();
-				SecretKeySpec key = new SecretKeySpec(enCodeFormat, AES);
 				Cipher cipher = Cipher.getInstance(AES);
-				byte[] byteContent = StringUtil.parseHexStr2Byte(content);
-				cipher.init(Cipher.ENCRYPT_MODE, key);
-				return StringUtil.parseByte2HexStr(cipher.doFinal(byteContent));
+				SecretKeySpec securekey = new SecretKeySpec(password.getBytes(), AES);
+				cipher.init(Cipher.ENCRYPT_MODE, securekey);
+
+				byte[] bytes = cipher.doFinal(content.getBytes());
+				return byte2hex(bytes);
 			} catch (Exception e) {
 				logger.error(e.getMessage(), e);
 			}
@@ -903,13 +901,12 @@ public class EncryptUtil {
 
 		public static String decrypt(String content, String password) {
 			try {
-				KeyGenerator kgen = KeyGenerator.getInstance(AES);
-				kgen.init(AES_PASSWORD, new SecureRandom(StringUtil.parseHexStr2Byte(password)));
-				byte[] enCodeFormat = kgen.generateKey().getEncoded();
-				SecretKeySpec key = new SecretKeySpec(enCodeFormat, AES);
 				Cipher cipher = Cipher.getInstance(AES);
-				cipher.init(Cipher.DECRYPT_MODE, key);
-				return StringUtil.parseByte2HexStr(cipher.doFinal(StringUtil.parseHexStr2Byte(content)));
+				SecretKeySpec securekey = new SecretKeySpec(password.getBytes(), AES);
+				cipher.init(Cipher.DECRYPT_MODE, securekey);
+
+				byte[] bytes = cipher.doFinal(hex2byte(content.getBytes()));
+				return new String(bytes);
 			} catch (Exception e) {
 				logger.error(e.getMessage(), e);
 			}
@@ -917,7 +914,7 @@ public class EncryptUtil {
 		}
 
 		public static String decrypt(String content) {
-			return decrypt(content, PUBLIC_KEY);
+			return decrypt(content, CRYPT_KEY);
 		}
 
 		public static boolean validation(String sourceContent, String encryptionContent) {
@@ -926,12 +923,41 @@ public class EncryptUtil {
 			}
 
 			try {
-				String decContent = EncryptUtil.AES.decrypt(encryptionContent);
-				return sourceContent.toLowerCase().equals(decContent.toLowerCase());
+				return sourceContent.toLowerCase().equals(EncryptUtil.AES.decrypt(encryptionContent).toLowerCase());
 			} catch (Exception e) {
 				logger.error("验证AES密钥失败,sourceContent={},encryptionContent={}", e, sourceContent, encryptionContent);
 				return false;
 			}
+		}
+
+		/***
+		 * 二进制转十六进制字符串
+		 * 
+		 * @param bytes
+		 * @return
+		 */
+		private static String byte2hex(byte[] bytes) {
+			String result = "";
+			String temp = "";
+			for (int i = 0; i < bytes.length; i++) {
+				temp = (java.lang.Integer.toHexString(bytes[i] & 0XFF));
+				if (temp.length() == 1)
+					result = result + "0" + temp;
+				else
+					result = result + temp;
+			}
+			return result.toUpperCase();
+		}
+
+		private static byte[] hex2byte(byte[] bytes) {
+			if ((bytes.length % 2) != 0)
+				throw new IllegalArgumentException("长度不是偶数");
+			byte[] bys = new byte[bytes.length / 2];
+			for (int i = 0; i < bytes.length; i += 2) {
+				String item = new String(bytes, i, 2);
+				bys[i / 2] = (byte) Integer.parseInt(item, 16);
+			}
+			return bys;
 		}
 	}
 }
