@@ -34,4 +34,13 @@ public enum DataStatusDef {
 	public int status() {
 		return this.status;
 	}
+
+	public DataStatusDef trance(String status) {
+		for (DataStatusDef statusDef : DataStatusDef.values()) {
+			if (statusDef.name().equals(status)) {
+				return statusDef;
+			}
+		}
+		return null;
+	}
 }
