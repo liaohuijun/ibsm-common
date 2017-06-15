@@ -1,4 +1,4 @@
-package com.hm.common.redis;
+package com.hm.common.redis.redisson;
 
 import org.redisson.api.RedissonClient;
 
