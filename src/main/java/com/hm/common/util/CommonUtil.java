@@ -2,9 +2,6 @@ package com.hm.common.util;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 /**
  * @author shishun.wang
