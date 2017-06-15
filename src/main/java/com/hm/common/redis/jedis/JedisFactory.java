@@ -4,6 +4,8 @@ import com.hm.common.exception.ServiceException;
 import com.hm.common.util.CommonUtil;
 
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.JedisSentinelPool;
 
 /**
  * @author shishun.wang
@@ -39,5 +41,17 @@ public class JedisFactory {
 		}
 
 		return new Jedis("192.168.0.100", port);
+	}
+
+	/**
+	 * 哨兵模式
+	 * 
+	 * @param poolConfig
+	 * @param slaveAddress
+	 * @return
+	 */
+	public Jedis buildSentinel(JedisPoolConfig poolConfig, String... slaveAddress) {
+		new JedisSentinelPool(null, null);//TODO 待完成
+		return null;
 	}
 }
