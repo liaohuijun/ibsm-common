@@ -5,7 +5,6 @@ import com.hm.common.util.CommonUtil;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.JedisSentinelPool;
 
 /**
  * @author shishun.wang
@@ -51,7 +50,7 @@ public class JedisFactory {
 	 * @return
 	 */
 	public Jedis buildSentinel(JedisPoolConfig poolConfig, String... slaveAddress) {
-		new JedisSentinelPool(null, null);//TODO 待完成
+//		new JedisSentinelPool(null, null);//TODO 待完成
 		return null;
 	}
 }
