@@ -39,7 +39,7 @@ public class JedisFactory {
 			throw ServiceException.warn("单服务器模式,redis服务器地址不能为空");
 		}
 
-		return new Jedis("192.168.0.100", port);
+		return new Jedis(address, port);
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class JedisFactory {
 	 * @return
 	 */
 	public Jedis buildSentinel(JedisPoolConfig poolConfig, String... slaveAddress) {
-//		new JedisSentinelPool(null, null);//TODO 待完成
+		// new JedisSentinelPool(null, null);//TODO 待完成
 		return null;
 	}
 }
