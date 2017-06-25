@@ -260,4 +260,5 @@ public class StringUtil extends CommonUtil {
 		Matcher isNum = pattern.matcher(str);
 		return isNum.matches();
 	}
+
 }

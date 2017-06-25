@@ -35,9 +35,52 @@
 		<commons-pool2.version>2.4.2</commons-pool2.version>
 		<commons-beanutils.version>1.9.3</commons-beanutils.version>
 		<mail.version>1.4.7</mail.version>
+		<akka-actor.version>2.2.5</akka-actor.version>
+		<akka-remote.version>2.4.1</akka-remote.version>
+		<akka-cluster.version>2.4.1</akka-cluster.version>
+		<scala-library.version>2.10.2</scala-library.version>
+		<reflections.version>0.9.10</reflections.version>
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+			<version>${reflections.version}</version>
+			<!-- 使用方式注解加包路径完成对指定class反射操作 -->
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- <dependency> -->
+		<!-- <groupId>org.scala-lang</groupId> -->
+		<!-- <artifactId>scala-library</artifactId> -->
+		<!-- <version>${scala-library.version}</version> -->
+		<!-- 依赖模块将提供 -->
+		<!-- <scope>provided</scope> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.typesafe.akka</groupId> -->
+		<!-- <artifactId>akka-cluster_2.11</artifactId> -->
+		<!-- <version>${akka-cluster.version}</version> -->
+		<!-- 依赖模块将提供 -->
+		<!-- <scope>provided</scope> -->
+		<!-- </dependency> -->
+		<dependency>
+			<groupId>com.typesafe.akka</groupId>
+			<artifactId>akka-actor_2.10</artifactId>
+			<version>${akka-actor.version}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
+		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>com.typesafe.akka</groupId> -->
+		<!-- <artifactId>akka-remote_2.11</artifactId> -->
+		<!-- <version>${akka-remote.version}</version> -->
+		<!-- 依赖模块将提供 -->
+		<!-- <scope>provided</scope> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>javax.mail </groupId>
 			<artifactId>mail </artifactId>
@@ -108,7 +151,6 @@
 		<!-- <artifactId>slf4j-log4j12</artifactId> -->
 		<!-- <version>1.7.25</version> -->
 		<!-- </dependency> -->
-
 
 		<dependency>
 			<groupId>redis.clients</groupId>
