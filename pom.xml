@@ -40,9 +40,19 @@
 		<akka-cluster.version>2.4.1</akka-cluster.version>
 		<scala-library.version>2.10.2</scala-library.version>
 		<reflections.version>0.9.10</reflections.version>
+		<netty.version>4.1.6.Final</netty.version>
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+			<version>${netty.version}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.reflections</groupId>
