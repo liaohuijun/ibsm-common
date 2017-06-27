@@ -5,6 +5,8 @@ import java.util.Date;
 
 import org.junit.Test;
 
+import com.hm.common.util.CommonUtil;
+
 /**
  * @author shishun.wang
  * @date 下午3:55:11 2017年6月27日
@@ -21,6 +23,7 @@ public class NettyTest {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
 
+		System.out.println(calendar.get(Calendar.MONTH));
 		System.out.println(Integer.toHexString(calendar.get(Calendar.YEAR) - 2000));
 		System.out.println(Integer.toHexString(calendar.get(Calendar.MONTH)));
 		System.out.println(Integer.toHexString(calendar.get(Calendar.DATE)));
@@ -30,7 +33,7 @@ public class NettyTest {
 
 		StringBuffer buffer = new StringBuffer();
 		
-		String year = Integer.toHexString(calendar.get(Calendar.YEAR));
+		String year = Integer.toHexString(calendar.get(Calendar.YEAR)-2000);
 		buffer.append(year.length() < 2 ? "0" + year : year);
 		
 		String month = Integer.toHexString(calendar.get(Calendar.MONTH));
@@ -49,5 +52,23 @@ public class NettyTest {
 		buffer.append(second.length() < 2 ? "0" + second : second);
 		
 		System.out.println(buffer.toString());
+		
+		StringBuffer buf = new StringBuffer();
+		for(byte by : hexStringToByteArray("E78102000B4D20150812000501B511061b121305000000140047E7")){
+			buf.append(by).append(" ");
+		}
+		System.out.println(buf.toString());
+		
+	}
+	
+	public  byte[] hexStringToByteArray(String s) {
+	    int len = s.length();
+	    byte[] b = new byte[len / 2];
+	    for (int i = 0; i < len; i += 2) {
+	        // 两位一组，表示一个字节,把这样表示的16进制字符串，还原成一个字节
+	        b[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4) + Character
+	                .digit(s.charAt(i + 1), 16));
+	    }
+	    return b;
 	}
 }
