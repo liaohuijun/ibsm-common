@@ -44,6 +44,14 @@ public class DateUtil extends CommonUtil {
 	public static String yyyyMMdd(Date date) {
 		return new SimpleDateFormat("yyyy-MM-dd").format(date);
 	}
+	
+	public static String yyyyMMddhhmm(long time) {
+		return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date(time));
+	}
+
+	public static String yyyyMMdd(long time) {
+		return new SimpleDateFormat("yyyy-MM-dd").format(new Date(time));
+	}
 
 	public static Long data2long(Date date) {
 		return date.getTime();
