@@ -76,7 +76,7 @@ public class PageInfo<T> implements Serializable {
 
 		public PageParam(int pageNumber, int pageSize) {
 			QueryParamUtil.checkPagging(pageNumber, pageSize);
-			this.page = pageNumber - 1;
+			this.page = pageNumber;
 			this.size = pageSize;
 		}
 
