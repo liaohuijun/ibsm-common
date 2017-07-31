@@ -4,6 +4,7 @@ import com.hm.common.exception.ServiceException;
 import com.hm.common.util.CommonUtil;
 
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 /**
@@ -14,18 +15,23 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 public class JedisFactory {
 
-	/**
-	 * 单服务器模式
-	 * 
-	 * @param address
-	 * @return
-	 */
-	public Jedis buildSingle(String address) {
-		if (CommonUtil.isEmpty(address)) {
-			throw ServiceException.warn("单服务器模式,redis服务器地址不能为空");
-		}
+	private int port = 6379;
 
-		return new Jedis(address, 6379);
+	private JedisPoolConfig config;
+
+	public JedisFactory poolConfig(JedisPoolConfig config) {
+		this.config = config;
+		return this;
+	}
+
+	@SuppressWarnings("resource")
+	private Jedis getJedisInstance(String address, int port, String password) {
+		JedisPool pool = new JedisPool(config, address, port);
+		Jedis jedis = pool.getResource();
+		if (CommonUtil.isNotEmpty(password)) {
+			jedis.auth(password);
+		}
+		return jedis;
 	}
 
 	/**
@@ -34,12 +40,42 @@ public class JedisFactory {
 	 * @param address
 	 * @return
 	 */
-	public Jedis buildSingle(String address, int port) {
-		if (CommonUtil.isAnyEmpty(address, port)) {
+	public Jedis buildSingle(String address, String password) {
+		if (CommonUtil.isEmpty(address)) {
 			throw ServiceException.warn("单服务器模式,redis服务器地址不能为空");
 		}
 
-		return new Jedis(address, port);
+		if (CommonUtil.isEmpty(config)) {
+			Jedis jedis = new Jedis(address, port);
+			if (CommonUtil.isNotEmpty(password)) {
+				jedis.auth(password);
+			}
+			return jedis;
+		}
+
+		return this.getJedisInstance(address, port, password);
+	}
+
+	/**
+	 * 单服务器模式
+	 * 
+	 * @param address
+	 * @return
+	 */
+	public Jedis buildSingle(String address, int port, String password) {
+		if (CommonUtil.isAnyEmpty(address, port)) {
+			throw ServiceException.warn("单服务器模式,redis服务器地址不能为空");
+		}
+		if (CommonUtil.isEmpty(config)) {
+			Jedis jedis = new Jedis(address, port);
+			if (CommonUtil.isNotEmpty(password)) {
+				jedis.auth(password);
+			}
+
+			return jedis;
+		}
+
+		return this.getJedisInstance(address, port, password);
 	}
 
 	/**
