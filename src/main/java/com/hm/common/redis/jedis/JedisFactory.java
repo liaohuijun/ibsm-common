@@ -1,5 +1,8 @@
 package com.hm.common.redis.jedis;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.hm.common.exception.ServiceException;
 import com.hm.common.util.CommonUtil;
 
@@ -15,21 +18,49 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 public class JedisFactory {
 
+	private Logger logger = LoggerFactory.getLogger(JedisFactory.class);
+
 	private int port = 6379;
 
 	private JedisPoolConfig config;
+
+	private JedisPool pool;
 
 	public JedisFactory poolConfig(JedisPoolConfig config) {
 		this.config = config;
 		return this;
 	}
 
-	@SuppressWarnings("resource")
-	private Jedis getJedisInstance(String address, int port, String password) {
-		JedisPool pool = new JedisPool(config, address, port);
-		Jedis jedis = pool.getResource();
-		if (CommonUtil.isNotEmpty(password)) {
-			jedis.auth(password);
+	/**
+	 * 释放jedis资源
+	 * 
+	 * @param jedis
+	 */
+	private void returnResource(final Jedis jedis) {
+		if (!CommonUtil.isAnyEmpty(pool, jedis)) {
+			pool.returnResource(jedis);
+		}
+	}
+
+	private synchronized void initPool(String address, int port, String password, int timeout) {
+		if (CommonUtil.isNotEmpty(pool)) {
+			return;
+		}
+
+		pool = new JedisPool(config, address, port, timeout, password);
+	}
+
+	private Jedis getJedisInstance(String address, int port, String password, int timeout) {
+		Jedis jedis = null;
+		try {
+			if (CommonUtil.isEmpty(pool)) {
+				initPool(address, port, password, timeout);
+			}
+			jedis = pool.getResource();
+		} catch (Exception e) {
+			logger.error("Get jedis error : " + e);
+		} finally {
+			returnResource(jedis);
 		}
 		return jedis;
 	}
@@ -40,7 +71,7 @@ public class JedisFactory {
 	 * @param address
 	 * @return
 	 */
-	public Jedis buildSingle(String address, String password) {
+	public Jedis buildSingle(String address, String password, int timeout) {
 		if (CommonUtil.isEmpty(address)) {
 			throw ServiceException.warn("单服务器模式,redis服务器地址不能为空");
 		}
@@ -53,7 +84,7 @@ public class JedisFactory {
 			return jedis;
 		}
 
-		return this.getJedisInstance(address, port, password);
+		return this.getJedisInstance(address, port, password, timeout);
 	}
 
 	/**
@@ -62,7 +93,7 @@ public class JedisFactory {
 	 * @param address
 	 * @return
 	 */
-	public Jedis buildSingle(String address, int port, String password) {
+	public Jedis buildSingle(String address, int port, String password, int timeout) {
 		if (CommonUtil.isAnyEmpty(address, port)) {
 			throw ServiceException.warn("单服务器模式,redis服务器地址不能为空");
 		}
@@ -75,7 +106,7 @@ public class JedisFactory {
 			return jedis;
 		}
 
-		return this.getJedisInstance(address, port, password);
+		return this.getJedisInstance(address, port, password, timeout);
 	}
 
 	/**
