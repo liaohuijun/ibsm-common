@@ -41,9 +41,16 @@
 		<scala-library.version>2.10.2</scala-library.version>
 		<reflections.version>0.9.10</reflections.version>
 		<netty.version>4.1.6.Final</netty.version>
+		<mongodb.driver.version>3.2.2</mongodb.driver.version>  
 	</properties>
 
 	<dependencies>
+
+		<dependency>  
+            <groupId>org.mongodb</groupId>  
+            <artifactId>mongo-java-driver</artifactId>  
+            <version>${mongodb.driver.version}</version>  
+        </dependency>
 
 		<dependency>
 			<groupId>io.netty</groupId>

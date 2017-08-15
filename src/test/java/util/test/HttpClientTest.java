@@ -26,7 +26,7 @@ public class HttpClientTest {
 
 	@Test
 	public void test() throws Exception {
-		uri = "http://lab.ocrking.com/do.html?url=http://simg.11467.com/phone/3133393830353038303138.jpg&service=OcrKingForPhoneNumber&language=eng&charset=11&outputFormat=&email=";
+		uri = "http://lab.ocrking.com/do.html?url=https://style.11467.com/phone/3133333038323039323331.jpg&service=OcrKingForPhoneNumber&language=eng&charset=11&outputFormat=&email=";
 //		Map<String, String> param = new HashMap<String, String>();
 //		{
 //			param.put("url", "http://simg.11467.com/phone/3133393830353038303138.jpg");
