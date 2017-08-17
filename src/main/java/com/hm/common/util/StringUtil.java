@@ -261,4 +261,15 @@ public class StringUtil extends CommonUtil {
 		return isNum.matches();
 	}
 
+	/*
+	 * 判断字符串中是否仅包含字母数字和汉字 各种字符的unicode编码的范围：
+	 * 汉字：[0x4e00,0x9fa5]（或十进制[19968,40869]） 数字：[0x30,0x39]（或十进制[48, 57]）
+	 * 小写字母：[0x61,0x7a]（或十进制[97, 122]） 大写字母：[0x41,0x5a]（或十进制[65, 90]）
+	 * 
+	 */
+	public static boolean isLetterDigitOrChinese(String str) {
+		String regex = "^[a-z0-9A-Z\u4e00-\u9fa5]+$";
+		return str.matches(regex);
+	}
+
 }

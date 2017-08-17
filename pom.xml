@@ -41,16 +41,16 @@
 		<scala-library.version>2.10.2</scala-library.version>
 		<reflections.version>0.9.10</reflections.version>
 		<netty.version>4.1.6.Final</netty.version>
-		<mongodb.driver.version>3.2.2</mongodb.driver.version>  
+		<mongodb.driver.version>3.2.2</mongodb.driver.version>
 	</properties>
 
 	<dependencies>
 
-		<dependency>  
-            <groupId>org.mongodb</groupId>  
-            <artifactId>mongo-java-driver</artifactId>  
-            <version>${mongodb.driver.version}</version>  
-        </dependency>
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>${mongodb.driver.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>io.netty</groupId>
@@ -293,6 +293,14 @@
 		</dependency>
 
 	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>hm-snapshots</id>
+			<url>http://122.114.176.221:8081/nexus/content/repositories/hm-snapshots</url>
+		</repository>
+	</distributionManagement>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -303,6 +311,20 @@
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 				</configuration>
+			</plugin>
+			<!--配置生成源码包 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
