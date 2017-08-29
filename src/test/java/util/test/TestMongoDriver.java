@@ -42,8 +42,7 @@ public class TestMongoDriver {
 		MongoDatabase db = client.getDatabase("smzc");
 		// 获取data集合，不存在的话，会自动建立该集合（相当于关系数据库中的数据表）
 
-		List<String> list = Arrays.asList("2017-08-16", "2017-08-17", "2017-08-18", "2017-08-19",
-				"2017-08-20");
+		List<String> list = Arrays.asList("2017-08-24", "2017-08-25", "2017-08-26", "2017-08-27", "2017-08-28", "2017-08-29", "2017-08-30");
 		boolean hasTitle = true;
 		for (String day : list) {
 			loadData(db, day, hasTitle);
@@ -52,28 +51,29 @@ public class TestMongoDriver {
 			}
 		}
 
-		// String collectionName = "CBOBD_LOCATION_INFO_UPSIDE";
-		// AggregateIterable<Document> iterable =
-		// db.getCollection(collectionName)
-		// .aggregate(Arrays.asList(
-		// Aggregates.match(Filters.and(Filters.eq("deviceId", "13172500117"),
-		// Filters.and(Filters.gt("gpsTime", "2017-08-08 00:00:00"),
-		// Filters.lt("gpsTime", "2017-08-16 23:59:59")))),
-		// Aggregates.sort(new Document().append("gpsTime", -1))));
-		// StringBuffer buffer = new StringBuffer();
-		// for (Document document : iterable) {
-		// buffer.append(document.get("gpsTime") + "\t\t" +
-		// document.get("originalData") + "\n");
-		// }
-		// System.out.println(buffer.toString());
-		// FileUtil.writer("d:/test.txt", buffer.toString());
+//		 String collectionName = "CBOBD_LOCATION_INFO_UPSIDE";
+//		 AggregateIterable<Document> iterable =
+//		 db.getCollection(collectionName)
+//		 .aggregate(Arrays.asList(
+//		 Aggregates.match(Filters.and(Filters.eq("deviceId", "13173300500"),
+//		 Filters.and(Filters.gt("gpsTime", "2017-08-23 00:00:00"),
+//		 Filters.lt("gpsTime", "2017-08-26 23:59:59")))),
+//		 Aggregates.sort(new Document().append("gpsTime", -1))));
+//		 StringBuffer buffer = new StringBuffer();
+//		 for (Document document : iterable) {
+//		 buffer.append(document.get("gpsTime") + "\t\t" +
+//		 document.get("originalData") + "\n");
+//		 }
+//		 System.out.println(buffer.toString());
+//		 FileUtil.writer("d:/test.txt", buffer.toString());
 	}
 
 	private static void loadData(MongoDatabase db, String day, boolean hasTitle) {
 		String collectionName = "CBOBD_LOCATION_INFO_UPSIDE";
 		AggregateIterable<Document> iterable = db.getCollection(collectionName)
 				.aggregate(Arrays.asList(
-						Aggregates.match(Filters.and(Filters.eq("deviceId", "13172500117"),
+						Aggregates.match(Filters.and(Filters.eq("deviceId", "13173300500"),
+						//Aggregates.match(Filters.and(Filters.eq("deviceId", "13172500117"),
 								Filters.and(Filters.gt("gpsTime", day + " 00:00:00"),
 										Filters.lt("gpsTime", day + " 23:59:59")))),
 						Aggregates.sort(new Document().append("gpsTime", -1)), Aggregates.limit(1)));
