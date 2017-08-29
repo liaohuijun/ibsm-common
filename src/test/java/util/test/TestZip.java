@@ -19,6 +19,8 @@ public class TestZip {
 			ArrayList<File> list = new ArrayList<File>();
 			list.add(new File("D:/tmp/mysql/2017-08-25.sql"));
 			ZipUtil.compressFilesZip(list, "D:/tmp/mysql/123.zip", "nihao123.");
+			
+			ZipUtil.unpackFilesZip("D:/tmp/mysql/unpack", "nihao123.", "D:/tmp/mysql/123.zip");
 
 		} catch (Exception e) {
 			e.printStackTrace();
