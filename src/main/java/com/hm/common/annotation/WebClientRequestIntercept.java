@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * @version 1.0
  * @describe 客户端请求拦截
  */
-@Target(ElementType.METHOD)
+@Target(ElementType.METHOD) 
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface WebClientRequestIntercept {
