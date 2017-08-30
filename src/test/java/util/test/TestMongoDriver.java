@@ -48,7 +48,7 @@ public class TestMongoDriver {
 			loadData(db, day, hasTitle);
 			if (hasTitle) {
 				hasTitle = false;
-			}
+			} 
 		}
 
 //		 String collectionName = "CBOBD_LOCATION_INFO_UPSIDE";
@@ -56,8 +56,8 @@ public class TestMongoDriver {
 //		 db.getCollection(collectionName)
 //		 .aggregate(Arrays.asList(
 //		 Aggregates.match(Filters.and(Filters.eq("deviceId", "13173300500"),
-//		 Filters.and(Filters.gt("gpsTime", "2017-08-23 00:00:00"),
-//		 Filters.lt("gpsTime", "2017-08-26 23:59:59")))),
+//		 Filters.and(Filters.gt("gpsTime", "2017-08-27 00:00:00"),
+//		 Filters.lt("gpsTime", "2017-09-26 23:59:59")))),
 //		 Aggregates.sort(new Document().append("gpsTime", -1))));
 //		 StringBuffer buffer = new StringBuffer();
 //		 for (Document document : iterable) {

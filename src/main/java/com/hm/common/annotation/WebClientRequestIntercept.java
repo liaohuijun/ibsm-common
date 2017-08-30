@@ -25,6 +25,13 @@ public @interface WebClientRequestIntercept {
 	boolean frequency() default false;
 
 	/**
+	 * 客户端请求->服务器对客户端请求身份认证
+	 * 
+	 * @return
+	 */
+	boolean requestCertification() default true;
+
+	/**
 	 * ip 黑名单,禁止访问
 	 * 
 	 * @return
