@@ -38,7 +38,7 @@ public class JedisFactory {
 		this.password = password;
 		this.timeout = timeout;
 
-//		this.poolInit();
+		// this.poolInit();
 		return this;
 	}
 
@@ -99,6 +99,20 @@ public class JedisFactory {
 	public synchronized void set(String key, String value) {
 		try {
 			getJedis().set(key, value);
+		} catch (Exception e) {
+			logger.error("Set key error : " + e);
+		}
+	}
+
+	/**
+	 * 设置 过期时间
+	 * @param key
+	 * @param seconds
+	 * @param value
+	 */
+	public synchronized void set(String key, int seconds, String value) {
+		try {
+			getJedis().setex(key.getBytes(), seconds, value.getBytes());
 		} catch (Exception e) {
 			logger.error("Set key error : " + e);
 		}
