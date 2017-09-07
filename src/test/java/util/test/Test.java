@@ -1,7 +1,9 @@
 package util.test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+
+import com.hm.common.util.DateUtil;
+import com.hm.common.util.StringUtil;
 
 /**
  * @author shishun.wang
@@ -25,6 +27,12 @@ public class Test {
 			}
 			System.out.println(a);
 		});
+
+		System.out.println(("SMZCKK" + StringUtil.token()).length());
+		System.out.println("SMZC451E901940128B3AFE7C203B215B".length());
+		System.out.println("1501689600000");
+		System.out.println(System.currentTimeMillis());
+		
 	}
 
 	public static double pay(double x, double l, double r) {

@@ -229,7 +229,7 @@ public class DateUtil extends CommonUtil {
 	 * 获取指定日期,前后几天
 	 * 
 	 * @param currentDate
-	 * @param days
+	 * @param days + 向后几天，- 向前几天
 	 * @return
 	 */
 	public static Date getCurrentCustomerDay(Date currentDate, Integer days) {

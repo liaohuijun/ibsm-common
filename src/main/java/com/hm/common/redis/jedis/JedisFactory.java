@@ -106,6 +106,7 @@ public class JedisFactory {
 
 	/**
 	 * 设置 过期时间
+	 * 
 	 * @param key
 	 * @param seconds
 	 * @param value
@@ -146,5 +147,27 @@ public class JedisFactory {
 			return null;
 		}
 		return getJedis().get(key);
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 */
+	public synchronized Long incr(String key) {
+		Long sequence = getJedis().incr(key);
+		return sequence;
+	}
+
+	/**
+	 * @param key
+	 * @param seconds
+	 *            以秒为单位
+	 * @return
+	 */
+	public synchronized Long incr(String key, int seconds) {
+		Jedis jedis = getJedis();
+		Long sequence = jedis.incr(key);
+		jedis.expire(key, seconds);
+		return sequence;
 	}
 }
