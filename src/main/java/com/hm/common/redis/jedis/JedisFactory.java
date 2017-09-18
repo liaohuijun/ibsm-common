@@ -170,4 +170,14 @@ public class JedisFactory {
 		jedis.expire(key, seconds);
 		return sequence;
 	}
+	
+	public synchronized Long remove(String key){
+		Jedis jedis = getJedis();
+		return jedis.del(key);
+	}
+	
+	public synchronized Long remove(byte[] key){
+		Jedis jedis = getJedis();
+		return jedis.del(key);
+	}
 }
