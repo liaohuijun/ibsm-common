@@ -675,32 +675,73 @@ public abstract class CommonUtil {
 		}
 		return str.toString();
 	}
-	
-	/**  
-	 * Convert hex string to byte[]  
-	 * @param hexString the hex string  
-	 * @return byte[]  
-	 */  
-	public static byte[] hexStringToBytes(String hexString) {   
-	    if (hexString == null || hexString.equals("")) {   
-	        return null;   
-	    }   
-	    hexString = hexString.toUpperCase();   
-	    int length = hexString.length() / 2;   
-	    char[] hexChars = hexString.toCharArray();   
-	    byte[] d = new byte[length];   
-	    for (int i = 0; i < length; i++) {   
-	        int pos = i * 2;   
-	        d[i] = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));   
-	    }   
-	    return d;   
-	}   
-	/**  
-	 * Convert char to byte  
-	 * @param c char  
-	 * @return byte  
-	 */  
-	 private static byte charToByte(char c) {   
-	    return (byte) "0123456789ABCDEF".indexOf(c);   
-	}  
+
+	/**
+	 * Convert hex string to byte[]
+	 * 
+	 * @param hexString
+	 *            the hex string
+	 * @return byte[]
+	 */
+	public static byte[] hexStringToBytes(String hexString) {
+		if (hexString == null || hexString.equals("")) {
+			return null;
+		}
+		hexString = hexString.toUpperCase();
+		int length = hexString.length() / 2;
+		char[] hexChars = hexString.toCharArray();
+		byte[] d = new byte[length];
+		for (int i = 0; i < length; i++) {
+			int pos = i * 2;
+			d[i] = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
+		}
+		return d;
+	}
+
+	/**
+	 * Convert char to byte
+	 * 
+	 * @param c
+	 *            char
+	 * @return byte
+	 */
+	private static byte charToByte(char c) {
+		return (byte) "0123456789ABCDEF".indexOf(c);
+	}
+
+	/**
+	 * 16进制字符串异或计算
+	 * @param content
+	 * @return
+	 */
+	public static String hexToYiHuo(String content) {
+		content = hexToYiHuoChange(content);
+		String[] b = content.split(" ");
+		int a = 0;
+		for (int i = 0; i < b.length; i++) {
+			a = a ^ Integer.parseInt(b[i], 16);
+		}
+		if (a < 10) {
+			StringBuffer sb = new StringBuffer();
+			sb.append("0");
+			sb.append(a);
+			return sb.toString();
+		}
+
+		String value = Integer.toHexString(a);
+
+		return (value.length() != 2) ? ("0" + value) : value;
+	}
+
+	private static String hexToYiHuoChange(String content) {
+		String str = "";
+		for (int i = 0; i < content.length(); i++) {
+			if (i % 2 == 0) {
+				str += " " + content.substring(i, i + 1);
+			} else {
+				str += content.substring(i, i + 1);
+			}
+		}
+		return str.trim();
+	}
 }
