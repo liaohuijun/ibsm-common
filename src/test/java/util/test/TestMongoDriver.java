@@ -7,7 +7,6 @@ import java.util.List;
 import org.bson.Document;
 
 import com.hm.common.util.CommonUtil;
-import com.hm.common.util.FileUtil;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.client.AggregateIterable;
@@ -47,7 +46,9 @@ public class TestMongoDriver {
 				"2017-09-05", "2017-09-06", "2017-09-07", "2017-09-08", "2017-09-09", "2017-09-10", "2017-09-11",
 				"2017-09-12", "2017-09-13", "2017-09-14", "2017-09-15", "2017-09-16", "2017-09-17", "2017-09-18",
 				"2017-09-19", "2017-09-20", "2017-09-21", "2017-09-22", "2017-09-23", "2017-09-24", "2017-09-25",
-				"2017-09-26","2017-09-27","2017-09-28");
+				"2017-09-26","2017-09-27","2017-09-28","2017-09-29","2017-09-30","2017-10-01","2017-10-02","2017-10-03",
+				"2017-10-04","2017-10-05","2017-10-06","2017-10-07","2017-10-08","2017-10-09","2017-10-10","2017-10-11"
+				,"2017-10-12","2017-10-13");
 		boolean hasTitle = true;
 		for (String day : list) {
 			loadData(db, day, hasTitle);
@@ -55,8 +56,7 @@ public class TestMongoDriver {
 				hasTitle = false;
 			}
 		}
-
-		String collectionName = "CBOBD_LOCATION_INFO_UPSIDE";
+		/*String collectionName = "CBOBD_LOCATION_INFO_UPSIDE";
 		AggregateIterable<Document> iterable = db.getCollection(collectionName)
 				.aggregate(Arrays.asList(
 						Aggregates.match(Filters.and(Filters.eq("deviceId", "13173300500"),
@@ -68,7 +68,7 @@ public class TestMongoDriver {
 			buffer.append(document.get("gpsTime") + "\t\t" + document.get("originalData") + "\n");
 		}
 		System.out.println(buffer.toString());
-		FileUtil.writer("d:/test.txt", buffer.toString());
+		FileUtil.writer("d:/test.txt", buffer.toString());*/
 	}
 
 	private static void loadData(MongoDatabase db, String day, boolean hasTitle) {

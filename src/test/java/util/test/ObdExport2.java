@@ -17,6 +17,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.client.AggregateIterable;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Aggregates;
@@ -28,11 +29,11 @@ import com.mongodb.client.model.Filters;
  * @version 1.0
  * @describe
  */
-public class ObdExport {
+public class ObdExport2 {
 
 	public static void main(String[] args) throws Exception {
 		// System.out.println(hexToYiHuo("8102000B4D2016100119497AE01109160b1324000000140"));
-		generationData();
+//		generationData();
 
 		// String content = "aad";
 		//
@@ -40,6 +41,25 @@ public class ObdExport {
 		//
 		// System.out.println(content);
 		// System.out.println(temp);
+		
+		
+		MongoClientOptions.Builder build = new MongoClientOptions.Builder();
+		// 与数据最大连接数50
+		build.connectionsPerHost(50);
+		// 如果当前所有的connection都在使用中，则每个connection上可以有50个线程排队等待
+		build.threadsAllowedToBlockForConnectionMultiplier(50);
+		build.connectTimeout(1 * 60 * 1000);
+		build.maxWaitTime(2 * 60 * 1000);
+		MongoClientOptions options = build.build();
+		MongoClient client = new MongoClient("127.0.0.1", options);
+		MongoDatabase db = client.getDatabase("ibsm-cms");
+
+		StringBuffer buffer = new StringBuffer();
+		FindIterable<Document> iterable = db.getCollection("BakObdCarsUpsideDocUpsideId").find();
+		for (Document document : iterable) {
+			buffer.append("'"+document.get("upsideId")+"',");
+		}
+		System.out.println(buffer.toString());
 	}
 
 	private static String test(String content) {

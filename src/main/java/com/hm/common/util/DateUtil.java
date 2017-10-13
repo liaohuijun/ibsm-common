@@ -365,6 +365,12 @@ public class DateUtil extends CommonUtil {
 
 	}
 
+	/**
+	 * @author shishun.wang
+	 * @date 下午2:41:25 2017年10月11日
+	 * @version 1.0
+	 * @describe 
+	 */
 	public static class OneDay {
 
 		private Date startTime;

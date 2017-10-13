@@ -31,8 +31,9 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  */
 public class FileUtil extends CommonUtil {
 
-	private FileUtil(){}
-	
+	private FileUtil() {
+	}
+
 	/**
 	 * 获取文件扩展名
 	 * 
@@ -103,6 +104,23 @@ public class FileUtil extends CommonUtil {
 			if (null != fileOutputStream)
 				fileOutputStream.close();
 		}
+	}
+
+	/**
+	 * 文件写入
+	 * 
+	 * @param path
+	 * @param data
+	 * @param cover
+	 *            是否覆盖
+	 * @throws IOException
+	 */
+	public static void writer(String path, String data, boolean cover) throws IOException {
+		File file = new File(path);
+		if (!cover && file.exists()) {
+			return;
+		}
+		writer(path, data);
 	}
 
 	public static String read(String path) throws IOException {
@@ -344,7 +362,7 @@ public class FileUtil extends CommonUtil {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * @author shishun.wang
 	 * @date 2016年12月23日 下午6:20:08
