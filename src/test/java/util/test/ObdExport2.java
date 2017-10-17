@@ -55,7 +55,7 @@ public class ObdExport2 {
 		MongoDatabase db = client.getDatabase("ibsm-cms");
 
 		StringBuffer buffer = new StringBuffer();
-		FindIterable<Document> iterable = db.getCollection("data").find();
+		FindIterable<Document> iterable = db.getCollection("obdLoginDoc").find();
 		for (Document document : iterable) {
 			buffer.append("'"+document.get("upsideId"));
 		}

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.hm.common.util.EncryptUtil.AES;
+import com.hm.common.util.EncryptUtil.Base64;
 import com.hm.common.util.StringUtil;
 
 /**
@@ -56,6 +57,8 @@ public class Test {
 		System.out.println(AES.encrypt(strs));
 		System.out.println(AES.decrypt(
 				"534965E87C859E6B35868EAA3F5F665E3C0D79D058BCEC7C402A819DC7645C0D99396F41F94E437AF69455E3D7F7F9FB"));
+	
+		System.out.println(Base64.encode("Nihao123.".getBytes()));
 	}
 
 	public static double pay(double x, double l, double r) {

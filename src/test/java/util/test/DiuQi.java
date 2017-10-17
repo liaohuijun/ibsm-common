@@ -46,14 +46,14 @@ public class DiuQi {
 		MongoClient client = new MongoClient("127.0.0.1", options);
 		MongoDatabase db = client.getDatabase("ibsm-cms");
 
-		FindIterable<Document> iterable = db.getCollection("data").find();
+		FindIterable<Document> iterable = db.getCollection("obdCarsUpsideDoc").find();
 		for (Document document : iterable) {
 			List<Document> docs = (List<Document>) document.get("upside_data");
-			// System.out.println(docs.get(0).get("originalData"));
-//			System.out.println(upsideDataVerify(docs.get(0).get("originalData") + ""));
+			 System.out.println(docs.get(0).get("originalData"));
+			System.out.println(upsideDataVerify(docs.get(0).get("originalData") + ""));
 		}
-		System.out.println(upsideDataVerify(
-				"E7020000764D2016100119497D1F1109190B333100B90100000001D235250633FF220000000000000006B327060000000000000000000000000000000000000000000011FFFBFF8000910100311AE9000424F205580A004C28640000674600005E011A00FA00D60000000001E22803B9036100311AE90005F686002100210024002E006E16E7"));
+//		System.out.println(upsideDataVerify(
+//				"E7020000764D2016100119497D1F1109190B333100B90100000001D235250633FF220000000000000006B327060000000000000000000000000000000000000000000011FFFBFF8000910100311AE9000424F205580A004C28640000674600005E011A00FA00D60000000001E22803B9036100311AE90005F686002100210024002E006E16E7"));
 	}
 
 	private static boolean upsideDataVerify(String content) {
