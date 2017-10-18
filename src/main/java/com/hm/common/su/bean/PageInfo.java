@@ -68,6 +68,12 @@ public class PageInfo<T> implements Serializable {
 		return "PageInfo [totalPage=" + totalPage + ", totalSize=" + totalSize + ", content=" + content + "]";
 	}
 
+	/**
+	 * @author shishun.wang
+	 * @date 下午2:33:12 2017年10月18日
+	 * @version 1.0
+	 * @describe
+	 */
 	public static class PageParam {
 
 		private int page;
@@ -88,5 +94,32 @@ public class PageInfo<T> implements Serializable {
 			return this.size;
 		}
 	}
-	
+
+	/**
+	 * @author shishun.wang
+	 * @date 下午2:32:27 2017年10月18日
+	 * @version 1.0
+	 * @describe
+	 */
+	public static class PageInfoParam {
+
+		private int page;
+
+		private int size;
+
+		public PageInfoParam(int pageNumber, int pageSize) {
+			QueryParamUtil.checkPagging(pageNumber, pageSize);
+			this.page = (pageNumber - 1);
+			this.size = pageSize;
+		}
+
+		public int getPage() {
+			return this.page;
+		}
+
+		public int getSize() {
+			return this.size;
+		}
+	}
+
 }

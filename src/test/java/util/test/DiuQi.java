@@ -35,25 +35,26 @@ public class DiuQi {
 		 * System.out.println(content);
 		 */
 
-		MongoClientOptions.Builder build = new MongoClientOptions.Builder();
-		// 与数据最大连接数50
-		build.connectionsPerHost(50);
-		// 如果当前所有的connection都在使用中，则每个connection上可以有50个线程排队等待
-		build.threadsAllowedToBlockForConnectionMultiplier(50);
-		build.connectTimeout(1 * 60 * 1000);
-		build.maxWaitTime(2 * 60 * 1000);
-		MongoClientOptions options = build.build();
-		MongoClient client = new MongoClient("127.0.0.1", options);
-		MongoDatabase db = client.getDatabase("ibsm-cms");
-
-		FindIterable<Document> iterable = db.getCollection("obdCarsUpsideDoc").find();
-		for (Document document : iterable) {
-			List<Document> docs = (List<Document>) document.get("upside_data");
-			 System.out.println(docs.get(0).get("originalData"));
-			System.out.println(upsideDataVerify(docs.get(0).get("originalData") + ""));
-		}
+//		MongoClientOptions.Builder build = new MongoClientOptions.Builder();
+//		// 与数据最大连接数50
+//		build.connectionsPerHost(50);
+//		// 如果当前所有的connection都在使用中，则每个connection上可以有50个线程排队等待
+//		build.threadsAllowedToBlockForConnectionMultiplier(50);
+//		build.connectTimeout(1 * 60 * 1000);
+//		build.maxWaitTime(2 * 60 * 1000);
+//		MongoClientOptions options = build.build();
+//		MongoClient client = new MongoClient("127.0.0.1", options);
+//		MongoDatabase db = client.getDatabase("ibsm-cms");
+//
+//		FindIterable<Document> iterable = db.getCollection("obdCarsUpsideDoc").find();
+//		for (Document document : iterable) {
+//			List<Document> docs = (List<Document>) document.get("upside_data");
+//			 System.out.println(docs.get(0).get("originalData"));
+//			System.out.println(upsideDataVerify(docs.get(0).get("originalData") + ""));
+//		}
 //		System.out.println(upsideDataVerify(
 //				"E7020000764D2016100119497D1F1109190B333100B90100000001D235250633FF220000000000000006B327060000000000000000000000000000000000000000000011FFFBFF8000910100311AE9000424F205580A004C28640000674600005E011A00FA00D60000000001E22803B9036100311AE90005F686002100210024002E006E16E7"));
+	System.out.println(upsideDataVerify("E7010200804D201610011933D10D484C4D3230305F56323034323031323031372D30392D303105DBFF32323154335710790553494D434F4D5F53494D3830304C0038363236343330333130363039393334363030343030373538303831373538393836303262303130313638303630363833380000000000000000000000000000000000000000084281000105E60134E7"));
 	}
 
 	private static boolean upsideDataVerify(String content) {
