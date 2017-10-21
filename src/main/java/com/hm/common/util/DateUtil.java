@@ -15,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.hm.common.def.DateUtilCompareDef;
+import com.hm.common.exception.ErrorCode;
+import com.hm.common.exception.ServiceException;
 
 /**
  * @author shishun.wang
@@ -37,6 +39,30 @@ public class DateUtil extends CommonUtil {
 		return yyyyMMdd(new Date());
 	}
 
+	public static Long yyyymmddhhmmss2long(String str) {
+		if (StringUtil.isBlankOrNull(str)) {
+			throw ServiceException.warning(ErrorCode.DATA_NOT_NULL);
+		}
+		try {
+			return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(str).getTime();
+		} catch (ParseException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
+
+	public static Long yyyymmdd2long(String str) {
+		if (StringUtil.isBlankOrNull(str)) {
+			throw ServiceException.warning(ErrorCode.DATA_NOT_NULL);
+		}
+		try {
+			return new SimpleDateFormat("yyyy-MM-dd").parse(str).getTime();
+		} catch (ParseException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
+
 	public static String yyyyMMddhhmm(Date date) {
 		return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date);
 	}
@@ -44,7 +70,7 @@ public class DateUtil extends CommonUtil {
 	public static String yyyyMMdd(Date date) {
 		return new SimpleDateFormat("yyyy-MM-dd").format(date);
 	}
-	
+
 	public static String yyyyMMddhhmm(long time) {
 		return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date(time));
 	}
@@ -229,7 +255,8 @@ public class DateUtil extends CommonUtil {
 	 * 获取指定日期,前后几天
 	 * 
 	 * @param currentDate
-	 * @param days + 向后几天，- 向前几天
+	 * @param days
+	 *            + 向后几天，- 向前几天
 	 * @return
 	 */
 	public static Date getCurrentCustomerDay(Date currentDate, Integer days) {
@@ -369,7 +396,7 @@ public class DateUtil extends CommonUtil {
 	 * @author shishun.wang
 	 * @date 下午2:41:25 2017年10月11日
 	 * @version 1.0
-	 * @describe 
+	 * @describe
 	 */
 	public static class OneDay {
 
