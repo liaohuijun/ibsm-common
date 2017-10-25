@@ -44,7 +44,7 @@ public class DateUtil extends CommonUtil {
 			throw ServiceException.warning(ErrorCode.DATA_NOT_NULL);
 		}
 		try {
-			return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(str).getTime();
+			return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(str).getTime();
 		} catch (ParseException e) {
 			logger.error(e.getMessage(), e);
 		}
@@ -64,7 +64,7 @@ public class DateUtil extends CommonUtil {
 	}
 
 	public static String yyyyMMddhhmm(Date date) {
-		return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date);
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
 	}
 
 	public static String yyyyMMdd(Date date) {
@@ -72,7 +72,7 @@ public class DateUtil extends CommonUtil {
 	}
 
 	public static String yyyyMMddhhmm(long time) {
-		return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date(time));
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(time));
 	}
 
 	public static String yyyyMMdd(long time) {

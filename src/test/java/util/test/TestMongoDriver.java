@@ -41,14 +41,7 @@ public class TestMongoDriver {
 		MongoDatabase db = client.getDatabase("smzc");
 		// 获取data集合，不存在的话，会自动建立该集合（相当于关系数据库中的数据表）
 
-		List<String> list = Arrays.asList("2017-08-24", "2017-08-25", "2017-08-26", "2017-08-27", "2017-08-28",
-				"2017-08-29", "2017-08-30", "2017-08-31", "2017-09-01", "2017-09-02", "2017-09-03", "2017-09-04",
-				"2017-09-05", "2017-09-06", "2017-09-07", "2017-09-08", "2017-09-09", "2017-09-10", "2017-09-11",
-				"2017-09-12", "2017-09-13", "2017-09-14", "2017-09-15", "2017-09-16", "2017-09-17", "2017-09-18",
-				"2017-09-19", "2017-09-20", "2017-09-21", "2017-09-22", "2017-09-23", "2017-09-24", "2017-09-25",
-				"2017-09-26","2017-09-27","2017-09-28","2017-09-29","2017-09-30","2017-10-01","2017-10-02","2017-10-03",
-				"2017-10-04","2017-10-05","2017-10-06","2017-10-07","2017-10-08","2017-10-09","2017-10-10","2017-10-11"
-				,"2017-10-12","2017-10-13","2017-10-14","2017-10-15","2017-10-16","2017-10-17");
+		List<String> list = Arrays.asList("2017-10-20","2017-10-21","2017-10-22","2017-10-23","2017-10-24");
 		boolean hasTitle = true;
 		for (String day : list) {
 			loadData(db, day, hasTitle);
@@ -75,7 +68,7 @@ public class TestMongoDriver {
 		String collectionName = "CBOBD_LOCATION_INFO_UPSIDE";
 		AggregateIterable<Document> iterable = db.getCollection(collectionName)
 				.aggregate(Arrays.asList(
-						Aggregates.match(Filters.and(Filters.eq("deviceId", "13173300500"),
+						Aggregates.match(Filters.and(Filters.eq("deviceId", "13173900985"),
 								// Aggregates.match(Filters.and(Filters.eq("deviceId",
 								// "13172500117"),
 								Filters.and(Filters.gt("gpsTime", day + " 00:00:00"),
