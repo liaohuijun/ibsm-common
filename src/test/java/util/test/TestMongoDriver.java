@@ -7,6 +7,7 @@ import java.util.List;
 import org.bson.Document;
 
 import com.hm.common.util.CommonUtil;
+import com.hm.common.util.FileUtil;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.client.AggregateIterable;
@@ -41,27 +42,27 @@ public class TestMongoDriver {
 		MongoDatabase db = client.getDatabase("smzc");
 		// 获取data集合，不存在的话，会自动建立该集合（相当于关系数据库中的数据表）
 
-		List<String> list = Arrays.asList("2017-10-20","2017-10-21","2017-10-22","2017-10-23","2017-10-24");
+		List<String> list = Arrays.asList("2017-10-20","2017-10-21","2017-10-22","2017-10-23","2017-10-24","2017-10-25","2017-10-26");
 		boolean hasTitle = true;
 		for (String day : list) {
-			loadData(db, day, hasTitle);
+//			loadData(db, day, hasTitle);
 			if (hasTitle) {
 				hasTitle = false;
 			}
 		}
-		/*String collectionName = "CBOBD_LOCATION_INFO_UPSIDE";
+		String collectionName = "CBOBD_LOCATION_INFO_UPSIDE";
 		AggregateIterable<Document> iterable = db.getCollection(collectionName)
 				.aggregate(Arrays.asList(
-						Aggregates.match(Filters.and(Filters.eq("deviceId", "13173300500"),
-								Filters.and(Filters.gt("gpsTime", "2017-08-27 00:00:00"),
-										Filters.lt("gpsTime", "2017-09-26 23:59:59")))),
+						Aggregates.match(Filters.and(Filters.eq("deviceId", "13173900985"),
+								Filters.and(Filters.gt("gpsTime", "2017-10-20 00:00:00"),
+										Filters.lt("gpsTime", "2017-10-26 23:59:59")))),
 						Aggregates.sort(new Document().append("gpsTime", -1))));
 		StringBuffer buffer = new StringBuffer();
 		for (Document document : iterable) {
 			buffer.append(document.get("gpsTime") + "\t\t" + document.get("originalData") + "\n");
 		}
 		System.out.println(buffer.toString());
-		FileUtil.writer("d:/test.txt", buffer.toString());*/
+		FileUtil.writer("d:/test.txt", buffer.toString());
 	}
 
 	private static void loadData(MongoDatabase db, String day, boolean hasTitle) {
