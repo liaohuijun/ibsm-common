@@ -1,11 +1,5 @@
 package util.test;
 
-import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.List;
-
-import org.bson.Document;
-
 import com.hm.common.util.CommonUtil;
 import com.hm.common.util.FileUtil;
 import com.mongodb.MongoClient;
@@ -14,6 +8,11 @@ import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
+import org.bson.Document;
+
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author shishun.wang
@@ -42,20 +41,21 @@ public class TestMongoDriver {
 		MongoDatabase db = client.getDatabase("smzc");
 		// 获取data集合，不存在的话，会自动建立该集合（相当于关系数据库中的数据表）
 
-		List<String> list = Arrays.asList("2017-10-20","2017-10-21","2017-10-22","2017-10-23","2017-10-24","2017-10-25","2017-10-26");
-		boolean hasTitle = true;
-		for (String day : list) {
+//		List<String> list = Arrays.asList("2017-10-20","2017-10-21","2017-10-22","2017-10-23","2017-10-24","2017-10-25","2017-10-26",
+//				"2017-10-27","2017-10-28","2017-10-29","2017-10-30");
+//		boolean hasTitle = true;
+//		for (String day : list) {
 //			loadData(db, day, hasTitle);
-			if (hasTitle) {
-				hasTitle = false;
-			}
-		}
+//			if (hasTitle) {
+//				hasTitle = false;
+//			}
+//		}
 		String collectionName = "CBOBD_LOCATION_INFO_UPSIDE";
 		AggregateIterable<Document> iterable = db.getCollection(collectionName)
 				.aggregate(Arrays.asList(
 						Aggregates.match(Filters.and(Filters.eq("deviceId", "13173900985"),
 								Filters.and(Filters.gt("gpsTime", "2017-10-20 00:00:00"),
-										Filters.lt("gpsTime", "2017-10-26 23:59:59")))),
+										Filters.lt("gpsTime", "2017-10-30 23:59:59")))),
 						Aggregates.sort(new Document().append("gpsTime", -1))));
 		StringBuffer buffer = new StringBuffer();
 		for (Document document : iterable) {

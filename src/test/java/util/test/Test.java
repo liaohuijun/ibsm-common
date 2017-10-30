@@ -3,6 +3,7 @@ package util.test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import com.hm.common.util.EncryptUtil.AES;
 import com.hm.common.util.EncryptUtil.Base64;
@@ -59,6 +60,14 @@ public class Test {
 				"534965E87C859E6B35868EAA3F5F665E3C0D79D058BCEC7C402A819DC7645C0D99396F41F94E437AF69455E3D7F7F9FB"));
 	
 		System.out.println(Base64.encode("Nihao123.".getBytes()));
+		
+		String myTest = new String();
+		Optional.ofNullable(myTest).ifPresent(test ->{
+			System.out.println("-------------->"+123);
+			return ;
+		});
+		
+		System.out.println("aaaaaaaaaaaaaaaaaaaaa");
 	}
 
 	public static double pay(double x, double l, double r) {
