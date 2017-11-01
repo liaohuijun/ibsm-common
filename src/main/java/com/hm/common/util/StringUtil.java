@@ -1,5 +1,6 @@
 package com.hm.common.util;
 
+import java.lang.reflect.Field;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -272,4 +273,28 @@ public class StringUtil extends CommonUtil {
 		return str.matches(regex);
 	}
 
+	/**
+	 * 去除java bean 字符串属性前后空格
+	 * 
+	 * @param obj
+	 * @throws Exception
+	 */
+	public static <T> void trimOf(T obj) throws Exception {
+		if (null == obj) {
+			return;
+		}
+		Class<?> objClass = obj.getClass();
+		Field[] fields = objClass.getDeclaredFields();
+		for (Field field : fields) {
+			field.setAccessible(true);
+			if (field.getType() != String.class) {
+				continue;
+			}
+			Object value = field.get(obj);
+			if (value == null) {
+				continue;
+			}
+			field.set(obj, value.toString().trim());
+		}
+	}
 }

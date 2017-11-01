@@ -1,6 +1,14 @@
 package util.test;
 
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
+import org.bson.Document;
+
 import com.hm.common.util.CommonUtil;
+import com.hm.common.util.DateUtil;
 import com.hm.common.util.FileUtil;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
@@ -8,11 +16,6 @@ import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
-import org.bson.Document;
-
-import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author shishun.wang
@@ -41,28 +44,110 @@ public class TestMongoDriver {
 		MongoDatabase db = client.getDatabase("smzc");
 		// 获取data集合，不存在的话，会自动建立该集合（相当于关系数据库中的数据表）
 
-//		List<String> list = Arrays.asList("2017-10-20","2017-10-21","2017-10-22","2017-10-23","2017-10-24","2017-10-25","2017-10-26",
-//				"2017-10-27","2017-10-28","2017-10-29","2017-10-30");
-//		boolean hasTitle = true;
-//		for (String day : list) {
-//			loadData(db, day, hasTitle);
-//			if (hasTitle) {
-//				hasTitle = false;
-//			}
-//		}
-		String collectionName = "CBOBD_LOCATION_INFO_UPSIDE";
-		AggregateIterable<Document> iterable = db.getCollection(collectionName)
-				.aggregate(Arrays.asList(
-						Aggregates.match(Filters.and(Filters.eq("deviceId", "13173900985"),
-								Filters.and(Filters.gt("gpsTime", "2017-10-20 00:00:00"),
-										Filters.lt("gpsTime", "2017-10-30 23:59:59")))),
-						Aggregates.sort(new Document().append("gpsTime", -1))));
-		StringBuffer buffer = new StringBuffer();
-		for (Document document : iterable) {
-			buffer.append(document.get("gpsTime") + "\t\t" + document.get("originalData") + "\n");
+		List<String> list = Arrays.asList("2017-10-20", "2017-10-21", "2017-10-22", "2017-10-23", "2017-10-24",
+				"2017-10-25", "2017-10-26", "2017-10-27", "2017-10-28", "2017-10-29", "2017-10-30", "2017-10-31",
+				"2017-11-01");
+		boolean hasTitle = true;
+		for (String day : list) {
+			// loadData(db, day, hasTitle);
+			if (hasTitle) {
+				hasTitle = false;
+			}
 		}
-		System.out.println(buffer.toString());
-		FileUtil.writer("d:/test.txt", buffer.toString());
+
+		//加载车辆注册数据
+		loadRegData(db);
+		//加载车辆上报数据
+		loadCarUpload(db);
+
+	}
+
+	private static void loadRegData(MongoDatabase db) throws Exception {
+		String collectionName = "CBOBD_REGISTRATION_UPSIDE";
+		AggregateIterable<Document> iterable = db
+				.getCollection(
+						collectionName)
+				.aggregate(Arrays.asList(Aggregates.match(Filters.and(Filters.eq("deviceId", "13173900985"),
+						Filters.and(
+								Filters.gt("createTime", new Date(DateUtil.yyyymmddhhmmss2long("2017-10-20 00:00:00"))),
+								Filters.lt("createTime",
+										new Date(DateUtil.yyyymmddhhmmss2long("2017-12-01 23:59:59"))))))));
+
+		StringBuilder builder = new StringBuilder();
+		for (Document document : iterable) {
+			loadCarUploadData(db, builder, document.get("upsideId").toString());
+		}
+		FileUtil.writer("d:/cobd/" + DateUtil.now4yyyyMMdd() + "_车辆注册平台上报数据.txt", builder.toString());
+	}
+
+	private static void loadCarUpload(MongoDatabase db) throws Exception {
+		String collectionName = "CBOBD_LOCATION_INFO_UPSIDE";
+		AggregateIterable<Document> iterable = db.getCollection(collectionName).aggregate(Arrays.asList(
+				Aggregates.match(
+						Filters.and(Filters.eq("deviceId", "13173900985"), Filters.and(Filters.ne("upsideId", null)),
+								// Aggregates.match(Filters.and(Filters.eq("deviceId",
+								// "13172500117"),
+								Filters.and(Filters.gt("gpsTime", "2017-10-20 00:00:00"),
+										Filters.lt("gpsTime", "2017-12-01 23:59:59")))),
+				Aggregates.sort(new Document().append("gpsTime", -1))));
+
+		StringBuilder builder = new StringBuilder();
+		for (Document document : iterable) {
+			loadCarUploadData(db, builder, document.get("upsideId").toString());
+		}
+		FileUtil.writer("d:/cobd/" + DateUtil.now4yyyyMMdd() + "_车辆上行上报数据.txt", builder.toString());
+	}
+
+	private static void loadCarUploadData(MongoDatabase db, StringBuilder builder, String upsideId) {
+		String collectionName = "OBD_UPSIDE_DATA";
+		AggregateIterable<Document> iterable = db.getCollection(collectionName)
+				.aggregate(Arrays.asList(Aggregates.match(Filters.and(Filters.eq("_id", upsideId)))));
+
+		for (Document document : iterable) {
+			builder.append("终端上报数据日期:").append(DateUtil.yyyyMMddhhmm((Date) document.get("createTime")))
+					.append(System.lineSeparator());
+			builder.append("终端上报未转义报文:").append(document.get("originalData")).append(System.lineSeparator());
+			builder.append("终端上报转义报文:").append(escape7D02or7D01(document.get("originalData").toString()))
+					.append(System.lineSeparator()).append(System.lineSeparator());
+		}
+	}
+
+	/**
+	 * 转换7D01、7D02
+	 * 
+	 * @param content
+	 * @return
+	 */
+	private static String escape7D02or7D01(String content) {
+		String data = content;
+		data = data.substring(2).toUpperCase();// 去头部E7
+		data = data.substring(0, data.length() - 2);// 去尾部E7
+
+		String regex = "(.{2})";
+		String dataTmp = data.replaceAll(regex, "$1 ");
+		String[] datas = dataTmp.split("\\s+");
+
+		String lastCode = "";
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < datas.length; i++) {
+			if ("7D01".equals(lastCode + datas[i])) {
+				builder.delete(builder.length() - 2, builder.length());
+				builder.append("7D");
+				lastCode = datas[i];
+				continue;
+			}
+
+			if ("7D02".equals(lastCode + datas[i])) {
+				builder.delete(builder.length() - 2, builder.length());
+				builder.append("7E");
+				lastCode = datas[i];
+				continue;
+			}
+
+			lastCode = datas[i];
+			builder.append(datas[i]);
+		}
+		return "7E" + builder.toString() + "7E";
 	}
 
 	private static void loadData(MongoDatabase db, String day, boolean hasTitle) {
