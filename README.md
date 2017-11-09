@@ -93,3 +93,199 @@ public class BeanUtil {
 }
 
 ```
+
+3、maven项目配置。
+```
+<?xml version="1.0" encoding="UTF-8"?>
+
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  
+  <pluginGroups>
+  </pluginGroups>
+  <proxies></proxies>
+  <servers>
+    <server>  
+      <id>nexus-releases</id>  
+      <username>deployment</username>  
+      <password>1234567</password>  
+    </server>  
+    <server>  
+      <id>nexus-snapshots</id>  
+      <username>deployment</username>  
+      <password>1234567</password>  
+    </server> 
+	
+	<server>  
+      <id>hm-snapshots</id>  
+      <username>admin</username>  
+      <password>1234567</password>  
+    </server>
+  </servers>
+
+  <mirrors>
+      <mirror>
+        <id>nexus-snapshots</id>
+        <mirrorOf>nexus-snapshots</mirrorOf>
+        <url>http://192.168.3.100:8888/nexus/content/groups/public-snapshots</url>
+      </mirror>
+
+      <mirror>
+        <id>nexus-releases</id>
+        <mirrorOf>nexus-releases</mirrorOf>
+        <url>http://192.168.3.100:8888/nexus/content/groups/public</url>
+      </mirror>
+	  
+	  <mirror>
+		<id>hm-snapshots</id>
+		<mirrorOf>hm-snapshots</mirrorOf>
+		<url>http://120.92.147.60:8081/nexus/content/repositories/hm-snapshots</url>
+	  </mirror>
+	  
+	  <mirror>
+		<id>thirdparty</id>
+		<mirrorOf>thirdparty</mirrorOf>
+		<url>http://120.92.147.60:8081/nexus/content/repositories/thirdparty</url>
+	  </mirror>
+
+      <mirror>
+          <id>central-maven</id>
+	<mirrorOf>*</mirrorOf>
+          <url>http://central.maven.org/maven2/</url>
+      </mirror>
+<mirror>
+<id>central-repo1</id>
+<mirrorOf>*</mirrorOf>
+<url>http://repo1.maven.org/maven2/</url>
+</mirror>
+
+  </mirrors>
+
+  
+  <profiles>
+  <!---->
+    <profile>
+      <id>nexus</id>
+      <activation><activeByDefault>true</activeByDefault></activation>
+      <repositories>  
+
+		<repository>
+			<id>hm-snapshots</id>
+			<name>hm-snapshots</name>
+			<url>http://120.92.147.60:8081/nexus/content/repositories/hm-snapshots</url>
+			<snapshots><enabled>true</enabled></snapshots>
+			<releases><enabled>true</enabled></releases>
+		 </repository>
+
+		<repository>
+			<id>thirdparty</id>
+			<name>thirdparty</name>
+			<url>http://120.92.147.60:8081/nexus/content/repositories/thirdparty</url>
+			<snapshots><enabled>true</enabled></snapshots>
+			<releases><enabled>true</enabled></releases>
+		 </repository>     
+	  
+        <repository>
+          <id>nexus-snapshots</id>
+          <name>nexus snapshots</name>
+          <snapshots><enabled>true</enabled></snapshots>
+          <releases><enabled>false</enabled></releases>
+          <url>http://192.168.3.100:8888/nexus/content/groups/public-snapshots</url>
+        </repository>
+
+        <repository>
+           <id>nexus-releases</id>
+           <name>nexus releases</name>
+           <snapshots><enabled>false</enabled></snapshots>
+           <releases><enabled>true</enabled></releases>
+           <url>http://192.168.3.100:8888/nexus/content/groups/public</url>
+        </repository>
+
+        <repository>  
+          <id>maven</id>  
+          <name>maven</name>  
+          <url>http://repo1.maven.org/maven2/</url>  
+        </repository> 
+	
+	<repository>
+          <id>central-maven</id>
+          <url>http://central.maven.org/maven2/</url>
+        </repository>
+        
+        <repository>
+          <id>apache.snapshots</id>
+          <url>http://people.apache.org/maven-snapshot-repository/</url>
+        </repository>
+
+        <repository>  
+          <id>nexus-world-repo</id>
+          <name>world-repo</name>  
+          <url>http://search.maven.org/</url>  
+        </repository> 
+          
+        <repository>  
+          <id>nexus-osc</id>
+          <name>Nexus osc</name>  
+          <url>http://maven.oschina.net/content/groups/public/</url>  
+        </repository>  
+        
+        <repository>     
+          <id>mirrors.ibiblio.org</id>     
+          <name>mirrors.ibiblio.org</name>     
+          <url>http://mirrors.ibiblio.org/maven2/</url>  
+        </repository>
+          
+        <repository>  
+          <id>nexus-osc-thirdparty</id> 
+          <name>Nexus osc thirdparty</name>  
+          <url>http://maven.oschina.net/content/repositories/thirdparty/</url>  
+        </repository>
+		
+		<repository>  
+          <id>thirdparty</id> 
+          <name>thirdparty</name>  
+          <url>http://120.92.147.60:8081/nexus/content/repositories/thirdparty/</url>  
+        </repository>
+      </repositories>
+  	  <pluginRepositories>
+        <pluginRepository>
+          <id>nexus-releases</id>
+          <name>nexus releases</name>
+          <url>http://192.168.3.100:8888/nexus/content/groups/public</url>
+          <snapshots><enabled>false</enabled></snapshots>
+          <releases><enabled>true</enabled></releases>
+        </pluginRepository>
+        <pluginRepository>
+          <id>nexus-snapshots</id>
+          <name>nexus snapshots</name>
+          <url>http://192.168.3.100:8888/nexus/content/groups/public-snapshots</url>
+          <snapshots><enabled>true</enabled></snapshots>
+          <releases><enabled>false</enabled></releases>
+        </pluginRepository>
+		
+		<pluginRepository>
+			<id>hm-snapshots</id>
+			<name>hm-snapshots</name>
+			<url>http://120.92.147.60:8081/nexus/content/repositories/hm-snapshots</url>
+			<snapshots><enabled>true</enabled></snapshots>
+			<releases><enabled>true</enabled></releases>
+        </pluginRepository>
+
+		<pluginRepository>
+			<id>thirdparty</id>
+			<name>thirdparty</name>
+			<url>http://120.92.147.60:8081/nexus/content/repositories/thirdparty</url>
+			<snapshots><enabled>true</enabled></snapshots>
+			<releases><enabled>true</enabled></releases>
+        </pluginRepository>
+		
+  	  </pluginRepositories>
+    </profile>
+	
+  </profiles>
+<!---->
+
+</settings>
+
+```
