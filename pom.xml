@@ -60,12 +60,16 @@
 		<dependency>
 			<groupId>com.aliyuncs</groupId>
 			<artifactId>aliyun-java-sdk-core</artifactId>
-			<version>3.3.1</version>
+			<version>${aliyun-java-sdk-core.version>}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.aliyuncs</groupId>
 			<artifactId>aliyun-java-sdk-dysmsapi</artifactId>
-			<version>1.0.0</version>
+			<version>${aliyun-java-sdk-dysmsapi.version}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
 		</dependency>
 		<!-- 阿里大于短信发送 -->
 
