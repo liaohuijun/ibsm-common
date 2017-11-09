@@ -46,9 +46,60 @@
 		<ganymed-ssh2.version>build210-hudson-1</ganymed-ssh2.version>
 		<jsch.version>0.1.54</jsch.version>
 		<jsoup.version>1.7.2</jsoup.version>
+		<gson.version>2.3</gson.version>
+		<jiguang-common.version>1.0.8</jiguang-common.version>
+		<netty-all.version>4.1.6.Final</netty-all.version>
+		<jpush-client.version>3.3.2</jpush-client.version>
+		<aliyun-java-sdk-dysmsapi.version>1.0.0</aliyun-java-sdk-dysmsapi.version>
+		<aliyun-java-sdk-core.version>3.3.1</aliyun-java-sdk-core.version>
 	</properties>
 
 	<dependencies>
+
+		<!-- 阿里大于短信发送 -->
+		<dependency>
+			<groupId>com.aliyuncs</groupId>
+			<artifactId>aliyun-java-sdk-core</artifactId>
+			<version>3.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aliyuncs</groupId>
+			<artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<!-- 阿里大于短信发送 -->
+
+		<!-- jpush -->
+		<dependency>
+			<groupId>cn.jpush.api</groupId>
+			<artifactId>jpush-client</artifactId>
+			<version>${jpush-client.version}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>cn.jpush.api</groupId>
+			<artifactId>jiguang-common</artifactId>
+			<version>${jiguang-common.version}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+			<version>${netty-all.version}</version>
+			<!-- <scope>compile</scope> -->
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>${gson.version}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
+		</dependency>
+		<!-- jpush -->
 
 		<dependency>
 			<groupId>org.jsoup</groupId>
