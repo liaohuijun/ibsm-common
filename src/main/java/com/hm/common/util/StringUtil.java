@@ -1,6 +1,7 @@
 package com.hm.common.util;
 
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -296,5 +297,22 @@ public class StringUtil extends CommonUtil {
 			}
 			field.set(obj, value.toString().trim());
 		}
+	}
+	
+	/**
+	 * 数组转字符串
+	 * 
+	 * @param arrays
+	 * @return
+	 */
+	public static String array2str(List<String> arrays) {
+		if (CommonUtil.isEmpty(arrays)) {
+			return null;
+		}
+		StringBuilder builder = new StringBuilder("");
+		for (String entity : arrays) {
+			builder.append(entity).append(",");
+		}
+		return builder.substring(0, builder.length() - 1);
 	}
 }

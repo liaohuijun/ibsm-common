@@ -10,9 +10,11 @@ import org.bson.Document;
 import com.hm.common.util.CommonUtil;
 import com.hm.common.util.DateUtil;
 import com.hm.common.util.FileUtil;
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.client.AggregateIterable;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
@@ -46,18 +48,18 @@ public class TestMongoDriver {
 
 		List<String> list = Arrays.asList("2017-10-20", "2017-10-21", "2017-10-22", "2017-10-23", "2017-10-24",
 				"2017-10-25", "2017-10-26", "2017-10-27", "2017-10-28", "2017-10-29", "2017-10-30", "2017-10-31",
-				"2017-11-01");
+				"2017-11-01", "2017-11-02");
 		boolean hasTitle = true;
 		for (String day : list) {
-			// loadData(db, day, hasTitle);
+			loadData(db, day, hasTitle);
 			if (hasTitle) {
 				hasTitle = false;
 			}
 		}
 
-		//加载车辆注册数据
+		// 加载车辆注册数据
 		loadRegData(db);
-		//加载车辆上报数据
+		// 加载车辆上报数据
 		loadCarUpload(db);
 
 	}
@@ -69,7 +71,7 @@ public class TestMongoDriver {
 						collectionName)
 				.aggregate(Arrays.asList(Aggregates.match(Filters.and(Filters.eq("deviceId", "13173900985"),
 						Filters.and(
-								Filters.gt("createTime", new Date(DateUtil.yyyymmddhhmmss2long("2017-10-20 00:00:00"))),
+								Filters.gt("createTime", new Date(DateUtil.yyyymmddhhmmss2long("2017-10-24 00:00:00"))),
 								Filters.lt("createTime",
 										new Date(DateUtil.yyyymmddhhmmss2long("2017-12-01 23:59:59"))))))));
 
@@ -87,7 +89,7 @@ public class TestMongoDriver {
 						Filters.and(Filters.eq("deviceId", "13173900985"), Filters.and(Filters.ne("upsideId", null)),
 								// Aggregates.match(Filters.and(Filters.eq("deviceId",
 								// "13172500117"),
-								Filters.and(Filters.gt("gpsTime", "2017-10-20 00:00:00"),
+								Filters.and(Filters.gt("gpsTime", "2017-10-24 00:00:00"),
 										Filters.lt("gpsTime", "2017-12-01 23:59:59")))),
 				Aggregates.sort(new Document().append("gpsTime", -1))));
 
@@ -108,8 +110,50 @@ public class TestMongoDriver {
 					.append(System.lineSeparator());
 			builder.append("终端上报未转义报文:").append(document.get("originalData")).append(System.lineSeparator());
 			builder.append("终端上报转义报文:").append(escape7D02or7D01(document.get("originalData").toString()))
-					.append(System.lineSeparator()).append(System.lineSeparator());
+					.append(System.lineSeparator());
 		}
+
+		FindIterable<Document> findIterable = db.getCollection("OBD_DOWNSIDE_DATA")
+				.find(new BasicDBObject("upsideId", upsideId));
+		for (Document document : findIterable) {
+			String downData = document.get("responseData").toString();
+			builder.append("终端下行未转义报文:").append(downData).append(System.lineSeparator());
+			builder.append("终端下行转义报文:").append(escape7Eor7D(downData)).append(System.lineSeparator());
+			if(!document.get("escapeResponseData").equals(escape7Eor7D(downData))){
+				System.out.println("检测到数据非法");
+			}
+		}
+		builder.append(System.lineSeparator());
+	}
+
+	/**
+	 * 转义7E、7D
+	 * 
+	 * @param content
+	 * @return
+	 */
+	private static String escape7Eor7D(String content) {
+		String data = content;
+		data = data.substring(2).toUpperCase();// 去头部E7
+		data = data.substring(0, data.length() - 2);// 去尾部E7
+
+		String regex = "(.{2})";
+		String dataTmp = data.replaceAll(regex, "$1 ");
+		String[] datas = dataTmp.split("\\s+");
+
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < datas.length; i++) {
+			if ("7D".equals(datas[i])) {
+				builder.append("7D01");
+				continue;
+			}
+			if ("7E".equals(datas[i])) {
+				builder.append("7D02");
+				continue;
+			}
+			builder.append(datas[i]);
+		}
+		return "7E" + builder.toString() + "7E";
 	}
 
 	/**
