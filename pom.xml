@@ -60,7 +60,7 @@
 		<dependency>
 			<groupId>com.aliyuncs</groupId>
 			<artifactId>aliyun-java-sdk-core</artifactId>
-			<version>${aliyun-java-sdk-core.version>}</version>
+			<version>${aliyun-java-sdk-core.version}</version>
 			<!-- 依赖模块将提供 -->
 			<scope>provided</scope>
 		</dependency>
