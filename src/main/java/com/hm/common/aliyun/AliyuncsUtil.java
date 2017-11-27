@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSONObject;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
@@ -12,6 +13,12 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
+import com.hm.common.aliyun.AliyuncsUtil.SMS.SmsAuthorization;
+import com.hm.common.aliyun.vo.TaoBaoSmsResponseVo;
+import com.taobao.api.ApiException;
+import com.taobao.api.AutoRetryTaobaoClient;
+import com.taobao.api.request.AlibabaAliqinFcSmsNumSendRequest;
+import com.taobao.api.response.AlibabaAliqinFcSmsNumSendResponse;
 
 /**
  * @author shishun.wang
@@ -25,6 +32,64 @@ public final class AliyuncsUtil {
 
 	private AliyuncsUtil() {
 
+	}
+
+	/**
+	 * @author shishun.wang
+	 * @date 2017年11月15日 下午1:34:19
+	 * @version 1.0
+	 * @describe
+	 */
+	public final static class TaoBaoSMS {
+
+		/**
+		 * 产品域名
+		 */
+		private static final String domain = "https://eco.taobao.com/router/rest";
+
+		private TaoBaoSMS() {
+		}
+
+		public static TaoBaoSmsResponseVo sendSms(SmsAuthorization authorization, String templateCode, String signName,
+				String phoneNumbers) throws ApiException {
+			log.info("调用阿里大于发送短信:templateCode=" + templateCode + ";signName=" + signName + ";phoneNumbers="
+					+ phoneNumbers);
+
+			AlibabaAliqinFcSmsNumSendRequest req = bulidReq(templateCode, signName, phoneNumbers);
+			return execute(authorization, req);
+		}
+
+		public static TaoBaoSmsResponseVo sendSms(SmsAuthorization authorization, String templateCode, String signName,
+				String content, String phoneNumbers) throws ApiException {
+			log.info("调用阿里大于发送短信:templateCode=" + templateCode + ";signName=" + signName + ";phoneNumbers="
+					+ phoneNumbers + ";content=" + content);
+			AlibabaAliqinFcSmsNumSendRequest req = bulidReq(templateCode, signName, phoneNumbers);
+			req.setSmsParamString(content);
+
+			return execute(authorization, req);
+		}
+
+		private static TaoBaoSmsResponseVo execute(SmsAuthorization authorization, AlibabaAliqinFcSmsNumSendRequest req)
+				throws ApiException {
+			AlibabaAliqinFcSmsNumSendResponse response = new AutoRetryTaobaoClient(domain, authorization.getAccessKey(),
+					authorization.getAccessKeySecret()).execute(req);
+			if (null != response) {
+				return JSONObject.parseObject(response.getBody(), TaoBaoSmsResponseVo.class);
+			}
+			log.warn("阿里大于短信接口还没返回信息");
+			return null;
+		}
+
+		private static AlibabaAliqinFcSmsNumSendRequest bulidReq(String templateCode, String signName,
+				String phoneNumbers) {
+			AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
+			req.setSmsType("normal");
+			req.setSmsFreeSignName(signName);
+			req.setRecNum(phoneNumbers);
+			req.setSmsTemplateCode(templateCode);
+
+			return req;
+		}
 	}
 
 	/**

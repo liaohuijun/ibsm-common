@@ -52,9 +52,16 @@
 		<jpush-client.version>3.3.2</jpush-client.version>
 		<aliyun-java-sdk-dysmsapi.version>1.0.0</aliyun-java-sdk-dysmsapi.version>
 		<aliyun-java-sdk-core.version>3.3.1</aliyun-java-sdk-core.version>
+		<taobao-sms.version>1.0</taobao-sms.version>
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>com.taobao.api</groupId>
+			<artifactId>taobao-sms</artifactId>
+			<version>${taobao-sms.version}</version>
+		</dependency>
 
 		<!-- 阿里大于短信发送 -->
 		<dependency>
