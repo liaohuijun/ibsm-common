@@ -61,6 +61,8 @@
 			<groupId>com.taobao.api</groupId>
 			<artifactId>taobao-sms</artifactId>
 			<version>${taobao-sms.version}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- 阿里大于短信发送 -->
