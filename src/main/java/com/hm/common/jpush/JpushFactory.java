@@ -95,8 +95,13 @@ public enum JpushFactory {
 				break;
 			}
 
-			PushPayload pushPayload = buildPushObjectByRegistrationId(platform, notification.build(), tagetPushAlias,
-					msgContent);
+			PushPayload pushPayload = null;
+			if (StringUtil.isBlankOrNull(msgContent)) {
+				pushPayload = buildPushObjectByRegistrationId(platform, notification.build(), tagetPushAlias);
+			} else {
+				pushPayload = buildPushObjectByRegistrationId(platform, notification.build(), tagetPushAlias,
+						msgContent);
+			}
 
 			PushResult result = client.sendPush(pushPayload);
 			delayWating();// 延迟等待第三方程序处理
@@ -167,7 +172,12 @@ public enum JpushFactory {
 				break;
 			}
 
-			PushPayload pushPayload = buildPushObjectByAlia(platform, notification.build(), tagetPushAlias, msgContent);
+			PushPayload pushPayload = null;
+			if (StringUtil.isBlankOrNull(msgContent)) {
+				pushPayload = buildPushObjectByAlia(platform, notification.build(), tagetPushAlias);
+			} else {
+				pushPayload = buildPushObjectByAlia(platform, notification.build(), tagetPushAlias, msgContent);
+			}
 
 			PushResult result = client.sendPush(pushPayload);
 			delayWating();// 延迟等待第三方程序处理
@@ -244,10 +254,26 @@ public enum JpushFactory {
 	}
 
 	private static PushPayload buildPushObjectByAlia(Platform platform, Notification notification,
+			List<String> tagetPushAlias) {
+		return PushPayload.newBuilder().setPlatform(platform).setAudience(Audience.alias(tagetPushAlias))
+				.setNotification(notification).setOptions(Options.newBuilder().setApnsProduction(true)// 通知是APNs推送通道的，消息是JPush应用内消息通道的。APNs的推送环境是“生产”（如果不显式设置的话，Library会默认指定为开发）
+						.build())
+				.build();
+	}
+
+	private static PushPayload buildPushObjectByAlia(Platform platform, Notification notification,
 			List<String> tagetPushAlias, String msgContent) {
 		return PushPayload.newBuilder().setPlatform(platform).setAudience(Audience.alias(tagetPushAlias))
 				.setNotification(notification).setMessage(Message.content(msgContent))// 消息内容是MSG_CONTENT
 				.setOptions(Options.newBuilder().setApnsProduction(true)// 通知是APNs推送通道的，消息是JPush应用内消息通道的。APNs的推送环境是“生产”（如果不显式设置的话，Library会默认指定为开发）
+						.build())
+				.build();
+	}
+
+	private static PushPayload buildPushObjectByRegistrationId(Platform platform, Notification notification,
+			List<String> tagetPushAlias) {
+		return PushPayload.newBuilder().setPlatform(platform).setAudience(Audience.registrationId(tagetPushAlias))
+				.setNotification(notification).setOptions(Options.newBuilder().setApnsProduction(true)// 通知是APNs推送通道的，消息是JPush应用内消息通道的。APNs的推送环境是“生产”（如果不显式设置的话，Library会默认指定为开发）
 						.build())
 				.build();
 	}
