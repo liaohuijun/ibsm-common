@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * @version 1.0
  * @describe 客户端请求拦截
  */
-@Target(ElementType.METHOD) 
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface WebClientRequestIntercept {
@@ -25,16 +25,23 @@ public @interface WebClientRequestIntercept {
 	boolean frequency() default false;
 
 	/**
-	 * 客户端请求->服务器对客户端请求身份认证
+	 * 需要授权
 	 * 
 	 * @return
 	 */
-	boolean requestCertification() default true;
+	boolean auth() default true;
+
+	/**
+	 * 角色列表可以访问
+	 * 
+	 * @return
+	 */
+	String[] roles() default {};
 
 	/**
 	 * ip 黑名单,禁止访问
 	 * 
 	 * @return
 	 */
-	String[] ipBlacklist() default {};
+	String[] blacklist() default {};
 }

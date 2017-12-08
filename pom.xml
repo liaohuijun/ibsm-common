@@ -54,9 +54,20 @@
 		<aliyun-java-sdk-core.version>3.3.1</aliyun-java-sdk-core.version>
 		<taobao-sms.version>1.0</taobao-sms.version>
 		<freemarker.version>2.3.27-incubating</freemarker.version>
+		<rxjava.version>2.1.7</rxjava.version>
+		<lombok.version>1.16.18</lombok.version>
+		<logback-classic.version>1.2.3</logback-classic.version>
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>io.reactivex.rxjava2</groupId>
+			<artifactId>rxjava</artifactId>
+			<version>${rxjava.version}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.freemarker</groupId>
@@ -274,11 +285,21 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- <dependency> -->
-		<!-- <groupId>org.slf4j</groupId> -->
-		<!-- <artifactId>slf4j-log4j12</artifactId> -->
-		<!-- <version>1.7.25</version> -->
-		<!-- </dependency> -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback-classic.version}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>redis.clients</groupId>
