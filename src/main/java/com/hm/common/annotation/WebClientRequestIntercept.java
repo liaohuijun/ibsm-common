@@ -37,11 +37,4 @@ public @interface WebClientRequestIntercept {
 	 * @return
 	 */
 	String[] roles() default {};
-
-	/**
-	 * ip 黑名单,禁止访问
-	 * 
-	 * @return
-	 */
-	String[] blacklist() default {};
 }
