@@ -4,6 +4,7 @@
 package com.hm.common.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @describe
  */
+@SuppressWarnings({"unchecked" })
 public class CollectionUtil extends CommonUtil {
 
 	private CollectionUtil() {
@@ -38,8 +40,7 @@ public class CollectionUtil extends CommonUtil {
 		}
 		List<T> targetList = new ArrayList<>();
 		list.stream().filter(item -> item != null).forEach(item -> {
-			Optional<T> tryFind = targetList.parallelStream()
-					.filter(targetItem -> comparator.compare(item, targetItem) == 0).findAny();
+			Optional<T> tryFind = targetList.parallelStream().filter(targetItem -> comparator.compare(item, targetItem) == 0).findAny();
 			if (!tryFind.isPresent()) {
 				targetList.add(item);
 			}
@@ -52,5 +53,22 @@ public class CollectionUtil extends CommonUtil {
 			return Collections.emptyList();
 		}
 		return list.stream().distinct().collect(Collectors.toList());
+	}
+
+	@SuppressWarnings("rawtypes")
+	public static final List difference(List source, List<?> target) {
+		List sourceTmp = null;
+		List targetTmp = null;
+		if (source.size() >= target.size()) {
+			sourceTmp = source;
+			targetTmp = target;
+		} else {
+			sourceTmp = target;
+			targetTmp = source;
+		}
+		List<?> list = new ArrayList(Arrays.asList(new Object[sourceTmp.size()]));
+		Collections.copy(list, sourceTmp);
+		list.removeAll(targetTmp);
+		return list;
 	}
 }
