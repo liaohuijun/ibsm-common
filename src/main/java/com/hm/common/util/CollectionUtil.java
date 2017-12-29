@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @describe
  */
-@SuppressWarnings({"unchecked" })
 public class CollectionUtil extends CommonUtil {
 
 	private CollectionUtil() {
@@ -55,8 +54,8 @@ public class CollectionUtil extends CommonUtil {
 		return list.stream().distinct().collect(Collectors.toList());
 	}
 
-	@SuppressWarnings("rawtypes")
-	public static final List difference(List source, List<?> target) {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static final List difference(List source, List target) {
 		List sourceTmp = null;
 		List targetTmp = null;
 		if (source.size() >= target.size()) {
@@ -66,7 +65,7 @@ public class CollectionUtil extends CommonUtil {
 			sourceTmp = target;
 			targetTmp = source;
 		}
-		List<?> list = new ArrayList(Arrays.asList(new Object[sourceTmp.size()]));
+		List list = new ArrayList(Arrays.asList(new Object[sourceTmp.size()]));
 		Collections.copy(list, sourceTmp);
 		list.removeAll(targetTmp);
 		return list;
