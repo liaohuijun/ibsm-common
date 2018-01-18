@@ -10,6 +10,8 @@ import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -530,5 +532,30 @@ public class DateUtil extends CommonUtil {
 		public String desc() {
 			return this.desc;
 		}
+	}
+
+	/**
+	 * 获取指定日期之间间隔日期
+	 * 
+	 * @param dBegin
+	 * @param dEnd
+	 * @return
+	 */
+	public static List<Date> findIntervalDates(Date dBegin, Date dEnd) {
+		List<Date> dates = new LinkedList<Date>();
+		dates.add(dBegin);
+		Calendar calBegin = Calendar.getInstance();
+		// 使用给定的 Date 设置此 Calendar 的时间
+		calBegin.setTime(dBegin);
+		Calendar calEnd = Calendar.getInstance();
+		// 使用给定的 Date 设置此 Calendar 的时间
+		calEnd.setTime(dEnd);
+		// 测试此日期是否在指定日期之后
+		while (dEnd.after(calBegin.getTime())) {
+			// 根据日历的规则，为给定的日历字段添加或减去指定的时间量
+			calBegin.add(Calendar.DAY_OF_MONTH, 1);
+			dates.add(calBegin.getTime());
+		}
+		return dates;
 	}
 }
