@@ -12,12 +12,31 @@ public class ServiceException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
+	private String code;
+
+	private String message;
+
+	public String getCode() {
+		return code;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
 	private ServiceException() {
 		super();
 	}
 
 	private ServiceException(String message) {
 		super(message);
+		this.message = message;
+	}
+
+	private ServiceException(String code, String message) {
+		super(message);
+		this.code = code;
+		this.message = message;
 	}
 
 	private ServiceException(String message, Throwable cause) {
@@ -33,15 +52,15 @@ public class ServiceException extends RuntimeException {
 	}
 
 	public static ServiceException warn(String code, String message) {
-		return new ServiceException(code + ":*:" + message);
+		return new ServiceException(code, message);
 	}
 
 	public static ServiceException warning(ErrorCode errorCode, Object... params) {
-		return new ServiceException(errorCode.status() + ":*:" + MessageFormat.format(errorCode.describe(), params));
+		return new ServiceException(errorCode.status(), MessageFormat.format(errorCode.describe(), params));
 	}
 
 	public static ServiceException warning(ErrorCode errorCode) {
-		return new ServiceException(errorCode.status() + ":*:" + errorCode.describe());
+		return new ServiceException(errorCode.status(), errorCode.describe());
 	}
 
 }
