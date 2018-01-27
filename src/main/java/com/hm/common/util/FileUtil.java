@@ -304,6 +304,28 @@ public class FileUtil extends CommonUtil {
 				stream.close();
 		}
 	}
+	
+	/**
+	 * 从指定路径读取文件到字节数组中,对于一些非文本格式的内容可以选用这个方法 457364578634785634534
+	 * 
+	 * @param path
+	 *            文件路径,包含文件名
+	 * @return byte[] 文件字节数组
+	 * 
+	 */
+	public static byte[] getFile(File file) throws IOException {
+		FileInputStream stream = null;
+		try {
+			stream = new FileInputStream(file);
+			int size = stream.available();
+			byte data[] = new byte[size];
+			stream.read(data);
+			return data;
+		} finally {
+			if (null != stream)
+				stream.close();
+		}
+	}
 
 	/**
 	 * 把字节内容写入到对应的文件，对于一些非文本的文件可以采用这个方法。
