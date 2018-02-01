@@ -435,7 +435,7 @@
 	<distributionManagement>
 		<repository>
 			<id>hm-snapshots</id>
-			<url>http://120.92.147.60:8081/nexus/content/repositories/hm-snapshots</url>
+			<url>http://120.92.147.60:9000/nexus/content/repositories/hm-snapshots</url>
 		</repository>
 	</distributionManagement>
 
