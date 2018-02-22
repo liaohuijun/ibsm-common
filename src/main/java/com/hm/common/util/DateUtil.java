@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.SimpleTimeZone;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,6 +60,30 @@ public class DateUtil extends CommonUtil {
 		}
 		try {
 			return new SimpleDateFormat("yyyy-MM-dd").parse(str).getTime();
+		} catch (ParseException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
+
+	public static Date yyyymmddhhmmss2date(String str) {
+		if (StringUtil.isBlankOrNull(str)) {
+			throw ServiceException.warning(ErrorCode.DATA_NOT_NULL);
+		}
+		try {
+			return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(str);
+		} catch (ParseException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
+
+	public static Date yyyymmdd2date(String str) {
+		if (StringUtil.isBlankOrNull(str)) {
+			throw ServiceException.warning(ErrorCode.DATA_NOT_NULL);
+		}
+		try {
+			return new SimpleDateFormat("yyyy-MM-dd").parse(str);
 		} catch (ParseException e) {
 			logger.error(e.getMessage(), e);
 		}
@@ -557,5 +582,35 @@ public class DateUtil extends CommonUtil {
 			dates.add(calBegin.getTime());
 		}
 		return dates;
+	}
+
+	/**
+	 * 转换为iso日期
+	 * 
+	 * @param date
+	 * @return
+	 */
+	public static String toIosDate(Date date) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+		format.setCalendar(new GregorianCalendar(new SimpleTimeZone(0, "GMT")));
+		return format.format(date);
+	}
+
+	/**
+	 * iso日期转换为日期
+	 * 
+	 * @param isoDate
+	 * @return
+	 * @throws ParseException
+	 */
+	public static Date isoDate(String isoDate) {
+		try {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+			format.setCalendar(new GregorianCalendar(new SimpleTimeZone(0, "GMT")));
+			return format.parse(isoDate);
+		} catch (ParseException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
 	}
 }
