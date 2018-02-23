@@ -2,9 +2,12 @@ package com.hm.common.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.poi.ss.formula.functions.T;
 
 /**
  * @author shishun.wang
@@ -12,7 +15,7 @@ import java.util.Set;
  * @version 1.0
  * @describe 数组工具类
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "hiding" })
 public class ArraysUtil extends CommonUtil {
 
 	private ArraysUtil() {
@@ -183,7 +186,7 @@ public class ArraysUtil extends CommonUtil {
 	 * @param target
 	 * @return
 	 */
-	public static <T> Set<T> contain(Set<T> source, Set<T> target) {
+	public static Set<T> contain(Set<T> source, Set<T> target) {
 		if (CommonUtil.isAnyEmpty(source, target)) {
 			return null;
 		}
@@ -195,4 +198,37 @@ public class ArraysUtil extends CommonUtil {
 		}
 		return tmp;
 	}
+
+	/**
+	 * 集合是否相同比较
+	 * 
+	 * @param source
+	 * @param target
+	 * @return
+	 */
+	public static boolean equals(List<String> source, List<String> target) {
+		if (CommonUtil.isAllEmpty(source, target)) {
+			return true;
+		}
+
+		if (CommonUtil.isAnyEmpty(source, target)) {
+			return false;
+		}
+
+		if (source.size() != target.size()) {
+			return false;
+		}
+
+		Collections.sort(source, (a, b) -> b.compareTo(a));
+		Collections.sort(target, (a, b) -> b.compareTo(a));
+
+		for (int i = 0; i < source.size(); i++) {
+			if (!source.get(i).equals(target.get(i))) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 }

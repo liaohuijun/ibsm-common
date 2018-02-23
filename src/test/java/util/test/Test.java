@@ -81,8 +81,8 @@ public class Test {
 		System.out.println(format.format(new Date()));
 		System.out.println("-----------------------------");
 		
-		System.out.println(DateUtil.toIosDate(DateUtil.yyyymmddhhmmss2date("2018-02-13 00:00:00")));
-		System.out.println(DateUtil.toIosDate(DateUtil.yyyymmddhhmmss2date("2018-02-13 23:59:59")));
+		System.out.println(DateUtil.toIosDate(DateUtil.yyyymmddhhmmss2date("2018-02-12 00:00:00")));
+		System.out.println(DateUtil.toIosDate(DateUtil.yyyymmddhhmmss2date("2018-02-12 23:59:59")));
 		
 	}
 
