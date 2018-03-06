@@ -1,4 +1,4 @@
-package com.hm.akka.study;
+package com.hm.akka.study.demo2;
 
 import akka.actor.AbstractActor;
 import akka.actor.Props;
