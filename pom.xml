@@ -55,6 +55,10 @@
 		<lombok.version>1.16.18</lombok.version>
 		<logback-classic.version>1.2.3</logback-classic.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
+		<junit.version>4.12</junit.version>
+		<jsoup.version>1.10.2</jsoup.version>
+		<maven-compiler-plugin.version>3.2</maven-compiler-plugin.version>
+		<maven-source-plugin.version>3.0.1</maven-source-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -62,6 +66,8 @@
 			<groupId>com.belerweb</groupId>
 			<artifactId>pinyin4j</artifactId>
 			<version>${pinyin4j.version}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -405,14 +411,17 @@
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
-			<version>1.10.2</version>
+			<version>${jsoup.version}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
 		</dependency>
-
 
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>${junit.version}</version>
+			<!-- 依赖模块将提供 -->
+			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>
@@ -429,7 +438,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.2</version>
+				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
@@ -439,7 +448,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>3.0.1</version>
+				<version>${maven-source-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
