@@ -2,6 +2,9 @@ package com.hm.akka.study.demo2;
 
 import java.util.Optional;
 
+import com.hm.akka.study.demo2.DeviceManager.DeviceRegistered;
+import com.hm.akka.study.demo2.DeviceManager.RequestTrackDevice;
+
 import akka.actor.AbstractActor;
 import akka.actor.Props;
 import akka.event.Logging;
@@ -104,7 +107,13 @@ public class Device extends AbstractActor {
 
 	@Override
 	public Receive createReceive() {
-		return receiveBuilder().match(ReadTemperature.class, re -> {
+		return receiveBuilder().match(RequestTrackDevice.class, re -> {
+			if (this.groupId.equals(re.groupId) && this.deviceId.equals(re.deviceId)) {
+				getSender().tell(new DeviceRegistered(), getSelf());
+			} else {
+				log.warning("Ignoring TrackDevice request for {}-{}.This actor is responsible for {}-{}.", re.groupId, re.deviceId, this.groupId, this.deviceId);
+			}
+		}).match(ReadTemperature.class, re -> {
 			getSender().tell(new RespondTemperature(re.requestId, lastTemperatureReading), getSelf());
 		}).match(RecordTemperature.class, re -> {
 			log.info("Recorded temperature reading {} with {}", re.value, re.requestId);

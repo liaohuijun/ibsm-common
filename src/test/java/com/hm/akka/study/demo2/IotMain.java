@@ -1,5 +1,7 @@
 package com.hm.akka.study.demo2;
 
+import static org.junit.Assert.assertEquals;
+
 import com.hm.akka.study.demo2.Device.RespondTemperature;
 import com.hm.akka.study.demo2.Device.TemperatureRecorded;
 
@@ -16,6 +18,26 @@ import akka.testkit.javadsl.TestKit;
 public class IotMain {
 
 	public static void main(String[] args) {
+		ActorSystem actorSystem = ActorSystem.create("iot-system");
+		TestKit probe = new TestKit(actorSystem);
+		try {
+			ActorRef deviceActor = actorSystem.actorOf(Device.props("group", "device"));
+			
+			deviceActor.tell(new DeviceManager.RequestTrackDevice("group", "device"),probe.getRef());
+			probe.expectMsgClass(DeviceManager.DeviceRegistered.class);
+			
+//			System.out.println(deviceActor);
+//			System.out.println(deviceRegistered);
+			assertEquals(deviceActor, probe.getLastSender());
+			System.in.read();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			actorSystem.terminate();
+		}
+	}
+	
+	private static void testA() {
 		ActorSystem actorSystem = ActorSystem.create("iot-system");
 		TestKit probe = new TestKit(actorSystem);
 		try {
