@@ -11,19 +11,19 @@ public enum ActivateDef {
 	/**
 	 * 禁用（未激活）
 	 */
-	DISABLE(0, "禁用（未激活）"),
+	DISABLE("DISABLE", "禁用（未激活）"),
 
 	/**
 	 * 启用（已激活）
 	 */
-	ENABLE(1, "启用（已激活）");
+	ENABLE("ENABLE", "启用（已激活）");
 
-	private int status;
+	private String code;
 
 	private String desc;
 
-	private ActivateDef(int status, String desc) {
-		this.status = status;
+	private ActivateDef(String code, String desc) {
+		this.code = code;
 		this.desc = desc;
 	}
 
@@ -31,7 +31,16 @@ public enum ActivateDef {
 		return this.desc;
 	}
 
-	public int status() {
-		return this.status;
+	public String code() {
+		return this.code;
+	}
+	
+	public static ActivateDef trance(String code) {
+		for (ActivateDef statusDef : ActivateDef.values()) {
+			if (statusDef.code().equals(code)) {
+				return statusDef;
+			}
+		}
+		return null;
 	}
 }

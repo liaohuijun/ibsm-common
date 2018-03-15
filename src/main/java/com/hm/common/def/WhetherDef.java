@@ -12,12 +12,12 @@ public enum WhetherDef {
 	
 	NO("NO","否");
 
-	private String status;
+	private String code;
 
 	private String desc;
 
-	private WhetherDef(String status, String desc) {
-		this.status = status;
+	private WhetherDef(String code, String desc) {
+		this.code = code;
 		this.desc = desc;
 	}
 
@@ -25,13 +25,13 @@ public enum WhetherDef {
 		return this.desc;
 	}
 
-	public String status() {
-		return this.status;
+	public String code() {
+		return this.code;
 	}
 	
 	public static WhetherDef trance(String status) {
 		for (WhetherDef enumTmp : WhetherDef.values()) {
-			if (enumTmp.status.equals(status)) {
+			if (enumTmp.code.equals(status)) {
 				return enumTmp;
 			}
 		}

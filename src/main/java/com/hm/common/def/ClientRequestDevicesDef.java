@@ -28,12 +28,12 @@ public enum ClientRequestDevicesDef {
 	 */
 	PC("PC","PC浏览器");
 
-	private String status;
+	private String code;
 
 	private String desc;
 
-	private ClientRequestDevicesDef(String status, String desc) {
-		this.status = status;
+	private ClientRequestDevicesDef(String code, String desc) {
+		this.code = code;
 		this.desc = desc;
 	}
 
@@ -41,7 +41,7 @@ public enum ClientRequestDevicesDef {
 		return this.desc;
 	}
 
-	public String value() {
-		return this.status;
+	public String code() {
+		return this.code;
 	}
 }

@@ -16,21 +16,21 @@ public enum SystemSupportTerminalEnum {
 
 	ALL("ALL", "所有设备");
 
-	private SystemSupportTerminalEnum(String statu, String describe) {
-		this.statu = statu;
-		this.describe = describe;
+	private SystemSupportTerminalEnum(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
 
-	private String statu;
+	private String code;
 
-	private String describe;
+	private String desc;
 
-	public String getStatu() {
-		return statu;
+	public String code() {
+		return this.code;
 	}
 
-	public String getDescribe() {
-		return describe;
+	public String desc() {
+		return this.desc;
 	}
 
 	public static SystemSupportTerminalEnum trance(String statu) {
@@ -38,7 +38,7 @@ public enum SystemSupportTerminalEnum {
 			return null;
 		}
 		for (SystemSupportTerminalEnum targetEnum : SystemSupportTerminalEnum.values()) {
-			if (targetEnum.statu.equals(statu)) {
+			if (targetEnum.code.equals(statu)) {
 				return targetEnum;
 			}
 		}

@@ -11,19 +11,19 @@ public enum DataStatusDef {
 	/**
 	 * 禁用（已删除）
 	 */
-	DISABLE(0, "禁用（已删除）"),
+	DISABLE("DISABLE", "禁用（已删除）"),
 
 	/**
 	 * 启用（正在使用）
 	 */
-	ENABLE(1, "启用（正在使用）");
+	ENABLE("ENABLE", "启用（正在使用）");
 
-	private int status;
+	private String code;
 
 	private String desc;
 
-	private DataStatusDef(int status, String desc) {
-		this.status = status;
+	private DataStatusDef(String code, String desc) {
+		this.code = code;
 		this.desc = desc;
 	}
 
@@ -31,13 +31,13 @@ public enum DataStatusDef {
 		return this.desc;
 	}
 
-	public int status() {
-		return this.status;
+	public String code() {
+		return this.code;
 	}
 
-	public static DataStatusDef trance(String status) {
+	public static DataStatusDef trance(String code) {
 		for (DataStatusDef statusDef : DataStatusDef.values()) {
-			if (statusDef.name().equals(status)) {
+			if (statusDef.code().equals(code)) {
 				return statusDef;
 			}
 		}

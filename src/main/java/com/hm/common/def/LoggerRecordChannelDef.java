@@ -34,4 +34,13 @@ public enum LoggerRecordChannelDef {
 	public String code() {
 		return this.code;
 	}
+	
+	public static LoggerRecordChannelDef trance(String status) {
+		for (LoggerRecordChannelDef enumTmp : LoggerRecordChannelDef.values()) {
+			if (enumTmp.code.equals(status)) {
+				return enumTmp;
+			}
+		}
+		return null;
+	}
 }
