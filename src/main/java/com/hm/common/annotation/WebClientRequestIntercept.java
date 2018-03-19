@@ -23,6 +23,13 @@ public @interface WebClientRequestIntercept {
 	 * @return
 	 */
 	boolean frequency() default false;
+	
+	/**
+	 * 时间间隔,每隔一秒请求一次数据
+	 * 
+	 * @return
+	 */
+	long interval() default 1000;
 
 	/**
 	 * 需要授权
@@ -31,10 +38,4 @@ public @interface WebClientRequestIntercept {
 	 */
 	boolean auth() default true;
 
-	/**
-	 * 角色列表可以访问
-	 * 
-	 * @return
-	 */
-	String[] roles() default {};
 }
