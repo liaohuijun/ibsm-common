@@ -28,10 +28,11 @@ public class TestChannel {
 //		}
 //		channel.close();
 		
-		long start = System.currentTimeMillis();//1099519
+		long start = System.currentTimeMillis();//1099519、146849
 		AtomicInteger index = new AtomicInteger(0);
-		Files.readAllLines(Paths.get("D:/tmp/insurance.log")).stream().forEach(line ->{
+		Files.readAllLines(Paths.get("D:/tmp/insurance.log")).parallelStream().forEach(line ->{
 //			index.incrementAndGet();
+			System.out.println(Thread.currentThread().getName());
 			System.out.println(line);
 		});
 		System.out.println(System.currentTimeMillis() - start);
